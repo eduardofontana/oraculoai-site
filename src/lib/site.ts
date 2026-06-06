@@ -1,7 +1,7 @@
 export const site = {
   name: "Oráculo AI",
   shortName: "Oráculo AI",
-  slogan: "Tecnologia, Hospedagem e Segurança para Empresas que Querem Crescer",
+  slogan: "Tecnologia, Hospedagem e Segurança",
   heroSubtitle:
     "Hospedagem gerenciada, criação de sites, infraestrutura cloud, inteligência artificial e consultoria em cibersegurança com suporte humano especializado.",
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5500000000000",
