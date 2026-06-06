@@ -5,9 +5,11 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { FAQ } from "@/components/FAQ";
 import { Reveal } from "@/components/Reveal";
+import { PlansSection } from "@/components/PlansSection";
+import { DifferentialsSection } from "@/components/DifferentialsSection";
 
 export default function Home() {
-  const primaryCta = buildWhatsAppUrl("Olá! Quero um orçamento para um projeto premium.");
+  const primaryCta = buildWhatsAppUrl("Olá! Quero saber mais sobre os planos e serviços da Oráculo AI.");
 
   return (
     <main className="min-h-screen text-primary">
@@ -22,7 +24,7 @@ export default function Home() {
           <Reveal>
             <div className="inline-flex items-center gap-2 rounded-full border border-accent-border bg-accent-soft px-4 py-1.5 text-xs font-semibold text-accent-text">
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-glow-pulse" />
-              Atendimento direto via WhatsApp
+              Suporte humano especializado via WhatsApp
             </div>
           </Reveal>
 
@@ -33,31 +35,30 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={200}>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-secondary md:text-lg">
-              Criação de sites, hospedagem com preço de revenda Hostinger e consultoria em
-              cybersecurity. Tudo com atendimento direto, sem burocracia.
+            <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-secondary md:text-lg">
+              {site.heroSubtitle}
             </p>
           </Reveal>
 
           <Reveal delay={300}>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
-                href={primaryCta}
-                target="_blank"
-                rel="noreferrer"
+                href="#planos"
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-3.5 font-bold text-white shadow-lg shadow-[0_0_24px_var(--glow)] transition-all hover:shadow-[0_0_40px_var(--glow-strong)] hover:-translate-y-0.5"
               >
-                Falar no WhatsApp
+                Conheça os Planos
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-0.5">
                   <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                 </svg>
               </Link>
               <Link
-                href="#services"
+                href={primaryCta}
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-8 py-3.5 font-semibold text-secondary backdrop-blur-xl transition-all hover:border-border-hover hover:text-primary hover:bg-surface-overlay"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><line x1="9" y1="9" x2="15" y2="15" /><line x1="15" y1="9" x2="9" y2="15" /></svg>
-                Ver serviços
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                Solicitar Orçamento
               </Link>
             </div>
           </Reveal>
@@ -94,8 +95,8 @@ export default function Home() {
         <Reveal>
           <div className="grid divide-y border-y border-border md:grid-cols-3 md:divide-x md:divide-y-0">
             {[
-              { number: "3", label: "Serviços integrados", desc: "Web, hospedagem e segurança em um só lugar" },
-              { number: "24h", label: "Suporte via WhatsApp", desc: "Resposta rápida, sem burocracia" },
+              { number: "3+", label: "Frentes de atuação", desc: "Web, cloud, IA e segurança integrados" },
+              { number: "24h", label: "Suporte via WhatsApp", desc: "Resposta ágil de especialistas de verdade" },
               { number: "100%", label: "Atendimento remoto", desc: "Brasil e exterior com suporte direto" },
             ].map((stat) => (
               <div key={stat.label} className="flex items-center gap-4 px-6 py-8 md:px-8">
@@ -112,10 +113,10 @@ export default function Home() {
 
       {/* Services */}
       <Section
-        id="services"
+        id="servicos"
         eyebrow="Serviços"
-        title="Tudo que você precisa em um só lugar"
-        description="Site, hospedagem e segurança — resolva tudo com o mesmo responsável técnico, sem intermediários."
+        title="Tecnologia completa para o seu negócio"
+        description="Criação de sites, hospedagem gerenciada, infraestrutura cloud, inteligência artificial e cibersegurança — tudo com suporte humano especializado."
       >
         <div className="grid gap-4 md:grid-cols-3">
           {site.services.map((service, i) => (
@@ -126,85 +127,36 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Hostinger Pricing */}
-      <Section
-        id="hosting"
-        eyebrow="Revenda Hostinger"
-        title="Hospedagem com preço de revenda"
-        description="Domínio, e-mail profissional e hospedagem gerenciada. Preço menor que contratar direto."
-      >
-        <div className="grid gap-4 md:grid-cols-3">
-          {site.hostingPlans.map((plan, i) => (
-            <Reveal key={plan.name} delay={i * 120}>
-              <div className={`group relative flex h-full flex-col rounded-2xl border p-7 transition-all duration-500 hover:-translate-y-1 ${
-                plan.popular
-                  ? "border-accent-border bg-card shadow-[0_0_24px_var(--glow)]"
-                  : "border-border bg-card"
-              }`}>
-                {plan.popular && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-accent px-4 py-1 text-xs font-bold text-white drop-shadow-sm">
-                    Mais escolhido
-                  </span>
-                )}
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted">{plan.name}</p>
-                <p className="mt-1 text-sm leading-6 text-secondary">{plan.description}</p>
-                <div className="mt-5 flex items-baseline gap-1">
-                  <span className="font-display text-4xl font-extrabold tracking-tight text-primary drop-shadow-sm">{plan.price}</span>
-                  <span className="text-sm text-muted">{plan.period}</span>
-                </div>
-                <div className="flex-1">
-                  <ul className="mt-6 space-y-2.5 border-t border-border pt-6 text-sm text-secondary">
-                    {plan.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2.5">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <Link
-                  href={primaryCta}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-all ${
-                    plan.popular
-                      ? "bg-accent text-white shadow-lg shadow-[0_0_16px_var(--glow)] hover:shadow-[0_0_32px_var(--glow-strong)]"
-                      : "border border-border text-secondary hover:border-accent-border hover:text-accent-text"
-                  }`}
-                >
-                  {plan.cta}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                </Link>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
+      {/* Plans */}
+      <PlansSection />
+
+      {/* Differentials */}
+      <DifferentialsSection />
 
       {/* Processo */}
       <Section
         eyebrow="Processo"
         title="Como funciona"
-        description="Três etapas até seu projeto no ar. Simples e direto."
+        description="Simples, direto e sem burocracia. Três etapas até sua operação no ar."
       >
         <div className="grid gap-3 md:grid-cols-3">
           {[
             {
               step: "01",
-              title: "Você chama no WhatsApp",
-              desc: "Contato direto, sem formulário. Respondo pessoalmente em minutos.",
+              title: "Você entra em contato",
+              desc: "Fale conosco pelo WhatsApp. Entendemos seu cenário e objetivos em uma conversa objetiva.",
               icon: "message",
             },
             {
               step: "02",
-              title: "Alinhamos escopo",
-              desc: "Entendo o objetivo e defino o caminho mais eficiente com prazo e valor claros.",
+              title: "Alinhamos a solução",
+              desc: "Definimos o plano, escopo e prazos. Você recebe tudo claro e sem surpresas.",
               icon: "target",
             },
             {
               step: "03",
-              title: "Entrego a solução",
-              desc: "Execução objetiva com estética premium, suporte contínuo e backup incluso.",
+              title: "Cuidamos de tudo",
+              desc: "Execução, migração, configuração e suporte contínuo — você foca no seu negócio.",
               icon: "rocket",
             },
           ].map((item) => (
@@ -238,7 +190,7 @@ export default function Home() {
       <Section
         eyebrow="Depoimentos"
         title="O que nossos clientes dizem"
-        description="Quem já experimentou o atendimento direto e a entrega premium sabe o valor."
+        description="Quem já experimenta o atendimento direto e a entrega premium sabe o valor."
       >
         <div className="grid gap-4 md:grid-cols-3">
           {site.testimonials.map((t, i) => (
@@ -266,10 +218,10 @@ export default function Home() {
             <div className="pointer-events-none absolute -top-20 -right-20 h-60 w-60 rounded-full bg-accent-blue/3 blur-[100px]" />
             <div className="relative z-10">
               <h2 className="font-display text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
-                Vamos começar?
+                Vamos construir juntos?
               </h2>
               <p className="mx-auto mt-4 max-w-lg text-base text-secondary">
-                Site, hospedagem ou segurança — o próximo passo é uma conversa objetiva no WhatsApp.
+                Site, hospedagem, cloud, IA ou segurança — o próximo passo é uma conversa objetiva.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Link

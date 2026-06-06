@@ -36,10 +36,10 @@ export default function DesenvolvimentoWebPage() {
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </Link>
                 <Link
-                  href="/servicos/cybersecurity"
+                  href="/servicos/consultoria"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3 font-semibold text-secondary backdrop-blur-xl transition hover:border-border-hover hover:text-primary"
                 >
-                  Ver cybersecurity
+                  Ver consultoria IA e segurança
                 </Link>
               </div>
             </section>
