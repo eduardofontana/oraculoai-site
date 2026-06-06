@@ -1,26 +1,40 @@
 import type { ReactNode } from "react";
 
 type SectionProps = {
+  id?: string;
   eyebrow?: string;
   title: string;
   description?: string;
   children?: ReactNode;
+  className?: string;
 };
 
-export function Section({ eyebrow, title, description, children }: SectionProps) {
+export function Section({
+  id,
+  eyebrow,
+  title,
+  description,
+  children,
+  className,
+}: SectionProps) {
   return (
-    <section className="mx-auto w-full max-w-6xl px-6 py-16 md:px-8">
-      <div className="max-w-2xl">
+    <section
+      id={id}
+      className={`mx-auto w-full max-w-7xl px-6 py-20 md:px-8 ${className ?? ""}`.trim()}
+    >
+      <div className="max-w-3xl scroll-mt-24">
         {eyebrow ? (
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-cyan-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.32em] text-cyan-300/80">
             {eyebrow}
           </p>
         ) : null}
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white md:text-4xl">
+        <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-white md:text-6xl">
           {title}
         </h2>
         {description ? (
-          <p className="mt-4 text-base leading-7 text-zinc-300">{description}</p>
+          <p className="mt-4 max-w-2xl text-base leading-8 text-zinc-300 md:text-lg">
+            {description}
+          </p>
         ) : null}
       </div>
       {children ? <div className="mt-10">{children}</div> : null}
