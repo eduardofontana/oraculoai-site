@@ -16,11 +16,11 @@ export function Section({ children, eyebrow, title, description, id }: Props) {
         <Reveal>
           <div className="mx-auto mb-14 max-w-2xl text-center">
             {eyebrow && (
-              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-accent-text/70">
+              <p className="text-xs font-bold uppercase tracking-[0.32em] text-accent">
                 {eyebrow}
               </p>
             )}
-            <h2 className="mt-5 font-display text-4xl tracking-tight text-primary md:text-5xl">
+            <h2 className="mt-5 font-display text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
               {title}
             </h2>
             {description && (

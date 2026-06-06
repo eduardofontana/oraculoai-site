@@ -14,9 +14,10 @@
   --color-accent-border: var(--accent-border);
   --color-accent-text: var(--accent-text);
   --color-surface-overlay: var(--surface-overlay);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-blue-soft: var(--accent-blue-soft);
   --font-sans: var(--font-sans), system-ui, sans-serif;
-  --font-display: var(--font-display), Georgia, serif;
-  --font-mono: var(--font-mono), monospace;
+  --font-display: var(--font-sans), system-ui, sans-serif;
 }
 
 :root {
@@ -48,58 +49,48 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-@keyframes noise {
-  0% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -5%); }
-  20% { transform: translate(-10%, 5%); }
-  30% { transform: translate(5%, -10%); }
-  40% { transform: translate(-5%, 15%); }
-  50% { transform: translate(-10%, 5%); }
-  60% { transform: translate(15%, 0); }
-  70% { transform: translate(0, 10%); }
-  80% { transform: translate(-15%, 0); }
-  90% { transform: translate(10%, 5%); }
-  100% { transform: translate(5%, 0); }
-}
-
-/* ── DARK (default) ── */
+/* ── DARK (NordVPN-inspired) ── */
 .dark {
-  --bg: #0c0c0f;
-  --bg-card: #151518;
-  --bg-elevated: #1c1c21;
+  --bg: #0b0b12;
+  --bg-card: #141420;
+  --bg-elevated: #1c1c2a;
   --border: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.10);
-  --text-primary: #f5f5f5;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --accent: #f59e0b;
-  --accent-soft: rgba(251, 191, 36, 0.08);
-  --accent-border: rgba(251, 191, 36, 0.18);
-  --accent-text: #fbbf24;
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --text-primary: #f5f5f7;
+  --text-secondary: #9494a8;
+  --text-muted: #63637a;
+  --accent: #e11937;
+  --accent-soft: rgba(225, 25, 55, 0.10);
+  --accent-border: rgba(225, 25, 55, 0.20);
+  --accent-text: #e11937;
+  --accent-blue: #1f5fff;
+  --accent-blue-soft: rgba(31, 95, 255, 0.10);
   --surface-overlay: rgba(255, 255, 255, 0.03);
-  --glow: rgba(251, 191, 36, 0.12);
-  --glow-strong: rgba(251, 191, 36, 0.25);
-  --noise-opacity: 0.012;
+  --glow: rgba(225, 25, 55, 0.15);
+  --glow-strong: rgba(225, 25, 55, 0.30);
+  --noise-opacity: 0.01;
 }
 
 /* ── LIGHT ── */
 .light {
-  --bg: #f8f8f6;
+  --bg: #f5f5f7;
   --bg-card: #ffffff;
   --bg-elevated: #ffffff;
   --border: rgba(0, 0, 0, 0.06);
   --border-hover: rgba(0, 0, 0, 0.10);
-  --text-primary: #1a1a1a;
-  --text-secondary: #52525b;
-  --text-muted: #a1a1aa;
-  --accent: #d97706;
-  --accent-soft: rgba(217, 119, 6, 0.06);
-  --accent-border: rgba(217, 119, 6, 0.18);
-  --accent-text: #d97706;
+  --text-primary: #1a1a2e;
+  --text-secondary: #5c5c72;
+  --text-muted: #9494a8;
+  --accent: #d4152c;
+  --accent-soft: rgba(212, 21, 44, 0.06);
+  --accent-border: rgba(212, 21, 44, 0.18);
+  --accent-text: #d4152c;
+  --accent-blue: #1a5eff;
+  --accent-blue-soft: rgba(26, 94, 255, 0.06);
   --surface-overlay: rgba(0, 0, 0, 0.02);
-  --glow: rgba(217, 119, 6, 0.12);
-  --glow-strong: rgba(217, 119, 6, 0.22);
-  --noise-opacity: 0.006;
+  --glow: rgba(212, 21, 44, 0.12);
+  --glow-strong: rgba(212, 21, 44, 0.22);
+  --noise-opacity: 0.005;
 }
 
 html {
@@ -119,18 +110,6 @@ body {
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: -50%;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: var(--noise-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  animation: noise 0.5s steps(4) infinite;
-  transition: opacity 0.35s ease;
-}
-
 body::after {
   content: "";
   position: fixed;
@@ -142,18 +121,18 @@ body::after {
 
 .dark body::after {
   background:
-    radial-gradient(ellipse 80% 40% at 50% -15%, rgba(251, 191, 36, 0.04), transparent),
-    radial-gradient(ellipse 50% 30% at 80% 90%, rgba(217, 119, 6, 0.03), transparent);
+    radial-gradient(ellipse 80% 35% at 50% -10%, rgba(225, 25, 55, 0.04), transparent),
+    radial-gradient(ellipse 50% 25% at 80% 90%, rgba(31, 95, 255, 0.03), transparent);
 }
 
 .light body::after {
   background:
-    radial-gradient(ellipse 80% 40% at 50% -15%, rgba(217, 119, 6, 0.03), transparent),
-    radial-gradient(ellipse 50% 30% at 80% 90%, rgba(217, 119, 6, 0.02), transparent);
+    radial-gradient(ellipse 80% 35% at 50% -10%, rgba(212, 21, 44, 0.03), transparent),
+    radial-gradient(ellipse 50% 25% at 80% 90%, rgba(26, 94, 255, 0.02), transparent);
 }
 
 ::selection {
-  background: rgba(251, 191, 36, 0.18);
+  background: rgba(225, 25, 55, 0.20);
   color: var(--text-primary);
 }
 
