@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0b;
+  --background: #070708;
   --foreground: #fafafa;
 }
 
@@ -11,6 +11,29 @@
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-display: var(--font-instrument-serif), Georgia, serif;
   --font-mono: var(--font-geist-mono), monospace;
+
+  --animate-fade-in-up: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-glow-pulse: glow-pulse 3s ease-in-out infinite;
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.15); }
+    50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.3); }
+  }
 }
 
 html {
@@ -19,13 +42,14 @@ html {
 
 body {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 158, 11, 0.08), transparent),
-    linear-gradient(180deg, #0a0a0b 0%, #09090b 50%, #0a0a0b 100%);
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(251, 191, 36, 0.06), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(249, 115, 22, 0.04), transparent),
+    linear-gradient(180deg, #070708 0%, #09090b 50%, #070708 100%);
   color: var(--foreground);
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
 ::selection {
-  background: rgba(245, 158, 11, 0.28);
+  background: rgba(251, 191, 36, 0.25);
   color: #fafafa;
 }
