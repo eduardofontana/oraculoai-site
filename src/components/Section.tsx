@@ -24,11 +24,11 @@ export function Section({
     >
       <div className="max-w-3xl scroll-mt-24">
         {eyebrow ? (
-          <p className="text-xs font-semibold uppercase tracking-[0.32em] text-cyan-300/80">
+          <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-400/80">
             {eyebrow}
           </p>
         ) : null}
-        <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-white md:text-6xl">
+        <h2 className="mt-3 font-[family-name:var(--font-instrument-serif)] text-4xl tracking-tight text-white md:text-5xl">
           {title}
         </h2>
         {description ? (

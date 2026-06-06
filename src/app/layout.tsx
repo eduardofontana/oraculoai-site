@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
+import { Inter, Instrument_Serif, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
 });
 
 const geistMono = Geist_Mono({
@@ -13,16 +23,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const display = Cormorant_Garamond({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
 export const metadata: Metadata = {
   title: "OraculoAI | Presença digital premium",
   description:
-    "Desenvolvimento web, cybersecurity e infraestrutura com foco em conversão via WhatsApp.",
+    "Desenvolvimento web, cybersecurity e infraestrutura com atendimento direto no WhatsApp.",
 };
 
 export default function RootLayout({
@@ -33,9 +37,14 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable} ${display.variable} h-full antialiased`}
+      className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-screen flex flex-col">
+        <Header />
+        <WhatsAppButton />
+        <div className="flex-1 pt-16">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }
