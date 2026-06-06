@@ -7,13 +7,6 @@ type Message = {
   content: string;
 };
 
-function generateSessionId() {
-  if (typeof crypto !== "undefined" && crypto.randomUUID) {
-    return crypto.randomUUID().slice(0, 12);
-  }
-  return Math.random().toString(36).slice(2, 14);
-}
-
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -25,7 +18,6 @@ export function ChatBot() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId] = useState(generateSessionId);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -46,19 +38,21 @@ export function ChatBot() {
     setIsLoading(true);
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_CHAT_API_URL}/api/chat`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, session_id: sessionId }),
-        },
-      );
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...messages, { role: "user", content: text }].map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        }),
+      });
       if (!res.ok) throw new Error("API error");
       const data = await res.json();
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.reply },
+        { role: "assistant", content: data.message.content },
       ]);
     } catch {
       setMessages((prev) => [
@@ -72,7 +66,7 @@ export function ChatBot() {
     } finally {
       setIsLoading(false);
     }
-  }, [input, isLoading, sessionId]);
+  }, [input, isLoading, messages]);
 
   return (
     <div className="fixed bottom-24 right-5 z-50 flex flex-col items-end gap-3 sm:bottom-28 sm:right-6">
