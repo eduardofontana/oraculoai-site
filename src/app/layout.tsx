@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/lib/theme";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { ChatBot } from "@/components/ChatBot";
 import "./globals.css";
 
 const nunito = Nunito_Sans({
@@ -34,6 +35,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Header />
           <WhatsAppButton />
+          <ChatBot />
           <div className="flex-1 pt-16">{children}</div>
           <Footer />
         </ThemeProvider>
