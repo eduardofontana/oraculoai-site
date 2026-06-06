@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
+import { ThemeProvider } from "@/lib/theme";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -38,13 +39,16 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${dmSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} antialiased`}
+      className={`${dmSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} antialiased dark`}
+      suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col">
-        <Header />
-        <WhatsAppButton />
-        <div className="flex-1 pt-16">{children}</div>
-        <Footer />
+        <ThemeProvider>
+          <Header />
+          <WhatsAppButton />
+          <div className="flex-1 pt-16">{children}</div>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

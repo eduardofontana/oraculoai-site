@@ -19,11 +19,11 @@ export function FAQ({ items }: Props) {
       {items.map((item, i) => (
         <div
           key={i}
-          className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl transition-all hover:border-white/[0.10]"
+          className="rounded-xl border border-border bg-card transition-all hover:border-border-hover"
         >
           <button
             onClick={() => setOpenIndex(openIndex === i ? null : i)}
-            className="flex w-full items-center justify-between px-6 py-5 text-left text-sm font-medium text-white transition"
+            className="flex w-full items-center justify-between px-6 py-5 text-left text-sm font-medium text-primary transition"
             aria-expanded={openIndex === i}
           >
             <span>{item.question}</span>
@@ -46,7 +46,7 @@ export function FAQ({ items }: Props) {
               openIndex === i ? "max-h-96" : "max-h-0"
             }`}
           >
-            <p className="border-t border-white/[0.06] px-6 py-5 text-sm leading-7 text-zinc-400">
+            <p className="border-t border-border px-6 py-5 text-sm leading-7 text-secondary">
               {item.answer}
             </p>
           </div>
