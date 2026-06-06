@@ -1,16 +1,28 @@
-import Link from "next/link";
 import { buildWhatsAppUrl, site } from "@/lib/site";
 
 export function WhatsAppButton() {
+  const url = buildWhatsAppUrl(site.whatsappMessage);
+
   return (
-    <Link
-      href={buildWhatsAppUrl(site.whatsappMessage)}
+    <a
+      href={url}
       target="_blank"
       rel="noreferrer"
-      className="fixed bottom-5 right-5 z-50 inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-zinc-950/80 px-4 py-3 text-sm font-semibold text-amber-100 shadow-2xl shadow-black/40 backdrop-blur-2xl transition hover:-translate-y-0.5 hover:border-amber-500/40 hover:bg-zinc-900 animate-glow-pulse"
+      className="group fixed right-5 bottom-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-amber-500 to-amber-400 text-zinc-950 shadow-lg shadow-amber-500/20 transition-all hover:shadow-[0_0_32px_rgba(251,191,36,0.4)] hover:scale-105"
+      aria-label="Falar no WhatsApp"
     >
-      <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.7)]" />
-      WhatsApp
-    </Link>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      </svg>
+    </a>
   );
 }

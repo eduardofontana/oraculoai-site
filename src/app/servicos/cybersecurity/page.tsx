@@ -14,7 +14,7 @@ export default function CybersecurityPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.32em] text-amber-400/70">
                 Serviço 02
               </p>
-              <h1 className="mt-5 max-w-3xl font-[family-name:var(--font-instrument-serif)] text-5xl tracking-tight text-white md:text-7xl">
+              <h1 className="mt-5 max-w-3xl font-[family-name:var(--font-display)] text-5xl tracking-tight text-white md:text-7xl">
                 Cybersecurity
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-400 md:text-lg">
