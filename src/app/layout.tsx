@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${nunito.variable} antialiased dark`}
+      className={`${nunito.variable} antialiased light`}
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col">

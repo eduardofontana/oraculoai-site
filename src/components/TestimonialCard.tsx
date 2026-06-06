@@ -2,9 +2,10 @@ type Props = {
   quote: string;
   author: string;
   role: string;
+  avatar: string;
 };
 
-export function TestimonialCard({ quote, author, role }: Props) {
+export function TestimonialCard({ quote, author, role, avatar }: Props) {
   return (
     <figure className="flex h-full flex-col rounded-2xl border border-border bg-card p-7 transition-all duration-500 hover:border-border-hover hover:-translate-y-0.5">
       <div className="flex gap-1 mb-4">
@@ -15,9 +16,16 @@ export function TestimonialCard({ quote, author, role }: Props) {
       <blockquote className="flex-1 text-sm leading-7 text-secondary">
         &ldquo;{quote}&rdquo;
       </blockquote>
-      <figcaption className="mt-6 border-t border-border pt-4">
-        <p className="text-sm font-bold text-primary">{author}</p>
-        <p className="text-xs text-muted">{role}</p>
+      <figcaption className="mt-6 flex items-center gap-3 border-t border-border pt-4">
+        <img
+          src={avatar}
+          alt={author}
+          className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-border"
+        />
+        <div>
+          <p className="text-sm font-bold text-primary">{author}</p>
+          <p className="text-xs text-muted">{role}</p>
+        </div>
       </figcaption>
     </figure>
   );

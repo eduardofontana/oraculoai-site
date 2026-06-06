@@ -117,18 +117,21 @@ export const site = {
         "A OraculoAI transformou nossa presença digital. O site ficou muito mais profissional e as conversas pelo WhatsApp aumentaram.",
       author: "Carlos Mendes",
       role: "CEO, Mendez Tech",
+      avatar: "https://i.pravatar.cc/80?img=12",
     },
     {
       quote:
         "Atendimento direto, sem burocracia. Em uma semana meu site estava no ar com uma aparência que parece de agência grande.",
       author: "Ana Barcelos",
       role: "Fundadora, Barcelos Studio",
+      avatar: "https://i.pravatar.cc/80?img=25",
     },
     {
       quote:
         "Segurança e hospedagem tudo resolvido em um lugar. Economizei tempo e dinheiro com a consultoria completa.",
       author: "Rafael Oliveira",
       role: "CTO, Oliva Digital",
+      avatar: "https://i.pravatar.cc/80?img=60",
     },
   ],
   faq: [
