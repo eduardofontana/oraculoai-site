@@ -110,9 +110,9 @@ export function ChatBot() {
             {isLoading && (
               <div className="flex justify-start">
                 <div className="flex items-center gap-1.5 rounded-2xl border border-border bg-surface-overlay px-4 py-3 text-sm text-secondary">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent [animation-delay:150ms]" />
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent [animation-delay:300ms]" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-accent [animation-delay:0ms]" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-accent [animation-delay:150ms]" />
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-accent [animation-delay:300ms]" />
                 </div>
               </div>
             )}
