@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { generatePixPayload } from "@/lib/pix"
 import { CopyButton } from "./CopyButton"
-import { QrCodeGenerator } from "./QrCodeGenerator"
 
 export function PixGenerator() {
   const [key, setKey] = useState("")

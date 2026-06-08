@@ -11,15 +11,15 @@ type ThemeContext = {
 
 const ThemeCtx = createContext<ThemeContext>({ theme: "dark", toggle: () => {} });
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+function getInitialTheme(): Theme {
+  if (typeof window === "undefined") return "dark"
+  const stored = localStorage.getItem("theme") as Theme | null
+  if (stored === "light" || stored === "dark") return stored
+  return "dark"
+}
 
-  useEffect(() => {
-    const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored === "light" || stored === "dark") {
-      setTheme(stored);
-    }
-  }, []);
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
     const root = document.documentElement;

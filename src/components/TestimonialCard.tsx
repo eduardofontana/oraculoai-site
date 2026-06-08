@@ -17,6 +17,7 @@ export function TestimonialCard({ quote, author, role, avatar }: Props) {
         &ldquo;{quote}&rdquo;
       </blockquote>
       <figcaption className="mt-6 flex items-center gap-3 border-t border-border pt-4">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={avatar}
           alt={author}

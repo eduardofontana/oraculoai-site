@@ -1,27 +1,23 @@
 "use client"
 
-import { useEffect, useState } from "react"
-
 export function UserAgentInspector() {
-  const [info, setInfo] = useState<Record<string, string>>({})
+  if (typeof window === "undefined") {
+    return <p className="text-sm text-muted">Coletando dados...</p>
+  }
 
-  useEffect(() => {
-    const ua = navigator.userAgent
-    setInfo({
-      "User-Agent": ua,
-      "Plataforma": navigator.platform,
-      "Idioma": navigator.language,
-      "Cookies habilitados": navigator.cookieEnabled ? "Sim" : "Não",
-      "Hardware Concurrency": String(navigator.hardwareConcurrency || "N/A"),
-      "Resolução de tela": `${screen.width}x${screen.height}`,
-      "Profundidade de cor": `${screen.colorDepth} bits`,
-      "Viewport": `${window.innerWidth}x${window.innerHeight}`,
-      "Navegador": ua.includes("Chrome") ? "Chrome" : ua.includes("Firefox") ? "Firefox" : ua.includes("Safari") ? "Safari" : "Outro",
-      "Sistema": ua.includes("Windows") ? "Windows" : ua.includes("Mac") ? "macOS" : ua.includes("Linux") ? "Linux" : "Outro",
-    })
-  }, [])
-
-  if (Object.keys(info).length === 0) return <p className="text-sm text-muted">Coletando dados...</p>
+  const ua = navigator.userAgent
+  const info: Record<string, string> = {
+    "User-Agent": ua,
+    "Plataforma": navigator.platform,
+    "Idioma": navigator.language,
+    "Cookies habilitados": navigator.cookieEnabled ? "Sim" : "Não",
+    "Hardware Concurrency": String(navigator.hardwareConcurrency || "N/A"),
+    "Resolução de tela": `${screen.width}x${screen.height}`,
+    "Profundidade de cor": `${screen.colorDepth} bits`,
+    "Viewport": `${window.innerWidth}x${window.innerHeight}`,
+    "Navegador": ua.includes("Chrome") ? "Chrome" : ua.includes("Firefox") ? "Firefox" : ua.includes("Safari") ? "Safari" : "Outro",
+    "Sistema": ua.includes("Windows") ? "Windows" : ua.includes("Mac") ? "macOS" : ua.includes("Linux") ? "Linux" : "Outro",
+  }
 
   return (
     <div className="space-y-6">

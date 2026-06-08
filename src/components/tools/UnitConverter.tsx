@@ -14,10 +14,10 @@ export function UnitConverter() {
   const handleConvert = () => {
     const v = parseFloat(value)
     if (isNaN(v)) return
-    setResult(convertUnit(category as any, v, fromUnit, toUnit))
+    setResult(convertUnit(category as "length" | "weight" | "temperature" | "data", v, fromUnit, toUnit))
   }
 
-  const units = getUnits(category as any)
+  const units = getUnits(category as "length" | "weight" | "temperature" | "data")
 
   return (
     <div className="space-y-6">
