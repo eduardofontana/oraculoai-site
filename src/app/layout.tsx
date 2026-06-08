@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const nunito = Nunito_Sans({
   variable: "--font-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Header />
           <WhatsAppButton />
+          <Analytics />
           <div className="flex-1 pt-16">{children}</div>
           <Footer />
         </ThemeProvider>
