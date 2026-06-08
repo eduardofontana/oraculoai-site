@@ -111,7 +111,7 @@ export function PlansSection() {
         ))}
       </div>
       <Reveal delay={500}>
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
+        <div className="mt-12 grid gap-4 sm:grid-cols-3">
           {[
             { label: "Hospedagem de Sites", href: "https://www.hostinger.com/br/cart?product=hosting%3Ahostinger_business&period=12&referral_type=cart_link&REFERRALCODE=LJOFONTANIXB&referral_id=019ea60f-d4df-7103-b70c-9e56dfe7e05c" },
             { label: "Servidor VPS", href: "https://www.hostinger.com/br/cart?product=vps%3Avps_kvm_2&period=12&referral_type=cart_link&REFERRALCODE=LJOFONTANIXB&referral_id=019ea610-1778-70aa-95de-9f7e4596f2b8" },
@@ -121,9 +121,9 @@ export function PlansSection() {
                href={link.href}
                target="_blank"
                rel="noopener noreferrer"
-               className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3 font-semibold text-secondary backdrop-blur-xl transition-all hover:border-border-hover hover:text-primary hover:bg-surface-overlay">
-              {link.label}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+               className="flex items-center justify-center gap-3 rounded-xl border border-border bg-card px-5 py-4 font-semibold text-secondary shadow-sm transition-all hover:border-border-hover hover:text-primary hover:bg-surface-overlay hover:-translate-y-0.5">
+              <span>{link.label}</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-muted">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
             </a>
@@ -132,14 +132,7 @@ export function PlansSection() {
       </Reveal>
 
 
-      <Reveal delay={400}>
-        <p className="mt-10 text-center text-sm text-muted">
-          Precisa de algo personalizado?{" "}
-          <Link href={primaryCta} target="_blank" rel="noreferrer" className="font-semibold text-accent-text underline underline-offset-2 hover:text-accent">
-            Fale com nosso time
-          </Link>
-        </p>
-      </Reveal>
+
     </section>
   );
 }

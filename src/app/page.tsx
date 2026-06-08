@@ -14,10 +14,52 @@ export default function Home() {
   return (
     <main className="min-h-screen text-primary">
       {/* Hero */}
-      <section className="relative mx-auto flex min-h-[88vh] w-full max-w-7xl items-center overflow-hidden px-6 pt-24 pb-20 md:px-8">
+      <section className="relative flex min-h-[88vh] w-full items-center overflow-hidden px-6 pt-24 pb-20 md:px-8">
+        {/* ── Background layer ── */}
+        <div className="pointer-events-none absolute inset-0 hero-glow" />
+        <div className="pointer-events-none absolute inset-0 hero-grid" />
+
+        {/* ── Floating orbs ── */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-accent/5 blur-[120px]" />
-          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-accent-blue/5 blur-[120px]" />
+          <div
+            className="absolute -top-20 -right-20 h-96 w-96 rounded-full opacity-70"
+            style={{
+              background: "radial-gradient(circle, rgba(225,25,55,0.12), transparent 70%)",
+              animation: "orb-drift 18s ease-in-out infinite",
+            }}
+          />
+          <div
+            className="absolute -bottom-32 -left-20 h-[30rem] w-[30rem] rounded-full opacity-60"
+            style={{
+              background: "radial-gradient(circle, rgba(31,95,255,0.10), transparent 70%)",
+              animation: "orb-drift-slow 22s ease-in-out infinite",
+            }}
+          />
+          <div
+            className="absolute top-1/3 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40"
+            style={{
+              background: "radial-gradient(circle, rgba(225,25,55,0.06), transparent 70%)",
+              animation: "orb-drift 14s ease-in-out infinite reverse",
+            }}
+          />
+        </div>
+
+        {/* ── Dots de conexão (neural nodes) ── */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-30">
+          <svg className="h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="none">
+            <circle cx="200" cy="150" r="2" fill="var(--accent)" opacity="0.6" />
+            <circle cx="1200" cy="200" r="1.5" fill="var(--accent-blue)" opacity="0.5" />
+            <circle cx="100" cy="600" r="2" fill="var(--accent-blue)" opacity="0.4" />
+            <circle cx="1300" cy="700" r="1.5" fill="var(--accent)" opacity="0.5" />
+            <circle cx="700" cy="100" r="2" fill="var(--accent)" opacity="0.4" />
+            <circle cx="500" cy="750" r="1.5" fill="var(--accent-blue)" opacity="0.5" />
+            <line x1="200" y1="150" x2="700" y2="100" stroke="var(--accent)" strokeWidth="0.5" opacity="0.15" />
+            <line x1="200" y1="150" x2="1200" y2="200" stroke="var(--accent)" strokeWidth="0.5" opacity="0.08" />
+            <line x1="1200" y1="200" x2="1300" y2="700" stroke="var(--accent-blue)" strokeWidth="0.5" opacity="0.12" />
+            <line x1="700" y1="100" x2="500" y2="750" stroke="var(--accent-blue)" strokeWidth="0.5" opacity="0.08" />
+            <line x1="100" y1="600" x2="500" y2="750" stroke="var(--accent)" strokeWidth="0.5" opacity="0.1" />
+            <line x1="100" y1="600" x2="200" y2="150" stroke="var(--accent-blue)" strokeWidth="0.5" opacity="0.08" />
+          </svg>
         </div>
 
         <div className="relative z-10 mx-auto max-w-5xl text-center">
