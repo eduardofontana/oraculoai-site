@@ -266,6 +266,48 @@ export const tools: Tool[] = [
     description: "Veja seu IP público e informações de conexão.",
     keywords: ["ip", "rede", "conexão", "internet"],
   },
+  {
+    title: "Minificador CSS/JS",
+    slug: "minificador-css-js",
+    category: "Desenvolvimento",
+    description: "Minifique código CSS e JavaScript removendo espaços e comentários.",
+    keywords: ["minificar", "css", "javascript", "js", "otimizar"],
+  },
+  {
+    title: "Conversor YAML/JSON/TOML",
+    slug: "conversor-yaml-json-toml",
+    category: "Desenvolvimento",
+    description: "Converta entre formatos de configuração YAML, JSON e TOML.",
+    keywords: ["yaml", "json", "toml", "conversor", "config"],
+  },
+  {
+    title: "Testador de Regex",
+    slug: "testador-regex",
+    category: "Desenvolvimento",
+    description: "Teste expressões regulares em tempo real com highlight de matches.",
+    keywords: ["regex", "expressão regular", "teste", "match"],
+  },
+  {
+    title: "Calculadora de Datas",
+    slug: "calculadora-datas",
+    category: "Utilitários",
+    description: "Calcule a diferença entre datas ou adicione/subtraia dias, meses e anos.",
+    keywords: ["data", "calculadora", "dias", "meses", "diferença"],
+  },
+  {
+    title: "Diff JSON",
+    slug: "diff-json",
+    category: "Desenvolvimento",
+    description: "Compare dois JSONs lado a lado e veja as diferenças detalhadas.",
+    keywords: ["json", "diff", "comparar", "diferenças"],
+  },
+  {
+    title: "Cortar Imagem",
+    slug: "cortar-imagem",
+    category: "Imagem",
+    description: "Faça upload de uma imagem e corte a área desejada diretamente no navegador.",
+    keywords: ["imagem", "cortar", "crop", "recortar", "editor"],
+  },
 ]
 
 export const categories = Array.from(new Set(tools.map((t) => t.category)))
