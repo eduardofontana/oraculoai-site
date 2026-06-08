@@ -20,14 +20,15 @@ export function PlansSection() {
       </Reveal>
 
       <Reveal delay={80}>
-        <div className="mb-10 flex flex-wrap items-center justify-center gap-2 rounded-xl border border-border bg-card p-4 text-center text-sm">
-          <span className="text-green-500">✅ Sem fidelidade</span>
-          <span className="hidden text-muted md:inline">•</span>
-          <span className="text-green-500">✅ Cancelamento simples</span>
-          <span className="hidden text-muted md:inline">•</span>
-          <span className="text-green-500">✅ Suporte humano via WhatsApp</span>
-          <span className="hidden text-muted md:inline">•</span>
-          <span className="text-green-500">✅ Ganhe 2 meses grátis no plano anual</span>
+        <div className="mb-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 rounded-xl border border-border bg-card px-6 py-3.5 text-center text-sm">
+          {["Sem fidelidade", "Cancelamento simples", "Suporte humano via WhatsApp", "Ganhe 2 meses grátis no plano anual"].map((item) => (
+            <span key={item} className="inline-flex items-center gap-1.5 text-secondary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              {item}
+            </span>
+          ))}
         </div>
       </Reveal>
 
