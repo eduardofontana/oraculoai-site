@@ -9,10 +9,10 @@ type ThemeContext = {
   toggle: () => void;
 };
 
-const ThemeCtx = createContext<ThemeContext>({ theme: "light", toggle: () => {} });
+const ThemeCtx = createContext<ThemeContext>({ theme: "dark", toggle: () => {} });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
     const stored = localStorage.getItem("theme") as Theme | null;
