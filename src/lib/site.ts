@@ -43,6 +43,9 @@ export const site = {
       name: "Profissional",
       price: "R$ 149,90",
       period: "/mês",
+      annualPrice: "R$ 1.499",
+      annualPeriod: "/ano",
+      annualSavings: "Ganhe 2 meses grátis",
       description: "Ideal para profissionais liberais, pequenos negócios e sites institucionais que precisam de estabilidade, suporte humano e gerenciamento simplificado.",
       popular: false,
       features: [
@@ -61,8 +64,11 @@ export const site = {
     },
     {
       name: "Business",
-      price: "R$ 349,90",
+      price: "R$ 299,90",
       period: "/mês",
+      annualPrice: "R$ 2.999",
+      annualPeriod: "/ano",
+      annualSavings: "Ganhe 2 meses grátis",
       description: "Para empresas que dependem do ambiente online e precisam de performance, suporte prioritário e acompanhamento técnico.",
       popular: true,
       features: [
@@ -81,8 +87,11 @@ export const site = {
     },
     {
       name: "Enterprise",
-      price: "R$ 699,90",
+      price: "R$ 599,90",
       period: "/mês",
+      annualPrice: "R$ 5.999",
+      annualPeriod: "/ano",
+      annualSavings: "Ganhe 2 meses grátis",
       description: "Solução completa para empresas que exigem alta disponibilidade, suporte avançado e acompanhamento estratégico.",
       popular: false,
       features: [

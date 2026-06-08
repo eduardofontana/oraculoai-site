@@ -19,6 +19,18 @@ export function PlansSection() {
         </div>
       </Reveal>
 
+      <Reveal delay={80}>
+        <div className="mb-10 flex flex-wrap items-center justify-center gap-2 rounded-xl border border-border bg-card p-4 text-center text-sm">
+          <span className="text-green-500">✅ Sem fidelidade</span>
+          <span className="hidden text-muted md:inline">•</span>
+          <span className="text-green-500">✅ Cancelamento simples</span>
+          <span className="hidden text-muted md:inline">•</span>
+          <span className="text-green-500">✅ Suporte humano via WhatsApp</span>
+          <span className="hidden text-muted md:inline">•</span>
+          <span className="text-green-500">✅ Ganhe 2 meses grátis no plano anual</span>
+        </div>
+      </Reveal>
+
       <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
         {site.hostingPlans.map((plan, i) => (
           <Reveal key={plan.name} delay={i * 120}>
@@ -51,7 +63,17 @@ export function PlansSection() {
                 <span className="text-sm text-muted">{plan.period}</span>
               </div>
 
-              <p className="mt-3 text-sm leading-6 text-secondary">{plan.description}</p>
+              <div className="mt-2 flex items-baseline gap-1.5">
+                <span className="font-display text-lg font-bold text-accent">
+                  {plan.annualPrice}
+                </span>
+                <span className="text-xs text-muted">{plan.annualPeriod}</span>
+                <span className="ml-1 rounded-full bg-accent-soft px-2.5 py-0.5 text-[10px] font-bold text-accent-text">
+                  {plan.annualSavings}
+                </span>
+              </div>
+
+              <p className="mt-4 text-sm leading-6 text-secondary">{plan.description}</p>
 
               <div className="mt-6 flex-1">
                 <ul className="space-y-3 border-t border-border pt-6 text-sm">
@@ -67,7 +89,7 @@ export function PlansSection() {
               </div>
 
               <Link
-                href={plan.popular ? primaryCta : primaryCta}
+                href={primaryCta}
                 target="_blank"
                 rel="noreferrer"
                 className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-all ${
