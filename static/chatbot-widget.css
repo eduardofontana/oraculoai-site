@@ -1,0 +1,4 @@
+/* Chatbot Widget CSS - can be overridden by inline styles */
+#oraculo-chatbot-widget {
+    font-family: system-ui, sans-serif;
+}
