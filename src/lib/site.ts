@@ -4,7 +4,6 @@ export const site = {
   slogan: "Tecnologia, Hospedagem e Segurança Digital",
   heroSubtitle:
     "Hospedagem gerenciada, criação de sites, infraestrutura em nuvem, inteligência artificial e consultoria em cibersegurança com atendimento humano.",
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
   whatsappMessage:
     "Olá! Quero saber mais sobre os planos e serviços da Oráculo AI.",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
@@ -215,5 +214,5 @@ export const site = {
 } as const;
 
 export function buildWhatsAppUrl(message: string) {
-  return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  return `/whatsapp?text=${encodeURIComponent(message)}`;
 }
