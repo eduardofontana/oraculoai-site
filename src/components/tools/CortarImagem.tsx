@@ -151,8 +151,7 @@ export function CortarImagem() {
           >
             <canvas
               ref={canvasRef}
-              className="max-w-full cursor-crosshair"
-              style={{ maxHeight: "400px" }}
+              className="max-h-[400px] max-w-full cursor-crosshair"
             />
             {image && crop && crop.w > 0 && crop.h > 0 && (
               <div className="absolute top-2 right-2 flex gap-2">

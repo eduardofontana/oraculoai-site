@@ -17,34 +17,10 @@ export default function Home() {
       <section className="relative flex min-h-[88vh] w-full items-center overflow-hidden px-6 pt-24 pb-20 md:px-8">
         {/* ── Floating orbs ── */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div
-            className="absolute -top-20 -right-20 h-96 w-96 rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(225,25,55,0.18), transparent 70%)",
-              animation: "orb-drift 18s ease-in-out infinite",
-            }}
-          />
-          <div
-            className="absolute -bottom-32 -left-20 h-[30rem] w-[30rem] rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(31,95,255,0.14), transparent 70%)",
-              animation: "orb-drift-slow 22s ease-in-out infinite",
-            }}
-          />
-          <div
-            className="absolute top-1/3 left-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(225,25,55,0.10), transparent 70%)",
-              animation: "orb-drift 14s ease-in-out infinite reverse",
-            }}
-          />
-          <div
-            className="absolute top-1/4 right-1/4 h-48 w-48 rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(31,95,255,0.08), transparent 70%)",
-              animation: "orb-drift 12s ease-in-out infinite",
-            }}
-          />
+          <div className="hero-orb hero-orb-red hero-orb-red-1 absolute -top-20 -right-20 h-96 w-96 rounded-full" />
+          <div className="hero-orb hero-orb-blue hero-orb-blue-1 absolute -bottom-32 -left-20 h-[30rem] w-[30rem] rounded-full" />
+          <div className="hero-orb hero-orb-red hero-orb-red-2 absolute top-1/3 left-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full" />
+          <div className="hero-orb hero-orb-blue hero-orb-blue-2 absolute top-1/4 right-1/4 h-48 w-48 rounded-full" />
         </div>
 
         {/* ── Dots de conexão (neural nodes) ── */}

@@ -11,6 +11,9 @@ type Props = {
 export function Reveal({ children, className = "", delay = 0 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const revealClass = `reveal ${visible ? "reveal--visible" : ""} ${
+    delay ? `reveal-delay-${delay}` : ""
+  }`;
 
   useEffect(() => {
     const el = ref.current;
@@ -31,12 +34,7 @@ export function Reveal({ children, className = "", delay = 0 }: Props) {
   return (
     <div
       ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-      }}
+      className={`${revealClass} ${className}`.trim()}
     >
       {children}
     </div>

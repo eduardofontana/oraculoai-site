@@ -78,10 +78,15 @@ export function ColorConverter() {
 
   return (
     <div className="space-y-6">
-      <div
-        className="h-24 rounded-xl border border-border transition-all"
-        style={{ backgroundColor: hex }}
-      />
+      <svg
+        viewBox="0 0 100 24"
+        preserveAspectRatio="none"
+        className="h-24 w-full overflow-hidden rounded-xl border border-border transition-all"
+        aria-label={`Cor selecionada ${hex}`}
+        role="img"
+      >
+        <rect width="100" height="24" fill={hex} />
+      </svg>
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
