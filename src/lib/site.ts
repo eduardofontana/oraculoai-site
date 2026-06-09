@@ -4,10 +4,10 @@ export const site = {
   slogan: "Tecnologia, Hospedagem e Segurança",
   heroSubtitle:
     "Hospedagem gerenciada, criação de sites, infraestrutura cloud, inteligência artificial e consultoria em cibersegurança com suporte humano especializado.",
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5500000000000",
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
   whatsappMessage:
     "Olá! Quero saber mais sobre os planos e serviços da Oráculo AI.",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "placeholder@example.com",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
   location: "Atendimento remoto para Brasil e exterior",
   services: [
     {

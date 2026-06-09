@@ -4,7 +4,7 @@ import { useState } from "react"
 import { generateHash } from "@/lib/hash"
 import { CopyButton } from "./CopyButton"
 
-type Algorithm = "MD5" | "SHA-1" | "SHA-256"
+type Algorithm = "SHA-1" | "SHA-256"
 
 export function HashGenerator() {
   const [text, setText] = useState("")
@@ -28,7 +28,7 @@ export function HashGenerator() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap gap-3">
-        {(["MD5", "SHA-1", "SHA-256"] as Algorithm[]).map((algo) => (
+          {(["SHA-1", "SHA-256"] as Algorithm[]).map((algo) => (
           <button
             key={algo}
             onClick={() => {
