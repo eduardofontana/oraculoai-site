@@ -12,11 +12,7 @@ export default function Home() {
   const primaryCta = buildWhatsAppUrl("Olá! Quero saber mais sobre os planos e serviços da Oráculo AI.");
 
   return (
-    <main className="relative min-h-screen text-primary">
-      {/* ── Background layers (página toda) ── */}
-      <div className="pointer-events-none fixed inset-0 page-glow" />
-      <div className="pointer-events-none fixed inset-0 page-grid" />
-
+    <main className="min-h-screen text-primary">
       {/* Hero */}
       <section className="relative flex min-h-[88vh] w-full items-center overflow-hidden px-6 pt-24 pb-20 md:px-8">
         {/* ── Floating orbs ── */}

@@ -32,6 +32,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col">
+        {/* ── Background layers (todas as páginas) ── */}
+        <div className="pointer-events-none fixed inset-0 page-glow" />
+        <div className="pointer-events-none fixed inset-0 page-grid" />
         <ThemeProvider>
           <Header />
           <WhatsAppButton />
