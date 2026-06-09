@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import type { ReactNode } from "react";
+import Script from "next/script";
 import { ThemeProvider } from "@/lib/theme";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { site } from "@/lib/site";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -42,6 +44,13 @@ export default function RootLayout({
           <div className="flex-1 pt-16">{children}</div>
           <Footer />
         </ThemeProvider>
+        <Script id="chatbot-config" strategy="beforeInteractive">
+          {`window.ChatbotConfig=${JSON.stringify({
+            triggerSelector: 'a[aria-label="Falar no WhatsApp"]',
+            whatsappNumber: site.whatsappNumber,
+          })}`}
+        </Script>
+        <Script src="/chatbot-widget.js" strategy="afterInteractive" />
       </body>
     </html>
   );

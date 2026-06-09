@@ -27,26 +27,27 @@ npm run lint    # verificação de código
 
 ## Chatbot Widget
 
-Este projeto inclui um widget de chatbot simples (respostas pré-definidas) que pode ser integrado ao site.
+Widget de chatbot integrado ao botão flutuante do WhatsApp. As respostas são pré-definidas (state machine) e os dados de lead são enviados para o backend na VPS via API routes do Next.js (proxy), eliminando problemas de CORS.
 
 ### Arquivos
-- `static/chatbot-widget.js` – lógica do widget
-- `static/chatbot-widget.css` – estilos do widget
+- `public/chatbot-widget.js` – lógica do widget (servido estaticamente pelo Next.js)
+- `src/app/api/chatbot/[...path]/route.ts` – proxy API route para o backend na VPS
 
-### Integração
-Antes do fechamento da tag `</body>` nas páginas onde deseja o chatbot, adicione:
+### Fluxo
+1. Usuário clica no botão flutuante → abre o chat
+2. Escolhe opção → preenche nome/telefone/email/mensagem
+3. Widget envia POST `/api/chatbot/leads` → API route do Next.js proxy para `CHATBOT_API_URL`
+4. Widget também envia POST `/api/chatbot/message` para logging (mesmo proxy)
 
-```html
-<script>
-  window.ChatbotConfig = {
-    triggerSelector: 'a[aria-label="Falar no WhatsApp"]', // ajuste se necessário
-    apiBase: '' // mesma origem se o widget e API estiverem no mesmo domínio; caso contrário, informe a URL base da API
-  };
-</script>
-<script src="/static/chatbot-widget.js"></script>
-```
+### Variáveis de Ambiente
 
-O widget detecta automaticamente o botão flutuante existente (por padrão, o link com `aria-label="Falar no WhatsApp"`) e anexa um evento de clique para abrir a janela de chat.
+| Variável | Obrigatória | Descrição |
+|----------|-------------|-----------|
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Sim | Número do WhatsApp (5500000000000) |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Não | Email de contato |
+| `CHATBOT_API_URL` | Sim | URL do backend na VPS (ex: http://0.0.0.0) |
 
-### Configuração da API (backend)
-O backend do chatbot está hospedado separadamente (por exemplo, em uma VPS). Certifique‑se de que o CORS esteja configurado para permitir a origem do seu site Vercel.
+> `NEXT_PUBLIC_*` são expostas ao cliente. `CHATBOT_API_URL` é apenas server-side (usada pelas API routes).
+
+### Widget incluso no `layout.tsx`
+O widget já está embutido no root layout via `next/script`. Não é necessário adicionar tags manuais.
