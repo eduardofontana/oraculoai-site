@@ -3,7 +3,7 @@ import { buildWhatsAppUrl, site } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 
 export function PlansSection() {
-  const primaryCta = buildWhatsAppUrl("Olá! Quero saber mais sobre os planos da Oráculo AI.");
+  const primaryCta = buildWhatsAppUrl();
 
   return (
     <section id="planos" className="mx-auto w-full max-w-7xl scroll-mt-20 px-6 py-20 md:px-8 md:py-28">

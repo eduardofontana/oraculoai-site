@@ -3,7 +3,7 @@ import { buildWhatsAppUrl, site } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 
 export default function ContatoPage() {
-  const message = buildWhatsAppUrl("Olá! Quero conversar sobre um projeto.");
+  const message = buildWhatsAppUrl();
 
   return (
     <main className="min-h-[80vh] text-primary">

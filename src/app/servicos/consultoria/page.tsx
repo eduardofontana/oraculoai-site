@@ -3,7 +3,7 @@ import { buildWhatsAppUrl } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 
 export default function ConsultoriaPage() {
-  const message = buildWhatsAppUrl("Olá! Quero saber mais sobre consultoria em IA e segurança.");
+  const message = buildWhatsAppUrl();
 
   return (
     <main className="min-h-[80vh] text-primary">

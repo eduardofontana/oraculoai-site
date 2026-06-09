@@ -9,7 +9,7 @@ import { PlansSection } from "@/components/PlansSection";
 import { DifferentialsSection } from "@/components/DifferentialsSection";
 
 export default function Home() {
-  const primaryCta = buildWhatsAppUrl("Olá! Quero saber mais sobre os planos e serviços da Oráculo AI.");
+  const primaryCta = buildWhatsAppUrl();
 
   return (
     <main className="min-h-screen text-primary">

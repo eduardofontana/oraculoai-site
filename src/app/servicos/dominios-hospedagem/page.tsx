@@ -3,7 +3,7 @@ import { buildWhatsAppUrl } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 
 export default function DominiosHospedagemPage() {
-  const message = buildWhatsAppUrl("Olá! Quero domínio, hospedagem ou migração assistida.");
+  const message = buildWhatsAppUrl();
 
   return (
     <main className="min-h-[80vh] text-primary">

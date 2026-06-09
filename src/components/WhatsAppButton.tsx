@@ -1,7 +1,7 @@
-import { buildWhatsAppUrl, site } from "@/lib/site";
+import { buildWhatsAppUrl } from "@/lib/site";
 
 export function WhatsAppButton() {
-  const url = buildWhatsAppUrl(site.whatsappMessage);
+  const url = buildWhatsAppUrl();
 
   return (
     <a

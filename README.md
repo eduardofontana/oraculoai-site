@@ -29,7 +29,6 @@ npm run lint    # verificação de código
 
 | Variável | Obrigatória | Descrição |
 |----------|-------------|-----------|
-| `WHATSAPP_PHONE_NUMBER` | Sim | Número do WhatsApp (apenas no servidor, com DDD e país) |
 | `NEXT_PUBLIC_CONTACT_EMAIL` | Não | Email de contato |
 
-> Variáveis `NEXT_PUBLIC_*` ficam expostas ao cliente. O número de WhatsApp agora é usado apenas no servidor.
+> Variáveis `NEXT_PUBLIC_*` ficam expostas ao cliente.

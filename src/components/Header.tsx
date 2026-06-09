@@ -3,7 +3,7 @@ import { buildWhatsAppUrl, site } from "@/lib/site";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Header() {
-  const whatsappUrl = buildWhatsAppUrl(site.whatsappMessage);
+  const whatsappUrl = buildWhatsAppUrl();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/90 backdrop-blur-2xl">
