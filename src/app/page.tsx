@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <main className="min-h-screen text-primary">
       {/* Hero */}
-      <section className="relative flex min-h-[88vh] w-full items-center overflow-hidden px-6 pt-24 pb-20 md:px-8">
+      <section id="hero" className="relative flex min-h-[88vh] w-full items-center overflow-hidden px-6 pt-24 pb-20 md:px-8">
         {/* ── Floating orbs ── */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="hero-orb hero-orb-red hero-orb-red-1 absolute -top-20 -right-20 h-96 w-96 rounded-full" />

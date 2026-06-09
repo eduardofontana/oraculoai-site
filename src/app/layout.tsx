@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/lib/theme";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { NeuralNetwork } from "@/components/NeuralNetwork";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -33,8 +34,8 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col">
         {/* ── Background layers (todas as páginas) ── */}
-        <div className="pointer-events-none fixed inset-0 page-glow" />
-        <div className="pointer-events-none fixed inset-0 page-grid" />
+        <div className="pointer-events-none fixed inset-0 z-[-3] page-glow" />
+        <NeuralNetwork />
         <ThemeProvider>
           <Header />
           <WhatsAppButton />
