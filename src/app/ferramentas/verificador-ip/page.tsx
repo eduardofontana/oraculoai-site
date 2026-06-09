@@ -9,7 +9,7 @@ export default function Page() {
     <ToolLayout
       slug="verificador-ip"
       title="Verificador de IP"
-      description="Veja seu IP público e informações da sua conexão. Esta ferramenta consulta serviços externos para identificar o IP público."
+      description="Veja seu IP público. Esta ferramenta consulta um serviço externo apenas para identificar o IP público."
     >
       <IpChecker />
     </ToolLayout>
