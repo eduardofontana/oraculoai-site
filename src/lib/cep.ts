@@ -24,6 +24,8 @@ const bairros = [
   "Barra da Tarioba", "Bela Vista",
 ]
 
+import { randInt } from "./rand"
+
 export interface Endereco {
   cep: string
   logradouro: string
@@ -32,9 +34,7 @@ export interface Endereco {
   uf: string
 }
 
-function rand(n: number) {
-  return Math.floor(Math.random() * n)
-}
+const rand = randInt
 
 function pad(n: number, len: number) {
   return String(n).padStart(len, "0")

@@ -9,10 +9,19 @@ export function IpChecker() {
 
   useEffect(() => {
     const fetchIp = async () => {
-      try {
-        const res = await fetch("https://api.ipify.org?format=json")
+      const fetchFrom = async (url: string) => {
+        const res = await fetch(url)
         const data = await res.json()
-        setIp(data.ip)
+        return data.ip
+      }
+
+      try {
+        const ip = await fetchFrom("https://api.ipify.org?format=json").catch(
+          () => fetchFrom("https://api.my-ip.io/ip.json").catch(
+            () => fetchFrom("https://ipapi.co/json/")
+          )
+        )
+        setIp(ip)
       } catch {
         setError("Não foi possível obter o IP. Verifique sua conexão.")
       } finally {

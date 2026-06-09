@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { CopyButton } from "./CopyButton"
+import { randInt } from "@/lib/rand"
 
 const LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
 const UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -26,7 +27,7 @@ export function PasswordGenerator() {
 
     let result = ""
     for (let i = 0; i < length; i++) {
-      result += chars[Math.floor(Math.random() * chars.length)]
+      result += chars[randInt(chars.length)]
     }
     setPassword(result)
   }

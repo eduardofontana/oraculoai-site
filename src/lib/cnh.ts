@@ -1,5 +1,7 @@
+import { randInt } from "./rand"
+
 export function generateCNH(): string {
-  const rand = (n: number) => Math.floor(Math.random() * n)
+  const rand = randInt
   const n = Array.from({ length: 9 }, () => rand(9))
 
   let d1 = 0

@@ -58,7 +58,7 @@ function diff(objA: unknown, objB: unknown): DiffEntry[] {
 
 export function DiffJson() {
   const [inputA, setInputA] = useState('{\n  "nome": "João",\n  "idade": 30,\n  "cidade": "São Paulo"\n}')
-  const [inputB, setInputB] = useState('{\n  "nome": "João",\n  "idade": 31,\n  "email": "joao@email.com"\n}')
+  const [inputB, setInputB] = useState('{\n  "nome": "João",\n  "idade": 31,\n  "email": "joao@exemplo.com"\n}')
 
   const parsedA = useMemo(() => {
     try { return { value: JSON.parse(inputA), error: null } }

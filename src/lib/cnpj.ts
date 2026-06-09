@@ -1,5 +1,7 @@
+import { randInt } from "./rand"
+
 export function generateCNPJ(pontuacao = true): string {
-  const rand = (n: number) => Math.floor(Math.random() * n)
+  const rand = randInt
 
   const n = [
     1 + rand(9),
