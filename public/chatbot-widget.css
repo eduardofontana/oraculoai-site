@@ -236,6 +236,36 @@
   }
 }
 
+/* ── Option buttons ── */
+.chatbot-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 4px 0 8px;
+}
+
+.chatbot-option-btn {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.chatbot-option-btn:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+}
+
+.chatbot-option-btn:active {
+  filter: brightness(0.95);
+}
+
 /* ── Accessibility / reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   #oraculo-chatbot-widget,

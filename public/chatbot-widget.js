@@ -47,6 +47,19 @@
   var chatState = getState();
   var widgetContainer, messagesArea, userInput;
 
+  /* ── Greeting detection ── */
+  var greetings = [
+    "ol\u00E1", "ola", "oi", "hey", "bom dia", "boa tarde",
+    "boa noite", "tudo bem", "tudo bom", "e a\u00ED", "e ai", "opa",
+  ];
+
+  function isGreeting(text) {
+    var lower = text.toLowerCase().trim();
+    return greetings.some(function (g) {
+      return lower === g || lower.startsWith(g + " ");
+    });
+  }
+
   /* ── Inject CSS (cached by browser after first load) ── */
   function injectCSS() {
     var link = document.createElement("link");
@@ -161,17 +174,31 @@
     messagesArea.scrollTop = messagesArea.scrollHeight;
   }
 
-  /* ── Show numbered options ── */
+  /* ── Show options as clickable buttons ── */
   function showOptions() {
     var options = [
-      "1. Solicitar or\u00E7amento",
-      "2. Conhecer nossos servi\u00E7os",
-      "3. Falar no WhatsApp",
-      "4. Deixar meus dados para contato",
+      { value: "1", label: "Solicitar or\u00E7amento" },
+      { value: "2", label: "Conhecer nossos servi\u00E7os" },
+      { value: "3", label: "Falar no WhatsApp" },
+      { value: "4", label: "Deixar meus dados para contato" },
     ];
+
+    var container = document.createElement("div");
+    container.className = "chatbot-options";
+
     options.forEach(function (opt) {
-      addMessage("bot", opt);
+      var btn = document.createElement("button");
+      btn.className = "chatbot-option-btn";
+      btn.textContent = opt.label;
+      btn.addEventListener("click", function () {
+        userInput.value = opt.value;
+        sendMessage();
+      });
+      container.appendChild(btn);
     });
+
+    messagesArea.appendChild(container);
+    messagesArea.scrollTop = messagesArea.scrollHeight;
     setState({ step: "option_selected" });
   }
 
@@ -209,6 +236,10 @@
       } else if (opt === "4") {
         botResponse = "Qual \u00E9 o seu nome?";
         setState({ step: "ask_name", option: "contato" });
+      } else if (isGreeting(text)) {
+        botResponse = "Ol\u00E1! Como posso ajudar?";
+        setTimeout(showOptions, 300);
+        setState({ step: "option_selected" });
       } else {
         botResponse =
           "Op\u00E7\u00E3o inv\u00E1lida. Por favor, escolha 1, 2, 3 ou 4.";
