@@ -248,7 +248,9 @@
         ask_name: "Qual \u00E9 o seu nome?",
         ask_phone: "Qual \u00E9 o seu telefone ou WhatsApp?\n\nExemplo: (11) 99999-0000",
         ask_email:
-          "Qual \u00E9 o seu e-mail?\n\nSe preferir n\u00E3o informar, digite \"pular\".",
+          "Qual \u00E9 o seu e-mail?\n\nSe preferir n\u00E3o informar, clique em \"Pular\".",
+        ask_origin:
+          "Como conheceu nossa empresa?",
         ask_service:
           "Qual servi\u00E7o voc\u00EA deseja?",
         ask_site_type:
@@ -262,7 +264,11 @@
       };
       if (prompts[state.step]) {
         addMessage("bot", prompts[state.step]);
-        if (state.step === "ask_service") {
+        if (state.step === "ask_email") {
+          showSubOptions([PULAR_BTN]);
+        } else if (state.step === "ask_origin") {
+          showSubOptions(ORIGIN_OPTIONS);
+        } else if (state.step === "ask_service") {
           showSubOptions(SERVICE_OPTIONS);
         } else if (state.step === "ask_site_type") {
           showSubOptions(SITE_TYPE_OPTIONS);
@@ -318,6 +324,16 @@
       { value: "nao-sei", label: "N\u00E3o sei" },
     ];
 
+    var ORIGIN_OPTIONS = [
+      { value: "google", label: "Google" },
+      { value: "instagram", label: "Instagram" },
+      { value: "facebook", label: "Facebook" },
+      { value: "indicacao", label: "Indica\u00E7\u00E3o" },
+      { value: "outro", label: "Outro" },
+    ];
+
+    var PULAR_BTN = { value: "pular", label: "\u23ED Pular" };
+
     /* ── State machine ── */
     if (state.step === "option_selected") {
       var opt = normalizeOpt(text);
@@ -353,7 +369,8 @@
 
     } else if (state.step === "ask_phone") {
       if (state.option === "orcamento") {
-        botResponse = "Perfeito.\n\nQual \u00E9 o seu e-mail?\n\nSe preferir n\u00E3o informar, digite \"pular\".";
+        botResponse = "Perfeito.\n\nQual \u00E9 o seu e-mail?\n\nSe preferir n\u00E3o informar, clique em \"Pular\".";
+        subOpts = [PULAR_BTN];
       } else {
         botResponse = "Qual \u00E9 o seu e-mail? Se n\u00E3o quiser informar, digite pular.";
       }
@@ -370,11 +387,11 @@
 
       if (state.option === "orcamento") {
         botResponse = pulou
-          ? "Sem problemas \uD83D\uDC4D\n\nQual servi\u00E7o voc\u00EA deseja?"
-          : "Qual servi\u00E7o voc\u00EA deseja?";
-        subOpts = SERVICE_OPTIONS;
+          ? "Sem problemas \uD83D\uDC4D\n\nComo conheceu nossa empresa?"
+          : "Como conheceu nossa empresa?";
+        subOpts = ORIGIN_OPTIONS;
         setState({
-          step: "ask_service",
+          step: "ask_origin",
           nome: state.nome,
           telefone: state.telefone,
           email: email,
@@ -391,6 +408,25 @@
           email: email,
           option: state.option,
         });
+      }
+
+    } else if (state.step === "ask_origin") {
+      var originMap = { google: "Google", instagram: "Instagram", facebook: "Facebook", indicacao: "Indica\u00E7\u00E3o", outro: "Outro" };
+      var labelOrigem = originMap[text];
+      if (labelOrigem) {
+        botResponse = "Obrigado! \uD83D\uDE42\n\nQual servi\u00E7o voc\u00EA deseja?";
+        subOpts = SERVICE_OPTIONS;
+        setState({
+          step: "ask_service",
+          nome: state.nome,
+          telefone: state.telefone,
+          email: state.email,
+          origem_lead: labelOrigem,
+          option: "orcamento",
+        });
+      } else {
+        botResponse = "Por favor, escolha uma das op\u00E7\u00F5es.";
+        subOpts = ORIGIN_OPTIONS;
       }
 
     } else if (state.step === "ask_service") {
@@ -475,6 +511,7 @@
       var s = state;
       var emailDisplay = s.email || "N\u00E3o informado";
       var tipoDisplay = s.tipo_site ? "\n\U0001F310 Tipo: " + s.tipo_site : "";
+      var origemDisplay = s.origem_lead ? "\n\uD83D\uDCCD Origem: " + s.origem_lead : "";
       botResponse =
         "Perfeito! \u2705\n\n" +
         "Resumo da solicita\u00E7\u00E3o:\n\n" +
@@ -482,7 +519,8 @@
         "\uD83D\uDCDE Telefone: " + s.telefone + "\n" +
         "\uD83D\uDCE7 E-mail: " + emailDisplay + "\n" +
         "\uD83D\uDCBC Servi\u00E7o: " + s.servico +
-        tipoDisplay + "\n" +
+        tipoDisplay +
+        origemDisplay + "\n" +
         "\uD83D\uDCDD Descri\u00E7\u00E3o: " + text + "\n\n" +
         "Sua solicita\u00E7\u00E3o foi enviada com sucesso.\n\n" +
         "Nossa equipe analisar\u00E1 as informa\u00E7\u00F5es e entrar\u00E1 em contato o mais breve poss\u00EDvel.\n\n" +
@@ -496,8 +534,9 @@
         servico: s.servico,
         tipo_site: s.tipo_site || "",
         dominio: s.dominio || "",
+        origem_lead: s.origem_lead || "",
         mensagem: text,
-        origem: window.location.href,
+        origem_pagina: window.location.href,
       };
       try {
         await fetch("/api/chatbot/leads", {
