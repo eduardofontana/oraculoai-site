@@ -12,40 +12,47 @@ export default function Home() {
   const primaryCta = buildWhatsAppUrl("Olá! Quero saber mais sobre os planos e serviços da Oráculo AI.");
 
   return (
-    <main className="min-h-screen text-primary">
+    <main className="relative min-h-screen text-primary">
+      {/* ── Background layers (página toda) ── */}
+      <div className="pointer-events-none fixed inset-0 page-glow" />
+      <div className="pointer-events-none fixed inset-0 page-grid" />
+
       {/* Hero */}
       <section className="relative flex min-h-[88vh] w-full items-center overflow-hidden px-6 pt-24 pb-20 md:px-8">
-        {/* ── Background layer ── */}
-        <div className="pointer-events-none absolute inset-0 hero-glow" />
-        <div className="pointer-events-none absolute inset-0 hero-grid" />
-
         {/* ── Floating orbs ── */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div
-            className="absolute -top-20 -right-20 h-96 w-96 rounded-full opacity-70"
+            className="absolute -top-20 -right-20 h-96 w-96 rounded-full"
             style={{
-              background: "radial-gradient(circle, rgba(225,25,55,0.12), transparent 70%)",
+              background: "radial-gradient(circle, rgba(225,25,55,0.18), transparent 70%)",
               animation: "orb-drift 18s ease-in-out infinite",
             }}
           />
           <div
-            className="absolute -bottom-32 -left-20 h-[30rem] w-[30rem] rounded-full opacity-60"
+            className="absolute -bottom-32 -left-20 h-[30rem] w-[30rem] rounded-full"
             style={{
-              background: "radial-gradient(circle, rgba(31,95,255,0.10), transparent 70%)",
+              background: "radial-gradient(circle, rgba(31,95,255,0.14), transparent 70%)",
               animation: "orb-drift-slow 22s ease-in-out infinite",
             }}
           />
           <div
-            className="absolute top-1/3 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40"
+            className="absolute top-1/3 left-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full"
             style={{
-              background: "radial-gradient(circle, rgba(225,25,55,0.06), transparent 70%)",
+              background: "radial-gradient(circle, rgba(225,25,55,0.10), transparent 70%)",
               animation: "orb-drift 14s ease-in-out infinite reverse",
+            }}
+          />
+          <div
+            className="absolute top-1/4 right-1/4 h-48 w-48 rounded-full"
+            style={{
+              background: "radial-gradient(circle, rgba(31,95,255,0.08), transparent 70%)",
+              animation: "orb-drift 12s ease-in-out infinite",
             }}
           />
         </div>
 
         {/* ── Dots de conexão (neural nodes) ── */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-30">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-40">
           <svg className="h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="none">
             <circle cx="200" cy="150" r="2" fill="var(--accent)" opacity="0.6" />
             <circle cx="1200" cy="200" r="1.5" fill="var(--accent-blue)" opacity="0.5" />

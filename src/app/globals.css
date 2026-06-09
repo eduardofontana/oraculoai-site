@@ -64,29 +64,29 @@
   100% { transform: translate(40px, 40px); }
 }
 
-/* ── Hero tech grid ── */
-.hero-grid {
+/* ── Page tech grid ── */
+.page-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
 }
-.light .hero-grid {
+.light .page-grid {
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
 }
 
-/* ── Hero gradient base ── */
-.hero-glow {
+/* ── Page gradient base ── */
+.page-glow {
   background:
-    radial-gradient(ellipse 90% 50% at 30% 30%, rgba(225, 25, 55, 0.08), transparent 60%),
-    radial-gradient(ellipse 70% 50% at 70% 70%, rgba(31, 95, 255, 0.06), transparent 60%);
+    radial-gradient(ellipse 90% 40% at 25% 20%, rgba(225, 25, 55, 0.10), transparent 55%),
+    radial-gradient(ellipse 70% 40% at 75% 80%, rgba(31, 95, 255, 0.08), transparent 55%);
 }
-.light .hero-glow {
+.light .page-glow {
   background:
-    radial-gradient(ellipse 90% 50% at 30% 30%, rgba(212, 21, 44, 0.05), transparent 60%),
-    radial-gradient(ellipse 70% 50% at 70% 70%, rgba(26, 94, 255, 0.04), transparent 60%);
+    radial-gradient(ellipse 90% 40% at 25% 20%, rgba(212, 21, 44, 0.06), transparent 55%),
+    radial-gradient(ellipse 70% 40% at 75% 80%, rgba(26, 94, 255, 0.05), transparent 55%);
 }
 
 /* ── DARK (NordVPN-inspired) ── */
