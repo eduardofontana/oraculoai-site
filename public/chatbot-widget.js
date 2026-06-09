@@ -55,6 +55,8 @@
 
   function isGreeting(text) {
     var lower = text.toLowerCase().trim();
+    /* strip common punctuation so "boa noite." matches "boa noite" */
+    lower = lower.replace(/[!?,.;:]+/g, "");
     return greetings.some(function (g) {
       return lower === g || lower.startsWith(g + " ");
     });
@@ -218,6 +220,38 @@
     var state = getState();
     var botResponse = "";
 
+    /* ── Global greeting detection (any state) ── */
+    if (state.step !== "initial" && isGreeting(text)) {
+      botResponse = "Ol\u00E1! Tudo bem? :)";
+      addMessage("bot", botResponse);
+      botResponse = "";
+      /* repeat the current question without advancing state */
+      var prompts = {
+        ask_name: "Qual \u00E9 o seu nome?",
+        ask_phone: "Qual \u00E9 o seu telefone?",
+        ask_email:
+          "Qual \u00E9 o seu e-mail? Se n\u00E3o quiser informar, digite pular.",
+        ask_message:
+          "Escreva uma breve mensagem sobre o que voc\u00EA precisa.",
+      };
+      if (prompts[state.step]) {
+        addMessage("bot", prompts[state.step]);
+      }
+      /* log greeting */
+      try {
+        await fetch("/api/chatbot/message", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: text,
+            session_id: sessionId,
+            origem: window.location.href,
+          }),
+        });
+      } catch (_) {}
+      return;
+    }
+
     if (state.step === "option_selected") {
       var opt = text;
       if (opt === "1") {
@@ -257,9 +291,11 @@
         option: state.option,
       });
     } else if (state.step === "ask_email") {
-      var email = text.toLowerCase() === "pular" ? "" : text;
-      botResponse =
-        "Escreva uma breve mensagem sobre o que voc\u00EA precisa.";
+      var pulou = text.toLowerCase() === "pular";
+      var email = pulou ? "" : text;
+      botResponse = pulou
+        ? "Ok, sem problemas. Escreva uma breve mensagem sobre o que voc\u00EA precisa."
+        : "Escreva uma breve mensagem sobre o que voc\u00EA precisa.";
       setState({
         step: "ask_message",
         nome: state.nome,
