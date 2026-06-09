@@ -1,14 +1,21 @@
 (function () {
+  "use strict";
+
   var config = window.ChatbotConfig || {};
-  var triggerSelector = config.triggerSelector || 'a[aria-label="Falar no WhatsApp"]';
+  var triggerSelector =
+    config.triggerSelector || 'a[aria-label="Falar no WhatsApp"]';
   var widgetId = "oraculo-chatbot-widget";
   var sessionIdKey = "oraculo-chatbot-session-id";
 
+  /* ── Session ID ── */
   function generateSessionId() {
     try {
       return crypto.randomUUID();
     } catch (_) {
-      return Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
+      return (
+        Math.random().toString(36).substring(2, 11) +
+        Date.now().toString(36)
+      );
     }
   }
 
@@ -18,6 +25,7 @@
     localStorage.setItem(sessionIdKey, sessionId);
   }
 
+  /* ── Chat state (sessionStorage) ── */
   function getState() {
     try {
       var s = sessionStorage.getItem("oraculo-chatbot-state-" + sessionId);
@@ -29,50 +37,94 @@
 
   function setState(state) {
     try {
-      sessionStorage.setItem("oraculo-chatbot-state-" + sessionId, JSON.stringify(state));
+      sessionStorage.setItem(
+        "oraculo-chatbot-state-" + sessionId,
+        JSON.stringify(state)
+      );
     } catch (_) {}
   }
 
   var chatState = getState();
   var widgetContainer, messagesArea, userInput;
 
+  /* ── Inject CSS (cached by browser after first load) ── */
+  function injectCSS() {
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "/chatbot-widget.css";
+    document.head.appendChild(link);
+  }
+
+  /* ── Bootstrap ── */
   function init() {
+    injectCSS();
     createWidget();
     bindEvents();
   }
 
+  /* ── Build DOM (no innerHTML, all createElement + className) ── */
   function createWidget() {
     var existing = document.getElementById(widgetId);
     if (existing) existing.remove();
 
     widgetContainer = document.createElement("div");
     widgetContainer.id = widgetId;
-    widgetContainer.style.cssText = "position:fixed;bottom:20px;right:20px;width:360px;max-width:90%;height:500px;max-height:80vh;background:white;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.15);display:none;z-index:10000;font-family:system-ui,sans-serif;";
-    widgetContainer.innerHTML =
-      '<div style="height:100%;display:flex;flex-direction:column;">' +
-      '<div style="background:#0d6efd;color:white;padding:12px 16px;border-top-left-radius:12px;border-top-right-radius:12px;display:flex;justify-content:space-between;align-items:center;">' +
-      "<div>Or\u00e1culo AI Chatbot</div>" +
-      '<button id="close-chat" style="background:transparent;border:none;color:white;font-size:18px;cursor:pointer;">&times;</button>' +
-      "</div>" +
-      '<div id="chat-messages" style="flex:1;overflow-y:auto;padding:12px;"></div>' +
-      '<div style="display:flex;border-top:1px solid #eee;">' +
-      '<input id="user-input" type="text" placeholder="Digite sua mensagem..." style="flex:1;padding:10px;border:none;outline:none;font-size:14px;" autocomplete="off">' +
-      '<button id="send-btn" style="background:#0d6efd;color:white;border:none;padding:0 16px;cursor:pointer;">Enviar</button>' +
-      "</div></div>";
+
+    /* ── Header ── */
+    var header = document.createElement("div");
+    header.className = "chatbot-header";
+
+    var title = document.createElement("span");
+    title.textContent = "Oráculo AI Chatbot";
+
+    var closeBtn = document.createElement("button");
+    closeBtn.id = "close-chat";
+    closeBtn.textContent = "\u00D7"; /* × symbol */
+    closeBtn.setAttribute("aria-label", "Fechar chat");
+
+    header.appendChild(title);
+    header.appendChild(closeBtn);
+
+    /* ── Messages area ── */
+    messagesArea = document.createElement("div");
+    messagesArea.id = "chat-messages";
+    messagesArea.className = "chatbot-messages";
+
+    /* ── Input area ── */
+    var inputArea = document.createElement("div");
+    inputArea.className = "chatbot-input-area";
+
+    userInput = document.createElement("input");
+    userInput.type = "text";
+    userInput.id = "user-input";
+    userInput.placeholder = "Digite sua mensagem...";
+    userInput.setAttribute("autocomplete", "off");
+    userInput.setAttribute("aria-label", "Digite sua mensagem");
+
+    var sendBtn = document.createElement("button");
+    sendBtn.id = "send-btn";
+    sendBtn.textContent = "Enviar";
+
+    inputArea.appendChild(userInput);
+    inputArea.appendChild(sendBtn);
+
+    /* ── Assemble ── */
+    widgetContainer.appendChild(header);
+    widgetContainer.appendChild(messagesArea);
+    widgetContainer.appendChild(inputArea);
     document.body.appendChild(widgetContainer);
 
-    messagesArea = widgetContainer.querySelector("#chat-messages");
-    userInput = widgetContainer.querySelector("#user-input");
-    var sendBtn = widgetContainer.querySelector("#send-btn");
-    var closeBtn = widgetContainer.querySelector("#close-chat");
-
+    /* ── Events ── */
     closeBtn.addEventListener("click", closeChat);
     sendBtn.addEventListener("click", sendMessage);
     userInput.addEventListener("keypress", function (e) {
-      if (e.key === "Enter") sendMessage();
+      if (e.key === "Enter") {
+        sendMessage();
+      }
     });
   }
 
+  /* ── Bind trigger button ── */
   function bindEvents() {
     var trigger = document.querySelector(triggerSelector);
     if (!trigger) {
@@ -85,35 +137,35 @@
     });
   }
 
+  /* ── Open / Close ── */
   function openChat() {
-    widgetContainer.style.display = "flex";
+    widgetContainer.classList.add("chatbot-visible");
     if (chatState.step === "initial") {
-      addMessage("bot", "Ol\u00e1! Seja bem-vindo(a). Como posso ajudar?");
+      addMessage("bot", "Ol\u00E1! Seja bem-vindo(a). Como posso ajudar?");
       setTimeout(showOptions, 500);
     }
   }
 
   function closeChat() {
-    widgetContainer.style.display = "none";
+    widgetContainer.classList.remove("chatbot-visible");
   }
 
+  /* ── Add message bubble ── */
   function addMessage(sender, text) {
     var msgDiv = document.createElement("div");
-    var baseStyle = "margin:8px 0;max-width:80%;clear:both;";
-    if (sender === "user") {
-      msgDiv.style.cssText = baseStyle + "margin-left:auto;background:#dcf8c6;border-radius:16px;padding:8px 12px;";
-    } else {
-      msgDiv.style.cssText = baseStyle + "margin-right:auto;background:#f0f0f0;border-radius:16px;padding:8px 12px;";
-    }
+    msgDiv.className =
+      sender === "user" ? "chatbot-message-user" : "chatbot-message-bot";
+    /* textContent is safe — no innerHTML with user data */
     msgDiv.textContent = text;
     messagesArea.appendChild(msgDiv);
     messagesArea.scrollTop = messagesArea.scrollHeight;
   }
 
+  /* ── Show numbered options ── */
   function showOptions() {
     var options = [
-      "1. Solicitar or\u00e7amento",
-      "2. Conhecer nossos servi\u00e7os",
+      "1. Solicitar or\u00E7amento",
+      "2. Conhecer nossos servi\u00E7os",
       "3. Falar no WhatsApp",
       "4. Deixar meus dados para contato",
     ];
@@ -123,13 +175,16 @@
     setState({ step: "option_selected" });
   }
 
+  /* ── Sanitize input (strip HTML tags) ── */
   function sanitize(str) {
     return str.replace(/<[^>]*>/g, "").trim();
   }
 
+  /* ── Send message flow ── */
   async function sendMessage() {
     var text = sanitize(userInput.value);
     if (!text) return;
+
     addMessage("user", text);
     userInput.value = "";
 
@@ -139,31 +194,48 @@
     if (state.step === "option_selected") {
       var opt = text;
       if (opt === "1") {
-        botResponse = "Qual \u00e9 o seu nome?";
+        botResponse = "Qual \u00E9 o seu nome?";
         setState({ step: "ask_name", option: "orcamento" });
       } else if (opt === "2") {
-        botResponse = "Nossos serviços incluem desenvolvimento de sites, automação com IA e consultoria. Qual é o seu nome?";
+        botResponse =
+          "Nossos servi\u00E7os incluem desenvolvimento de sites, automa\u00E7\u00E3o com IA e consultoria. Qual \u00E9 o seu nome?";
         setState({ step: "ask_name", option: "servicos" });
       } else if (opt === "3") {
         var wa = config.whatsappNumber || "5500000000000";
-        botResponse = "Clique abaixo para falar conosco pelo WhatsApp.\nhttps://wa.me/" + wa;
+        botResponse =
+          "Clique abaixo para falar conosco pelo WhatsApp.\nhttps://wa.me/" +
+          wa;
         setState({ step: "initial" });
       } else if (opt === "4") {
-        botResponse = "Qual \u00e9 o seu nome?";
+        botResponse = "Qual \u00E9 o seu nome?";
         setState({ step: "ask_name", option: "contato" });
       } else {
-        botResponse = "Op\u00e7\u00e3o inv\u00e1lida. Por favor, escolha 1, 2, 3 ou 4.";
+        botResponse =
+          "Op\u00E7\u00E3o inv\u00E1lida. Por favor, escolha 1, 2, 3 ou 4.";
       }
     } else if (state.step === "ask_name") {
-      botResponse = "Qual \u00e9 o seu telefone?";
+      botResponse = "Qual \u00E9 o seu telefone?";
       setState({ step: "ask_phone", nome: text, option: state.option });
     } else if (state.step === "ask_phone") {
-      botResponse = "Qual \u00e9 o seu e-mail? Se n\u00e3o quiser informar, digite pular.";
-      setState({ step: "ask_email", nome: state.nome, telefone: text, option: state.option });
+      botResponse =
+        "Qual \u00E9 o seu e-mail? Se n\u00E3o quiser informar, digite pular.";
+      setState({
+        step: "ask_email",
+        nome: state.nome,
+        telefone: text,
+        option: state.option,
+      });
     } else if (state.step === "ask_email") {
       var email = text.toLowerCase() === "pular" ? "" : text;
-      botResponse = "Escreva uma breve mensagem sobre o que voc\u00ea precisa.";
-      setState({ step: "ask_message", nome: state.nome, telefone: state.telefone, email: email, option: state.option });
+      botResponse =
+        "Escreva uma breve mensagem sobre o que voc\u00EA precisa.";
+      setState({
+        step: "ask_message",
+        nome: state.nome,
+        telefone: state.telefone,
+        email: email,
+        option: state.option,
+      });
     } else if (state.step === "ask_message") {
       botResponse = "Recebemos seus dados. Em breve entraremos em contato.";
       var lead = {
@@ -184,25 +256,34 @@
       }
       setState({ step: "initial" });
     } else {
-      botResponse = "Desculpe, n\u00e3o entendi. Por favor, reinicie a conversa fechando e abrindo o chat.";
+      botResponse =
+        "Desculpe, n\u00E3o entendi. Por favor, reinicie a conversa fechando e abrindo o chat.";
     }
 
     if (botResponse) {
       addMessage("bot", botResponse);
     }
 
+    /* Log the message to the backend (fire-and-forget) */
     try {
       await fetch("/api/chatbot/message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, session_id: sessionId, origem: window.location.href }),
+        body: JSON.stringify({
+          message: text,
+          session_id: sessionId,
+          origem: window.location.href,
+        }),
       });
     } catch (e) {
       console.error("Falha ao logar mensagem", e);
     }
   }
 
-  window.ChatbotWidget = { init };
+  /* ── Public API ── */
+  window.ChatbotWidget = { init: init };
+
+  /* ── Auto-init ── */
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
