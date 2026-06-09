@@ -38,7 +38,7 @@ export default function FerramentasPage() {
         ))}
       </div>
 
-      <div className="mx-auto mt-16 max-w-3xl rounded-xl border border-border bg-card p-6 text-center text-sm leading-relaxed text-secondary md:p-8">
+      <div className="mx-auto mt-16 max-w-3xl rounded-xl border border-border bg-card p-6 text-justify text-sm leading-relaxed text-secondary md:p-8">
         <p>
           <strong className="text-primary">📌 Aviso importante:</strong> Todas as ferramentas desta página
           processam os dados <strong className="text-primary">exclusivamente no seu navegador</strong> (client-side).
