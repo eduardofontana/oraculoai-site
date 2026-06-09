@@ -14,7 +14,7 @@ export function PlansSection() {
             Escolha o plano ideal para o seu negócio
           </h2>
           <p className="mt-4 text-base leading-8 text-secondary">
-            Hospedagem gerenciada, suporte humano e infraestrutura premium. Cancele quando quiser.
+            Hospedagem gerenciada, suporte humano e infraestrutura técnica. Cancele quando quiser.
           </p>
         </div>
       </Reveal>
@@ -115,7 +115,7 @@ export function PlansSection() {
           {[
             { label: "Hospedagem de Sites", href: "https://www.hostinger.com/br/cart?product=hosting%3Ahostinger_business&period=12&referral_type=cart_link&REFERRALCODE=LJOFONTANIXB&referral_id=019ea60f-d4df-7103-b70c-9e56dfe7e05c" },
             { label: "Servidor VPS", href: "https://www.hostinger.com/br/cart?product=vps%3Avps_kvm_2&period=12&referral_type=cart_link&REFERRALCODE=LJOFONTANIXB&referral_id=019ea610-1778-70aa-95de-9f7e4596f2b8" },
-            { label: "OpenClaw", href: "https://www.hostinger.com/br/cart?product=dockerhosting%3Astarter&period=12&referral_type=cart_link&REFERRALCODE=LJOFONTANIXB&referral_id=019ea610-5401-70ea-b7f8-d073883a7532&vps_application_id=245" },
+            { label: "Infraestrutura Docker", href: "https://www.hostinger.com/br/cart?product=dockerhosting%3Astarter&period=12&referral_type=cart_link&REFERRALCODE=LJOFONTANIXB&referral_id=019ea610-5401-70ea-b7f8-d073883a7532&vps_application_id=245" },
           ].map((link) => (
             <a key={link.label}
                href={link.href}

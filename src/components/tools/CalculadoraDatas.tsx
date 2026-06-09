@@ -34,11 +34,23 @@ export function CalculadoraDatas() {
     if (operation !== "add") return null
     const d = new Date(date1)
     if (unit === "days") {
-      direction === "add" ? d.setDate(d.getDate() + amount) : d.setDate(d.getDate() - amount)
+      if (direction === "add") {
+        d.setDate(d.getDate() + amount)
+      } else {
+        d.setDate(d.getDate() - amount)
+      }
     } else if (unit === "months") {
-      direction === "add" ? d.setMonth(d.getMonth() + amount) : d.setMonth(d.getMonth() - amount)
+      if (direction === "add") {
+        d.setMonth(d.getMonth() + amount)
+      } else {
+        d.setMonth(d.getMonth() - amount)
+      }
     } else {
-      direction === "add" ? d.setFullYear(d.getFullYear() + amount) : d.setFullYear(d.getFullYear() - amount)
+      if (direction === "add") {
+        d.setFullYear(d.getFullYear() + amount)
+      } else {
+        d.setFullYear(d.getFullYear() - amount)
+      }
     }
     return d.toISOString().split("T")[0]
   }, [operation, date1, amount, unit, direction])

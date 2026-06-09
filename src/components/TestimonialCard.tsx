@@ -2,10 +2,20 @@ type Props = {
   quote: string;
   author: string;
   role: string;
-  avatar: string;
 };
 
-export function TestimonialCard({ quote, author, role, avatar }: Props) {
+function getInitials(author: string) {
+  return author
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+export function TestimonialCard({ quote, author, role }: Props) {
+  const initials = getInitials(author);
+
   return (
     <figure className="flex h-full flex-col rounded-2xl border border-border bg-card p-7 transition-all duration-500 hover:border-border-hover hover:-translate-y-0.5">
       <div className="flex gap-1 mb-4">
@@ -17,12 +27,9 @@ export function TestimonialCard({ quote, author, role, avatar }: Props) {
         &ldquo;{quote}&rdquo;
       </blockquote>
       <figcaption className="mt-6 flex items-center gap-3 border-t border-border pt-4">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={avatar}
-          alt={author}
-          className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-border"
-        />
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-accent-soft text-xs font-bold text-accent-text ring-2 ring-border">
+          {initials}
+        </div>
         <div>
           <p className="text-sm font-bold text-primary">{author}</p>
           <p className="text-xs text-muted">{role}</p>

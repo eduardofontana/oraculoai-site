@@ -19,7 +19,7 @@ function jsonToYaml(obj: unknown, indent = 0): string {
   const pad = "  ".repeat(indent)
   if (obj === null || obj === undefined) return "null"
   if (typeof obj === "string") {
-    if (obj.includes(":") || obj.includes("#") || obj.includes("\n")) return `"${obj}"`
+    if (obj.includes(":") || obj.includes("#") || obj.includes("\n")) return JSON.stringify(obj)
     return obj
   }
   if (typeof obj === "number" || typeof obj === "boolean") return String(obj)
@@ -189,7 +189,7 @@ export function YamlJsonToml() {
 
         {detected && detected !== from && (
           <span className="text-xs text-muted">
-            (Detectado: {detected.toUpperCase()} — selecione "De" para {detected.toUpperCase()} se preferir)
+            (Detectado: {detected.toUpperCase()} — selecione &quot;De&quot; para {detected.toUpperCase()} se preferir)
           </span>
         )}
       </div>

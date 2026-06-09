@@ -140,8 +140,8 @@ export default function Home() {
         <Reveal>
           <div className="grid divide-y border-y border-border md:grid-cols-3 md:divide-x md:divide-y-0">
             {[
-              { number: "3+", label: "Frentes de atuação", desc: "Web, cloud, IA e segurança integrados" },
-              { number: "24h", label: "Suporte via WhatsApp", desc: "Resposta ágil de especialistas de verdade" },
+              { number: "3+", label: "Frentes de atuação", desc: "Web, nuvem, IA e segurança integrados" },
+              { number: "24h", label: "Suporte via WhatsApp", desc: "Resposta ágil e objetiva" },
               { number: "100%", label: "Atendimento remoto", desc: "Brasil e exterior com suporte direto" },
             ].map((stat) => (
               <div key={stat.label} className="flex items-center gap-4 px-6 py-8 md:px-8">
@@ -161,7 +161,7 @@ export default function Home() {
         id="servicos"
         eyebrow="Serviços"
         title="Tecnologia completa para o seu negócio"
-        description="Criação de sites, hospedagem gerenciada, infraestrutura cloud, inteligência artificial e cibersegurança — tudo com suporte humano especializado."
+        description="Criação de sites, hospedagem gerenciada, infraestrutura em nuvem, inteligência artificial e cibersegurança — tudo com suporte humano especializado."
       >
         <div className="grid gap-4 md:grid-cols-3">
           {site.services.map((service, i) => (
@@ -235,7 +235,7 @@ export default function Home() {
       <Section
         eyebrow="Depoimentos"
         title="O que nossos clientes dizem"
-        description="Quem já experimenta o atendimento direto e a entrega premium sabe o valor."
+        description="Quem já experimenta o atendimento direto e a entrega consistente entende o valor."
       >
         <div className="grid gap-4 md:grid-cols-3">
           {site.testimonials.map((t, i) => (
@@ -266,7 +266,7 @@ export default function Home() {
                 Vamos construir juntos?
               </h2>
               <p className="mx-auto mt-4 max-w-lg text-base text-secondary">
-                Site, hospedagem, cloud, IA ou segurança — o próximo passo é uma conversa objetiva.
+                Site, hospedagem, nuvem, IA ou segurança — o próximo passo é uma conversa objetiva.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Link

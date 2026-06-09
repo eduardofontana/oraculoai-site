@@ -10,7 +10,11 @@ export function IpChecker() {
   useEffect(() => {
     const fetchIp = async () => {
       const fetchFrom = async (url: string) => {
-        const res = await fetch(url)
+        const res = await fetch(url, {
+          cache: "no-store",
+          credentials: "omit",
+          referrerPolicy: "no-referrer",
+        })
         const data = await res.json()
         return data.ip
       }
@@ -33,6 +37,12 @@ export function IpChecker() {
 
   return (
     <div className="space-y-6">
+      <div className="rounded-lg border border-border bg-bg p-4">
+        <p className="text-xs leading-6 text-muted">
+          Esta ferramenta consulta serviços externos para identificar seu IP público.
+          Apenas essa informação é enviada às APIs usadas na consulta.
+        </p>
+      </div>
       {loading && <p className="text-sm text-muted">Obtendo IP...</p>}
       {error && <div className="rounded-lg border border-red-500/30 bg-red-500/5 p-4"><p className="text-sm font-bold text-red-500">{error}</p></div>}
       {ip && (

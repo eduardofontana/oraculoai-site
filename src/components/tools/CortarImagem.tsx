@@ -15,18 +15,21 @@ export function CortarImagem() {
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
 
   const handleFile = useCallback((file: File) => {
     if (!file.type.startsWith("image/")) return
     const img = new Image()
-    img.src = URL.createObjectURL(file)
+    const objectUrl = URL.createObjectURL(file)
+    img.src = objectUrl
     img.onload = () => {
+      URL.revokeObjectURL(objectUrl)
       setImage(img)
       setCrop(null)
       setPreviewUrl(null)
     }
+    img.onerror = () => URL.revokeObjectURL(objectUrl)
   }, [])
 
   const handleDrop = useCallback((e: React.DragEvent) => {
@@ -94,6 +97,7 @@ export function CortarImagem() {
       const scale = Math.min(maxW / image.naturalWidth, 400 / image.naturalHeight, 1)
       canvas.width = image.naturalWidth * scale
       canvas.height = image.naturalHeight * scale
+      setCanvasSize({ width: canvas.width, height: canvas.height })
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
 
@@ -139,7 +143,6 @@ export function CortarImagem() {
       ) : (
         <>
           <div
-            ref={containerRef}
             className="relative flex justify-center rounded-xl border border-border bg-bg p-2"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
@@ -179,16 +182,17 @@ export function CortarImagem() {
             {crop && (
               <span className="text-xs text-muted">
                 {Math.round(crop.w)} × {Math.round(crop.h)} px
-                {image && (
-                  <> · {Math.round((crop.w / canvasRef.current!.width) * image.naturalWidth)} × {Math.round((crop.h / canvasRef.current!.height) * image.naturalHeight)} px original</>
+                {image && canvasSize.width > 0 && canvasSize.height > 0 && (
+                  <> · {Math.round((crop.w / canvasSize.width) * image.naturalWidth)} × {Math.round((crop.h / canvasSize.height) * image.naturalHeight)} px original</>
                 )}
               </span>
             )}
           </div>
 
-          {previewUrl && (
+        {previewUrl && (
             <div className="rounded-xl border border-border bg-bg p-4 text-center">
               <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted">Prévia</p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={previewUrl} alt="Cortada" className="mx-auto max-h-64 rounded-lg" />
               <a
                 href={previewUrl}

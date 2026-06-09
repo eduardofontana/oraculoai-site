@@ -3,9 +3,9 @@ import { ToolCard } from "@/components/tools/ToolCard"
 import { tools, categories } from "@/data/tools"
 
 export const metadata: Metadata = {
-  title: "Ferramentas Online Grátis | OraculoAI Cloud",
+  title: "Ferramentas Online | Oráculo AI",
   description:
-    "Use ferramentas rápidas para documentos, Pix, QR Code, texto, desenvolvimento, imagem e PDF. Tudo simples, leve e gratuito.",
+    "Use ferramentas rápidas para documentos, Pix, QR Code, texto, desenvolvimento, imagem e PDF. Quase tudo roda localmente no navegador.",
 }
 
 export default function FerramentasPage() {
@@ -13,11 +13,11 @@ export default function FerramentasPage() {
     <div className="mx-auto max-w-7xl px-6 py-16 md:px-8">
       <div className="mx-auto max-w-2xl text-center">
         <h1 className="font-display text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
-          Ferramentas online grátis
+          Ferramentas online
         </h1>
         <p className="mt-4 text-base leading-relaxed text-secondary">
           Use ferramentas rápidas para documentos, Pix, QR Code, texto,
-          desenvolvimento, imagem e PDF. Tudo simples, leve e gratuito.
+          desenvolvimento, imagem e PDF. Quase tudo roda localmente no navegador.
         </p>
       </div>
 
@@ -40,14 +40,15 @@ export default function FerramentasPage() {
 
       <div className="mx-auto mt-16 max-w-3xl rounded-xl border border-border bg-card p-6 text-justify text-sm leading-relaxed text-secondary md:p-8">
         <p>
-          <strong className="text-primary">📌 Aviso importante:</strong> Todas as ferramentas desta página
-          processam os dados <strong className="text-primary">exclusivamente no seu navegador</strong> (client-side).
-          Nenhum texto, imagem, documento ou informação inserida é enviada, armazenada ou compartilhada
-          conosco ou com terceiros.
+          <strong className="text-primary">📌 Aviso importante:</strong> A maioria das ferramentas desta página
+          processa os dados <strong className="text-primary">exclusivamente no seu navegador</strong> (client-side).
+          Nenhum texto, imagem ou documento local é enviado, armazenado ou compartilhado
+          por este site.
         </p>
         <p className="mt-3">
-          Este site não coleta, salva ou transmite nenhum dado pessoal inserido nas ferramentas.
-          Todo o processamento é feito localmente, em sua máquina. Respeitamos a{" "}
+          Este site não coleta, salva ou transmite dados pessoais inseridos nas ferramentas que
+          funcionam localmente. Quando uma ferramenta depende de serviço externo, isso é informado na página.
+          Respeitamos a{" "}
           <strong className="text-primary">LGPD (Lei Geral de Proteção de Dados Pessoais)</strong> —
           seus dados permanecem sob seu controle o tempo todo.
         </p>

@@ -14,8 +14,8 @@ export function buildMetadata(slug: string): Metadata {
   const tool = tools.find((t) => t.slug === slug)
   if (!tool) return {}
   return {
-    title: `${tool.title} Online Grátis | OraculoAI Cloud`,
-    description: `${tool.description} Ferramenta gratuita, rápida e segura, sem enviar dados para servidor.`,
+    title: `${tool.title} | Oráculo AI`,
+    description: `${tool.description} Ferramenta gratuita, rápida e segura, com processamento local no navegador sempre que possível.`,
   }
 }
 
@@ -51,6 +51,11 @@ export function ToolLayout({
       <div className="rounded-xl border border-border bg-card p-6 md:p-8">
         {children}
       </div>
+
+      <p className="mt-4 text-xs leading-6 text-muted">
+        A maioria das ferramentas roda localmente no navegador. Quando uma
+        ferramenta depende de serviço externo, isso é indicado na própria página.
+      </p>
 
       {related.length > 0 && (
         <div className="mt-16">

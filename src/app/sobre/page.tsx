@@ -23,8 +23,8 @@ export default function SobrePage() {
                 Uma presença digital com mais intenção.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-secondary md:text-lg">
-                A OraculoAI existe para criar, proteger e operar presença digital com estética
-                premium, clareza comercial e conversa direta.
+                A OraculoAI existe para criar, proteger e operar presença digital com clareza
+                técnica, comunicação objetiva e conversa direta.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <Link

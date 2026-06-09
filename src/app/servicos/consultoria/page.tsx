@@ -56,7 +56,7 @@ export default function ConsultoriaPage() {
                     </span>
                     <div>
                       <p className="font-bold text-primary">Inteligência Artificial</p>
-                      <p className="mt-1 text-sm leading-6 text-secondary">Automação de processos, chatbots, análise de dados e IA aplicada ao seu negócio.</p>
+                      <p className="mt-1 text-sm leading-6 text-secondary">Automação de processos, análise de dados e IA aplicada ao seu negócio.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">

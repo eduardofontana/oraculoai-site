@@ -15,9 +15,9 @@ const nunito = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "OraculoAI | Presença digital premium",
+  title: "OraculoAI | Presença digital profissional",
   description:
-    "Desenvolvimento web, cybersecurity e infraestrutura com atendimento direto no WhatsApp.",
+    "Desenvolvimento web, cibersegurança e infraestrutura com atendimento direto no WhatsApp.",
 };
 
 export default function RootLayout({

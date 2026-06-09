@@ -12,8 +12,8 @@ export function Footer() {
               {site.name.slice(1)}
             </p>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-secondary">
-              Criação de sites, hospedagem com preço de revenda Hostinger e consultoria em
-              cybersecurity. Atendimento direto, sem burocracia.
+              Criação de sites, hospedagem gerenciada e consultoria em cibersegurança.
+              Atendimento direto, sem burocracia.
             </p>
           </div>
           <div>
@@ -48,7 +48,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {site.name}.
           </p>
           <p className="text-xs text-muted">
-            Parceiro autorizado Hostinger
+            Infraestrutura baseada em parceiros de hospedagem
           </p>
         </div>
       </div>

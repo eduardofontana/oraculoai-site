@@ -1,9 +1,9 @@
 export const site = {
   name: "Oráculo AI",
   shortName: "Oráculo AI",
-  slogan: "Tecnologia, Hospedagem e Segurança",
+  slogan: "Tecnologia, Hospedagem e Segurança Digital",
   heroSubtitle:
-    "Hospedagem gerenciada, criação de sites, infraestrutura cloud, inteligência artificial e consultoria em cibersegurança com suporte humano especializado.",
+    "Hospedagem gerenciada, criação de sites, infraestrutura em nuvem, inteligência artificial e consultoria em cibersegurança com atendimento humano.",
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
   whatsappMessage:
     "Olá! Quero saber mais sobre os planos e serviços da Oráculo AI.",
@@ -13,7 +13,7 @@ export const site = {
     {
       title: "Criação de Sites",
       description:
-        "Sites institucionais e landing pages com estética premium, performance e foco em conversão.",
+        "Sites institucionais e landing pages com foco em performance e conversão.",
       bullets: ["Landing pages de alta conversão", "Sites institucionais", "Manutenção e otimização contínua"],
       href: "/servicos/desenvolvimento-web",
       icon: "globe",
@@ -22,14 +22,14 @@ export const site = {
     {
       title: "Hospedagem Gerenciada",
       description:
-        "Infraestrutura cloud com suporte técnico especializado, migração assistida e monitoramento ativo.",
+        "Infraestrutura em nuvem com suporte técnico, migração assistida e monitoramento ativo.",
       bullets: ["Hospedagem cloud gerenciada", "Revenda de VPS e cloud", "Configuração de domínios e DNS"],
       href: "/servicos/dominios-hospedagem",
       icon: "server",
       highlight: "Parceiro tecnológico",
     },
     {
-      title: "Consultoria em IA e Segurança",
+      title: "Consultoria em IA e Cibersegurança",
       description:
         "Inteligência artificial aplicada ao negócio e cibersegurança prática para proteger sua operação digital.",
       bullets: ["Consultoria em Inteligência Artificial", "Consultoria em Cibersegurança", "Monitoramento e manutenção de ambientes web"],
@@ -102,7 +102,7 @@ export const site = {
         "Monitoramento avançado",
         "Migração completa",
         "Suporte prioritário",
-        "Hospedagem premium gerenciada",
+        "Hospedagem gerenciada",
         "3h de suporte técnico/mês",
         "Consultoria mensal",
         "Orientação em cibersegurança",
@@ -114,7 +114,7 @@ export const site = {
   differentials: [
     {
       title: "Atendimento Humano",
-      description: "Fale diretamente com especialistas via WhatsApp. Sem chatbots, sem filas, sem roteiros prontos.",
+      description: "Fale diretamente com especialistas via WhatsApp. Sem filas e sem roteiros prontos.",
       icon: "headset",
     },
     {
@@ -139,19 +139,19 @@ export const site = {
     },
     {
       title: "Parceiro Tecnológico",
-      description: "Muito além da hospedagem: desenvolvimento, automação, inteligência artificial e cibersegurança — tudo em um só lugar.",
+      description: "Muito além da hospedagem: desenvolvimento, automação, inteligência artificial e cibersegurança em um único lugar.",
       icon: "star",
     },
   ],
   portfolio: [
     {
       title: "Mendez Tech",
-      desc: "Site institucional com blog e integração WhatsApp",
+      desc: "Site institucional com blog e integração com WhatsApp",
       tags: ["Next.js", "Tailwind", "Vercel"],
     },
     {
       title: "Barcelos Studio",
-      desc: "Landing page premium para estúdio de design",
+      desc: "Landing page para estúdio de design",
       tags: ["Next.js", "Framer Motion", "Hostinger"],
     },
     {
@@ -162,7 +162,7 @@ export const site = {
   ],
   trustPoints: [
     "Atendimento direto com o responsável técnico",
-    "Parceiro oficial Hostinger com preço de revenda",
+    "Infraestrutura com parceiros de hospedagem",
     "Web, segurança e infraestrutura em um só lugar",
   ],
   testimonials: [
@@ -171,21 +171,18 @@ export const site = {
         "A Oráculo AI transformou nossa presença digital. O site ficou muito mais profissional e as conversas pelo WhatsApp aumentaram significativamente.",
       author: "Carlos Mendes",
       role: "CEO, Mendez Tech",
-      avatar: "https://i.pravatar.cc/80?img=12",
     },
     {
       quote:
         "Atendimento direto, sem burocracia. Em uma semana meu site estava no ar com uma aparência que parece de agência grande.",
       author: "Ana Barcelos",
       role: "Fundadora, Barcelos Studio",
-      avatar: "https://i.pravatar.cc/80?img=25",
     },
     {
       quote:
         "Infraestrutura, segurança e hospedagem tudo resolvido em um lugar. Economizei tempo e dinheiro com a consultoria completa.",
       author: "Rafael Oliveira",
       role: "CTO, Oliva Digital",
-      avatar: "https://i.pravatar.cc/80?img=60",
     },
   ],
   faq: [
@@ -202,7 +199,7 @@ export const site = {
     {
       question: "O que diferencia a Oráculo AI de uma hospedagem comum?",
       answer:
-        "Não somos apenas hospedagem. Somos um parceiro tecnológico: criamos sites, gerenciamos infraestrutura cloud, oferecemos consultoria em IA e cibersegurança, com suporte humano direto via WhatsApp. Tudo em um só lugar com o mesmo responsável técnico.",
+        "Não somos apenas hospedagem. Somos um parceiro tecnológico: criamos sites, gerenciamos infraestrutura em nuvem, oferecemos consultoria em IA e cibersegurança, com suporte humano direto via WhatsApp. Tudo em um só lugar com o mesmo responsável técnico.",
     },
     {
       question: "Como funciona o suporte técnico?",

@@ -3,7 +3,7 @@ import { buildWhatsAppUrl } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 
 export default function DesenvolvimentoWebPage() {
-  const message = buildWhatsAppUrl("Olá! Quero um site premium para meu negócio.");
+  const message = buildWhatsAppUrl("Olá! Quero um site para meu negócio.");
 
   return (
     <main className="min-h-[80vh] text-primary">
@@ -23,7 +23,8 @@ export default function DesenvolvimentoWebPage() {
                 Criação de Sites
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-secondary md:text-lg">
-                Landing pages e sites institucionais com estética premium, discurso claro e caminho curto até a conversa.
+                Landing pages e sites institucionais com foco em clareza, desempenho e caminho
+                curto até a conversa.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -39,7 +40,7 @@ export default function DesenvolvimentoWebPage() {
                   href="/servicos/consultoria"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3 font-semibold text-secondary backdrop-blur-xl transition hover:border-border-hover hover:text-primary"
                 >
-                  Ver consultoria IA e segurança
+                  Ver consultoria em IA e cibersegurança
                 </Link>
               </div>
             </section>
@@ -65,7 +66,7 @@ export default function DesenvolvimentoWebPage() {
                     </span>
                     <div>
                       <p className="font-bold text-primary">Sites institucionais</p>
-                      <p className="mt-1 text-sm leading-6 text-secondary">Presença digital profissional com leitura rápida e visual premium.</p>
+                      <p className="mt-1 text-sm leading-6 text-secondary">Presença digital profissional com leitura rápida e interface objetiva.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -94,7 +95,7 @@ export default function DesenvolvimentoWebPage() {
             <div className="rounded-xl border border-border bg-card p-6">
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Ideal para</p>
               <p className="mt-4 text-base leading-7 text-secondary">
-                Negócios que querem uma landing ou site com aparência premium e foco em conversão.
+                Negócios que querem uma landing ou site com aparência profissional e foco em conversão.
               </p>
             </div>
           </section>

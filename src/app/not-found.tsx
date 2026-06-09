@@ -15,7 +15,7 @@ export default function NotFound() {
             Página não encontrada
           </h1>
           <p className="mt-4 text-secondary">
-            Volte para a home e siga pelo WhatsApp para falar direto comigo.
+            Volte para a home ou use o contato para seguir pelo canal certo.
           </p>
           <Link
             href="/"
