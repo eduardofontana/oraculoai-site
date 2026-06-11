@@ -3,15 +3,16 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import type { Tool } from "@/data/tools"
-import { isToolPopular, getToolUsage } from "@/lib/analytics"
+import { getToolUsage } from "@/lib/analytics"
 
 export function ToolCard({ tool }: { tool: Tool }) {
   const [popular, setPopular] = useState(false)
   const [usage, setUsage] = useState(0)
 
   useEffect(() => {
-    setPopular(isToolPopular(tool.slug))
-    setUsage(getToolUsage(tool.slug))
+    const u = getToolUsage(tool.slug)
+    setUsage(u)
+    setPopular(u >= 3)
   }, [tool.slug])
 
   return (

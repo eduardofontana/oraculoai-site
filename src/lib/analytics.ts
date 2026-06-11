@@ -1,6 +1,6 @@
 const STORAGE_KEY = "oraculo-tool-usage"
 
-export interface UsageData {
+interface UsageData {
   counts: Record<string, number>
   lastUsed: Record<string, number>
 }
@@ -54,32 +54,4 @@ export function getTopTools(limit = 6): string[] {
     .map(([slug]) => slug)
 }
 
-/**
- * Verifica se uma ferramenta é considerada popular
- * (baseado no número mínimo de usos).
- */
-export function isToolPopular(slug: string, minUses = 3): boolean {
-  return getToolUsage(slug) >= minUses
-}
 
-/**
- * Retorna as N ferramentas mais recentemente usadas.
- */
-export function getRecentTools(limit = 5): string[] {
-  const data = loadUsage()
-  return Object.entries(data.lastUsed)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, limit)
-    .map(([slug]) => slug)
-}
-
-/**
- * Limpa todos os dados de uso (para testes).
- */
-export function clearUsage(): void {
-  try {
-    localStorage.removeItem(STORAGE_KEY)
-  } catch {
-    // ignora
-  }
-}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { tools } from "@/data/tools"
 
@@ -11,7 +11,6 @@ export function ToolSearch() {
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
-  // Abre/fecha com Ctrl+K
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -26,34 +25,29 @@ export function ToolSearch() {
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
-  // Foco no input ao abrir
   useEffect(() => {
     if (open) {
-      // Pequeno delay para a animação de abertura
-      setTimeout(() => inputRef.current?.focus(), 50)
+      requestAnimationFrame(() => inputRef.current?.focus())
       setQuery("")
       setSelectedIndex(0)
     }
   }, [open])
 
-  // Filtragem
-  const results = query.trim()
-    ? tools.filter((t) => {
-        const q = query.toLowerCase()
-        return (
-          t.title.toLowerCase().includes(q) ||
-          t.description.toLowerCase().includes(q) ||
-          t.keywords?.some((kw) => kw.toLowerCase().includes(q))
-        )
-      })
-    : tools.slice(0, 12) // mostra algumas ao abrir sem digitar
+  const results = useMemo(() => {
+    if (!query.trim()) return tools.slice(0, 12)
+    const q = query.toLowerCase()
+    return tools.filter(
+      (t) =>
+        t.title.toLowerCase().includes(q) ||
+        t.description.toLowerCase().includes(q) ||
+        t.keywords?.some((kw) => kw.toLowerCase().includes(q))
+    )
+  }, [query])
 
-  // Reset selectedIndex quando resultados mudam
   useEffect(() => {
     setSelectedIndex(0)
   }, [query])
 
-  // Navegação por setas
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === "ArrowDown") {
@@ -77,12 +71,14 @@ export function ToolSearch() {
     <div
       className="fixed inset-0 z-[100] flex items-start justify-center bg-black/60 pt-[15vh] backdrop-blur-sm"
       onClick={() => setOpen(false)}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Buscar ferramentas"
     >
       <div
         className="w-full max-w-xl overflow-hidden rounded-2xl border border-border bg-card shadow-2xl shadow-black/40"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Input */}
         <div className="flex items-center gap-3 border-b border-border px-5 py-4">
           <svg
             width="18"
@@ -94,6 +90,7 @@ export function ToolSearch() {
             strokeLinecap="round"
             strokeLinejoin="round"
             className="shrink-0 text-muted"
+            aria-hidden="true"
           >
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.3-4.3" />
@@ -106,14 +103,22 @@ export function ToolSearch() {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             className="flex-1 bg-transparent text-base text-primary outline-none placeholder:text-muted"
+            aria-activedescendant={
+              results[selectedIndex]
+                ? `search-result-${selectedIndex}`
+                : undefined
+            }
+            role="combobox"
+            aria-expanded="true"
+            aria-controls="search-results-list"
+            aria-label="Buscar ferramentas"
           />
           <kbd className="hidden shrink-0 rounded-md border border-border bg-surface-overlay px-2 py-0.5 text-xs text-muted sm:inline-block">
             ESC
           </kbd>
         </div>
 
-        {/* Results */}
-        <div className="max-h-[50vh] overflow-y-auto p-2">
+        <div className="max-h-[50vh] overflow-y-auto p-2" id="search-results-list" role="listbox">
           {results.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-12 text-center">
               <svg
@@ -126,6 +131,7 @@ export function ToolSearch() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="text-muted"
+                aria-hidden="true"
               >
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.3-4.3" />
@@ -135,8 +141,9 @@ export function ToolSearch() {
           ) : (
             <ul className="space-y-1">
               {results.map((tool, i) => (
-                <li key={tool.slug}>
+                <li key={tool.slug} role="option" aria-selected={i === selectedIndex}>
                   <button
+                    id={`search-result-${i}`}
                     onClick={() => {
                       router.push(`/ferramentas/${tool.slug}`)
                       setOpen(false)
@@ -157,7 +164,6 @@ export function ToolSearch() {
           )}
         </div>
 
-        {/* Footer hint */}
         <div className="hidden border-t border-border px-5 py-2.5 text-xs text-muted sm:flex items-center gap-4">
           <span className="flex items-center gap-1">
             <kbd className="rounded border border-border bg-surface-overlay px-1.5 py-0.5 text-[10px]">↑↓</kbd>

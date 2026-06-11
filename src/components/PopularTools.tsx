@@ -15,11 +15,13 @@ const FALLBACK_SLUGS = [
 ]
 
 export function PopularTools() {
-  const [topSlugs, setTopSlugs] = useState<string[]>([])
+  const [topSlugs, setTopSlugs] = useState<string[]>(FALLBACK_SLUGS)
 
   useEffect(() => {
     const slugs = getTopTools(6)
-    setTopSlugs(slugs.length >= 3 ? slugs : FALLBACK_SLUGS)
+    if (slugs.length >= 3) {
+      setTopSlugs(slugs)
+    }
   }, [])
 
   const topTools = tools.filter((t) => topSlugs.includes(t.slug))
