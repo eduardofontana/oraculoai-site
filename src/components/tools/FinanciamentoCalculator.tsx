@@ -35,6 +35,7 @@ export function FinanciamentoCalculator() {
   const [tabelaSAC, setTabelaSAC] = useState<Mes[] | null>(null)
   const [tabelaPRICE, setTabelaPRICE] = useState<Mes[] | null>(null)
   const [calculado, setCalculado] = useState(false)
+  const [limite, setLimite] = useState(12) // paginação: mostra 12 linhas por vez
 
   const calcular = () => {
     const vTotal = Number(valorTotal.replace(",", "."))
@@ -86,6 +87,7 @@ export function FinanciamentoCalculator() {
     setTabelaSAC(sac)
     setTabelaPRICE(price)
     setCalculado(true)
+    setLimite(12)
   }
 
   const totJurosSAC = tabelaSAC ? tabelaSAC.reduce((s, m) => s + m.juros, 0) : 0
@@ -168,7 +170,7 @@ export function FinanciamentoCalculator() {
             </div>
           </div>
 
-          {/* Tabela comparativa */}
+          {/* Tabela comparativa (paginação: 12 linhas por clique) */}
           <div className="overflow-x-auto rounded-lg border border-border">
             <table className="w-full text-left text-sm">
               <thead>
@@ -185,7 +187,7 @@ export function FinanciamentoCalculator() {
                 </tr>
               </thead>
               <tbody>
-                {tabelaSAC.map((sacMes, i) => {
+                {tabelaSAC.slice(0, limite).map((sacMes, i) => {
                   const priceMes = tabelaPRICE[i]!
                   return (
                     <tr key={i} className="border-b border-border last:border-0 hover:bg-surface-overlay/50">
@@ -204,6 +206,18 @@ export function FinanciamentoCalculator() {
               </tbody>
             </table>
           </div>
+
+          {tabelaSAC.length > limite && (
+            <button
+              onClick={() => setLimite((prev) => Math.min(prev + 12, tabelaSAC.length))}
+              className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-2 text-sm font-medium text-secondary transition-all hover:border-accent-border hover:text-accent-text"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+              Mostrar mais 12 meses ({limite} de {tabelaSAC.length})
+            </button>
+          )}
         </div>
       )}
     </div>

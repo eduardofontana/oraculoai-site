@@ -10,15 +10,17 @@ export function JurosCompostos() {
   const [periodos, setPeriodos] = useState("12")
   const [periodicidade, setPeriodicidade] = useState<"meses" | "anos">("meses")
   const [resultado, setResultado] = useState<ReturnType<typeof calcularJurosCompostos> | null>(null)
+  const [erro, setErro] = useState("")
 
   const handleCalcular = () => {
     const c = Number.parseFloat(capital)
     const t = Number.parseFloat(taxa)
     const p = Number.parseInt(periodos, 10)
+    setErro("")
 
-    if (Number.isNaN(c) || c <= 0) return
-    if (Number.isNaN(t) || t < 0) return
-    if (Number.isNaN(p) || p <= 0) return
+    if (Number.isNaN(c) || c <= 0) { setErro("Capital inicial deve ser maior que zero"); return }
+    if (Number.isNaN(t) || t < 0) { setErro("Taxa de juros inválida"); return }
+    if (Number.isNaN(p) || p <= 0) { setErro("Período deve ser maior que zero"); return }
 
     setResultado(calcularJurosCompostos(c, t, p, periodicidade))
   }
@@ -86,6 +88,12 @@ export function JurosCompostos() {
           </button>
         </div>
       </div>
+
+      {erro && (
+        <div className="rounded-lg border border-red-500/30 bg-red-500/5 p-4 text-sm font-bold text-red-500">
+          {erro}
+        </div>
+      )}
 
       {resultado && (
         <div className="space-y-6">
