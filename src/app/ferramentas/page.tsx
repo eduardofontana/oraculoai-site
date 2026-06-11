@@ -1,7 +1,6 @@
-import type { Metadata } from "next"
+﻿import type { Metadata } from "next"
 import { ToolCard } from "@/components/tools/ToolCard"
 import { tools, categories } from "@/data/tools"
-import { AdBanner } from "@/components/AdBanner"
 
 export const metadata: Metadata = {
   title: "Ferramentas Online | Oráculo AI",
@@ -35,8 +34,6 @@ export default function FerramentasPage() {
                   <ToolCard key={tool.slug} tool={tool} />
                 ))}
             </div>
-            {/* AdBanner após a 4ª e 8ª categoria */}
-            {(i === 3 || i === 7) && <AdBanner format="leaderboard" className="mt-10" />}
           </section>
         ))}
       </div>

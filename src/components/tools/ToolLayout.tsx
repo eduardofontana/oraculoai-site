@@ -1,9 +1,8 @@
-import type { ReactNode } from "react"
+﻿import type { ReactNode } from "react"
 import type { Metadata } from "next"
 import { tools, getRelatedTools } from "@/data/tools"
 import Link from "next/link"
 import { ToolUsageTracker } from "@/components/ToolUsageTracker"
-import { AdBanner } from "@/components/AdBanner"
 
 interface ToolLayoutProps {
   slug: string
@@ -55,8 +54,7 @@ export function ToolLayout({
         {children}
       </div>
 
-      <AdBanner format="leaderboard" className="mt-8" />
-
+      
       <p className="mt-4 text-xs leading-6 text-muted">
         A maioria das ferramentas roda localmente no navegador. Quando uma
         ferramenta depende de serviço externo, isso é indicado na própria página.
