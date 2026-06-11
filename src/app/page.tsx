@@ -7,6 +7,7 @@ import { FAQ } from "@/components/FAQ";
 import { Reveal } from "@/components/Reveal";
 import { PlansSection } from "@/components/PlansSection";
 import { DifferentialsSection } from "@/components/DifferentialsSection";
+import { PopularTools } from "@/components/PopularTools";
 
 export default function Home() {
   const primaryCta = buildWhatsAppUrl();
@@ -150,6 +151,26 @@ export default function Home() {
 
       {/* Plans */}
       <PlansSection />
+
+      {/* Popular Tools */}
+      <Section
+        eyebrow="Ferramentas"
+        title="Ferramentas populares"
+        description="As ferramentas gratuitas mais acessadas pelos nossos visitantes — tudo direto no navegador, sem envio de dados."
+      >
+        <PopularTools />
+        <div className="mt-8 text-center">
+          <Link
+            href="/ferramentas"
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-overlay px-6 py-3 text-sm font-semibold text-secondary transition-all hover:border-accent-border hover:text-accent-text hover:bg-accent-soft"
+          >
+            Ver todas as ferramentas
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+      </Section>
 
       {/* Differentials */}
       <DifferentialsSection />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import type { ReactNode } from "react";
+import Script from "next/script";
 import { ThemeProvider } from "@/lib/theme";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -8,6 +9,7 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { NeuralNetwork } from "@/components/NeuralNetwork";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import { ToolSearch } from "@/components/ToolSearch";
 
 const nunito = Nunito_Sans({
   variable: "--font-sans",
@@ -33,6 +35,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col">
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2572298012241654"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         {/* ── Background layers (todas as páginas) ── */}
         <div className="pointer-events-none fixed inset-0 z-[-3] page-glow" />
         <NeuralNetwork />
@@ -40,6 +48,7 @@ export default function RootLayout({
           <Header />
           <WhatsAppButton />
           <Analytics />
+          <ToolSearch />
           <div className="flex-1 pt-16">{children}</div>
           <Footer />
         </ThemeProvider>

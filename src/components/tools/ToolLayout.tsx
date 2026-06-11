@@ -2,6 +2,8 @@ import type { ReactNode } from "react"
 import type { Metadata } from "next"
 import { tools, getRelatedTools } from "@/data/tools"
 import Link from "next/link"
+import { ToolUsageTracker } from "@/components/ToolUsageTracker"
+import { AdBanner } from "@/components/AdBanner"
 
 interface ToolLayoutProps {
   slug: string
@@ -29,6 +31,7 @@ export function ToolLayout({
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-16 md:px-8">
+      <ToolUsageTracker slug={slug} />
       <Link
         href="/ferramentas"
         className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-secondary transition hover:text-primary"
@@ -51,6 +54,8 @@ export function ToolLayout({
       <div className="rounded-xl border border-border bg-card p-6 md:p-8">
         {children}
       </div>
+
+      <AdBanner format="leaderboard" className="mt-8" />
 
       <p className="mt-4 text-xs leading-6 text-muted">
         A maioria das ferramentas roda localmente no navegador. Quando uma
