@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 import Script from "next/script";
@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "OraculoAI | Presença digital profissional",
   description:
     "Desenvolvimento web, cibersegurança e infraestrutura com atendimento direto no WhatsApp.",
+  other: {
+    "google-adsense-account": "ca-pub-2572298012241654",
+  },
 };
 
 export default function RootLayout({
