@@ -23,7 +23,7 @@ function checkRateLimit(ip: string): boolean {
 /*  HUGGING FACE INFERENCE API                                        */
 /* ------------------------------------------------------------------ */
 const HF_API_URL =
-  "https://api-inference.huggingface.co/models/google/gemma-2-2b-it";
+  "https://api-inference.huggingface.co/models/gpt2";
 
 const SYSTEM_PROMPT = `Você é o Oráculo, um assistente técnico amigável e inteligente.
 
@@ -38,7 +38,7 @@ REGRAS:
 - Responda em português claro`;
 
 function buildPrompt(userMessage: string): string {
-  return `<start_of_turn>user\n${SYSTEM_PROMPT}\n\nPergunta do usuário: ${userMessage}<end_of_turn>\n<start_of_turn>model\n`;
+  return `Usuário: ${userMessage}\nOráculo:`;
 }
 
 export async function POST(request: NextRequest) {
@@ -177,9 +177,10 @@ export async function POST(request: NextRequest) {
 
     /* ---- 6. Limpar ---- */
     reply = reply.trim();
-    // Remove tokens de template do modelo
+    // Remove tokens de template e prefixos residuais
     reply = reply
       .replace(/<start_of_turn>|<end_of_turn>|<\|system\|>|<\|user\|>|<\|assistant\|>|<\/?s>|\[INST\]|\[\/INST\]/gi, "")
+      .replace(/^Oráculo:\s*/i, "")
       .trim();
 
     return NextResponse.json({ reply }, { status: 200 });
@@ -197,7 +198,7 @@ export async function POST(request: NextRequest) {
       console.error("[Oráculo] Stack:", err.stack);
     }
     return NextResponse.json(
-      { error: "Erro interno do servidor." },
+      { error: `Erro interno: ${errMsg}` },
       { status: 500 },
     );
   }
