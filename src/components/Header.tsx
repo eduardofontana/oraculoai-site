@@ -25,7 +25,7 @@ export function Header() {
               Serviços
             </Link>
             <Link
-              href="/#hosting"
+              href="/#planos"
               className="text-sm font-semibold text-secondary transition hover:text-primary"
             >
               Hospedagem
