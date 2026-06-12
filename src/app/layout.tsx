@@ -5,7 +5,6 @@ import Script from "next/script";
 import { ThemeProvider } from "@/lib/theme";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { NeuralNetwork } from "@/components/NeuralNetwork";
 import { OraculoTrigger } from "@/components/OraculoChat";
 import "./globals.css";
@@ -50,7 +49,6 @@ export default function RootLayout({
         <NeuralNetwork />
         <ThemeProvider>
           <Header />
-          <WhatsAppButton />
           <OraculoTrigger />
           <Analytics />
           <ToolSearch />

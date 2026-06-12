@@ -24,34 +24,28 @@ function checkRateLimit(ip: string): boolean {
 /*  HUGGING FACE INFERENCE API                                        */
 /* ------------------------------------------------------------------ */
 const HF_API_URL =
-  "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3";
+  "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta";
 
-const SYSTEM_PROMPT = `Você é o Oráculo, um assistente técnico especializado em segurança cibernética, inteligência artificial e arquitetura de sistemas.
+const SYSTEM_PROMPT = `Você é o Oráculo, um assistente técnico amigável e inteligente.
+
+Você domina segurança cibernética, inteligência artificial, arquitetura de sistemas, desenvolvimento web, Linux, cloud, DevOps, automação e ferramentas open source — esse é seu ponto forte. Mas você também sabe conversar sobre outros assuntos de forma natural, sem ser robótico.
 
 REGRAS:
-- Explique conceitos técnicos com clareza e profundidade
-- Mantenha foco defensivo e educativo em segurança
-- Sugira boas práticas, hardening, threat modeling, DevSecOps
-- Responda em português claro e direto
-- Se o usuário pedir algo perigoso ou ilegal, redirecione para uma alternativa segura
-- Seja técnico mas didático — use exemplos quando útil
-- Evite: espiritualidade, misticismo, adivinhação, linguagem esotérica
-- Evite: instruções ofensivas, exploração não autorizada, malware
+- Seja natural e converse de forma solta, não pare um manual
+- Em tecnologia: seja técnico, didático e direto, com exemplos quando útil
+- Em segurança: mantenha sempre foco DEFENSIVO e educativo
+- Se o usuário pedir algo perigoso/ilegal, redirecione para alternativa segura
+- Se perguntar algo que você não sabe (ex: clima agora, cotação), seja honesto: "não tenho acesso a dados em tempo real"
+- Evite: espiritualidade, misticismo, adivinhação, instruções ofensivas, exploração não autorizada, malware
+- Responda em português claro`;
 
-TÓPICOS DOMINANTES:
-cibersegurança defensiva, inteligência artificial, agentes de IA, arquitetura de software, Linux, cloud computing, DevOps, bug bounty defensivo, hardening, DevSecOps, automação, ferramentas open source, revisão de código segura`;
-
-function buildPrompt(conversationHistory: string, userMessage: string): string {
-  const historySection = conversationHistory
-    ? `\nHistórico da conversa:\n${conversationHistory}\n`
-    : "";
-
-  return `<s>[INST] ${SYSTEM_PROMPT}${historySection}\nUsuário: ${userMessage} [/INST]`;
+function buildPrompt(userMessage: string): string {
+  return `<|system|>\n${SYSTEM_PROMPT}\n<|user|>\n${userMessage}\n<|assistant|>\n`;
 }
 
 export async function POST(request: NextRequest) {
   try {
-    /* ---- 1. Validar método e body ---- */
+    /* ---- 1. Validar body ---- */
     const body = await request.json().catch(() => null);
     if (!body || typeof body.message !== "string") {
       return NextResponse.json(
@@ -97,8 +91,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const conversationHistory = body.history ?? "";
-    const prompt = buildPrompt(conversationHistory, rawMessage);
+    const prompt = buildPrompt(rawMessage);
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 25000);
@@ -113,9 +106,9 @@ export async function POST(request: NextRequest) {
         inputs: prompt,
         parameters: {
           max_new_tokens: 512,
-          temperature: 0.3,
+          temperature: 0.4,
           top_p: 0.9,
-          repetition_penalty: 1.1,
+          repetition_penalty: 1.05,
           return_full_text: false,
         },
       }),
@@ -124,12 +117,14 @@ export async function POST(request: NextRequest) {
 
     clearTimeout(timeout);
 
+    /* ---- 4. Tratar resposta da HF ---- */
     if (!hfResponse.ok) {
       const errorText = await hfResponse.text().catch(() => "Erro desconhecido");
       console.error(
         `[Oráculo] HF API error ${hfResponse.status}: ${errorText}`,
       );
-      // 503 = model loading (gratuito pode demorar para iniciar)
+
+      // 503 = model loading (comum no plano gratuito)
       if (hfResponse.status === 503) {
         return NextResponse.json(
           {
@@ -139,25 +134,38 @@ export async function POST(request: NextRequest) {
           { status: 200 },
         );
       }
+
       return NextResponse.json(
-        { error: "Falha na comunicação com o serviço de IA." },
+        { error: `Falha na comunicação com o serviço de IA (${hfResponse.status}).` },
         { status: 502 },
       );
     }
 
-    const data = (await hfResponse.json()) as
-      | { generated_text: string }
-      | { error: string }
-      | Array<{ generated_text: string }>;
+    /* ---- 5. Parsear resposta ---- */
+    const raw = await hfResponse.text();
+    let data: unknown;
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      console.error("[Oráculo] Resposta inválida da HF (não é JSON):", raw.slice(0, 500));
+      return NextResponse.json(
+        { error: "Resposta inválida do serviço de IA." },
+        { status: 502 },
+      );
+    }
 
     let reply = "";
 
     if (Array.isArray(data)) {
-      reply = data[0]?.generated_text ?? "";
-    } else if ("generated_text" in data) {
-      reply = data.generated_text;
-    } else {
-      reply = "";
+      reply = (data[0] as Record<string, unknown>)?.generated_text as string ?? "";
+    } else if (data && typeof data === "object" && "generated_text" in (data as Record<string, unknown>)) {
+      reply = (data as Record<string, unknown>).generated_text as string;
+    } else if (data && typeof data === "object" && "error" in (data as Record<string, unknown>)) {
+      console.error("[Oráculo] Erro retornado pela HF:", (data as Record<string, unknown>).error);
+      return NextResponse.json(
+        { error: "O serviço de IA retornou um erro." },
+        { status: 502 },
+      );
     }
 
     if (!reply) {
@@ -167,10 +175,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    /* ---- 4. Sanitizar resposta ---- */
+    /* ---- 6. Limpar resposta ---- */
     reply = reply.trim();
-    // Remover possíveis tags residuais do prompt
-    reply = reply.replace(/<\/?s>|<\/?INST>|\[INST\]|\[\/INST\]/gi, "").trim();
+    // Remove tags residuais do prompt
+    reply = reply
+      .replace(/<\|system\|>|<\|user\|>|<\|assistant\|>|<\/?s>|<\/?INST>|\[INST\]|\[\/INST\]/gi, "")
+      .trim();
+
+    // Se a resposta começar com o prompt do usuário, remove
+    const userPrefix = rawMessage.slice(0, 60);
+    if (reply.startsWith(userPrefix)) {
+      reply = reply.slice(userPrefix.length).trim();
+    }
 
     return NextResponse.json({ reply }, { status: 200 });
   } catch (err: unknown) {
@@ -180,7 +196,8 @@ export async function POST(request: NextRequest) {
         { status: 504 },
       );
     }
-    console.error("[Oráculo] Erro interno:", err);
+    const errMsg = err instanceof Error ? err.message : "Erro desconhecido";
+    console.error("[Oráculo] Erro interno:", errMsg);
     return NextResponse.json(
       { error: "Erro interno do servidor." },
       { status: 500 },

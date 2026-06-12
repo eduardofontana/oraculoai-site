@@ -18,7 +18,7 @@ const WELCOME_MESSAGE: Message = {
   id: "welcome",
   role: "assistant",
   content:
-    "Olá! Sou o **Oráculo**, seu assistente técnico especializado em segurança cibernética, inteligência artificial e arquitetura de sistemas.\n\nPergunte sobre:\n- 🔐 Hardening & segurança defensiva\n- 🤖 Agentes de IA & automação\n- ☁️ Cloud, Linux & DevOps\n- 🛡️ Bug bounty defensivo & DevSecOps\n- 📐 Arquitetura de software\n\nComo posso ajudar hoje?",
+    "Fala aí! 👋 Eu sou o **Oráculo**.\n\nSou um assistente técnico, mas sem aquele papo robótico. Manjo muito de **cibersegurança, IA, cloud, Linux, DevOps, arquitetura e ferramentas open source** — e adoro trocar uma ideia sobre isso.\n\nMas também posso conversar sobre outros assuntos numa boa. Se não souber algo, sou honesto e falo na lata.\n\nO que você quer saber?",
   timestamp: Date.now(),
 };
 
@@ -233,7 +233,7 @@ export function OraculoChatPanel({ onClose }: Props) {
             <div>
               <h2 className="text-sm font-bold text-primary">Oráculo</h2>
               <span className="text-[11px] font-medium text-accent uppercase tracking-wider">
-                Assistente Técnico IA
+                Assistente IA
               </span>
             </div>
           </div>
@@ -357,10 +357,10 @@ export function OraculoChatPanel({ onClose }: Props) {
                 autoResize(e.target);
               }}
               onKeyDown={handleKeyDown}
-              placeholder={
+                placeholder={
                 isAtLimit
                   ? "Limite atingido"
-                  : "Pergunte sobre segurança, IA, cloud..."
+                  : "Pergunte o que quiser..."
               }
               disabled={isAtLimit}
               rows={1}
