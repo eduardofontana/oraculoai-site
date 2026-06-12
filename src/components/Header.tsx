@@ -28,7 +28,7 @@ export function Header() {
               href="/#planos"
               className="text-sm font-semibold text-secondary transition hover:text-primary"
             >
-              Hospedagem
+              Planos
             </Link>
             <Link
               href="/sobre"
