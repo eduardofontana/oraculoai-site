@@ -29,22 +29,12 @@ function checkRateLimit(ip: string): boolean {
 /*  Hugging Face                                                      */
 /* ------------------------------------------------------------------ */
 const HF_API_URL =
-  "https://api-inference.huggingface.co/models/gpt2";
+  "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2";
 
-const SYSTEM_PROMPT = `Você é o Oráculo, um assistente técnico amigável e inteligente.
-
-Você domina segurança cibernética, inteligência artificial, arquitetura de sistemas, desenvolvimento web, Linux, cloud, DevOps, automação e ferramentas open source. Mas também sabe conversar sobre outros assuntos de forma natural.
-
-REGRAS:
-- Seja natural, não pare um manual de instruções
-- Em tecnologia: seja técnico e didático com exemplos quando útil
-- Em segurança: mantenha sempre foco DEFENSIVO e educativo
-- Se o usuário pedir algo perigoso/ilegal, redirecione para alternativa segura
-- Se não souber algo (ex: clima agora, cotação), seja honesto
-- Responda em português claro`;
+const SYSTEM_PROMPT = `Você é o Oráculo, um assistente técnico amigável e inteligente. Você domina segurança cibernética, IA, arquitetura, Linux, cloud, DevOps, automação. Seja natural, didático e direto. Responda em português claro. Se não souber algo, seja honesto.`;
 
 function buildPrompt(userMessage: string): string {
-  return `Usuário: ${userMessage}\nOráculo:`;
+  return `<s>[INST] ${SYSTEM_PROMPT}\n\nUsuário: ${userMessage} [/INST]</s>`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -180,9 +170,10 @@ export async function POST(request: NextRequest) {
     try {
       data = JSON.parse(raw);
     } catch {
-      console.error("[Oráculo] Resposta não é JSON:", raw?.slice(0, 500));
+      const preview = raw?.slice(0, 300) ?? "vazio";
+      console.error("[Oráculo] Resposta não é JSON:", preview);
       return NextResponse.json(
-        { error: "Resposta inválida do serviço de IA." },
+        { error: `Resposta inválida da IA (status ${hfResponse.status}): ${preview}` },
         { status: 502 },
       );
     }
@@ -227,7 +218,7 @@ export async function POST(request: NextRequest) {
     }
 
     const errMsg = err instanceof Error
-      ? `${err.name}: ${err.message}${err.cause ? ` (cause: ${err.cause})` : ""}`
+      ? `${err.name}: ${err.message}${err.cause ? ` | cause: ${err.cause}` : ""}${(err as NodeJS.ErrnoException).code ? ` | code: ${(err as NodeJS.ErrnoException).code}` : ""}`
       : String(err);
 
     return NextResponse.json(
