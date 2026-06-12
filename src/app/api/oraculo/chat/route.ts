@@ -1,20 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import https from "node:https";
-import { Resolver } from "node:dns/promises";
-
-const dnsResolver = new Resolver();
-dnsResolver.setServers(["1.1.1.1", "8.8.8.8"]);
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const httpsAgent = new https.Agent({
-  keepAlive: true,
-  lookup: ((hostname: string, _options: any, callback: any) => {
-    dnsResolver
-      .resolve4(hostname)
-      .then(([address]) => callback(null, address, 4))
-      .catch((err: Error) => callback(err));
-  }) as any,
-});
 
 /* ------------------------------------------------------------------ */
 /*  Rate-limit                                                        */
@@ -38,53 +22,13 @@ function checkLimit(ip: string): boolean {
 /* ------------------------------------------------------------------ */
 /*  Hugging Face Serverless Inference API                             */
 /* ------------------------------------------------------------------ */
-const HF_HOST = "api-inference.huggingface.co";
-const HF_PATH =
-  "/models/mistralai/Mistral-7B-Instruct-v0.2";
+const HF_URL =
+  "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2";
 
 const SYSTEM_PROMPT = `Você é o Oráculo, um assistente técnico amigável e inteligente. Você domina segurança cibernética, IA, arquitetura, Linux, cloud, DevOps, automação. Seja natural, didático e direto. Responda em português claro. Se não souber algo, seja honesto.`;
 
 function buildPrompt(msg: string): string {
   return `<s>[INST] ${SYSTEM_PROMPT}\n\nUsuário: ${msg} [/INST]</s>`;
-}
-
-/* ------------------------------------------------------------------ */
-/*  HTTPS request com DNS custom                                      */
-/* ------------------------------------------------------------------ */
-function hfPost(bodyStr: string, token: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const req = https.request(
-      {
-        hostname: HF_HOST,
-        path: HF_PATH,
-        method: "POST",
-        agent: httpsAgent,
-        timeout: 15000,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          "Content-Length": Buffer.byteLength(bodyStr),
-        },
-      },
-      (res) => {
-        const chunks: Buffer[] = [];
-        res.on("data", (c: Buffer) => chunks.push(c));
-        res.on("end", () => {
-          const raw = Buffer.concat(chunks).toString("utf8");
-          resolve(JSON.stringify({ status: res.statusCode, body: raw }));
-        });
-      },
-    );
-
-    req.on("timeout", () => {
-      req.destroy();
-      reject(new Error("Timeout"));
-    });
-
-    req.on("error", (err) => reject(err));
-    req.write(bodyStr);
-    req.end();
-  });
 }
 
 /* ------------------------------------------------------------------ */
@@ -125,43 +69,49 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    /* ---- 4. Chamar HF com DNS custom ---- */
+    /* ---- 4. Chamar HF via fetch ---- */
     const prompt = buildPrompt(rawMessage);
-    const payload = JSON.stringify({
+    const payload = {
       inputs: prompt,
       parameters: { max_new_tokens: 384, temperature: 0.4, top_p: 0.9 },
+    };
+
+    console.log("[Oráculo] Chamando HF via fetch...");
+    const hfRes = await fetch(HF_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${hfToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(15000),
     });
 
-    console.log("[Oráculo] Chamando HF via https.request...");
-    const result = await hfPost(payload, hfToken);
-    const parsed = JSON.parse(result) as { status: number; body: string };
-
-    console.log("[Oráculo] Status:", parsed.status);
+    console.log("[Oráculo] Status:", hfRes.status);
 
     /* ---- 5. Tratar HTTP errors ---- */
-    if (parsed.status !== 200) {
-      const preview = parsed.body.slice(0, 300);
-      console.error(`[Oráculo] HF ${parsed.status}:`, preview);
+    if (!hfRes.ok) {
+      const text = await hfRes.text().catch(() => "");
+      const preview = text.slice(0, 300);
 
-      if (parsed.status === 503) {
+      if (hfRes.status === 503) {
         return NextResponse.json(
           { reply: "Modelo carregando. Tente novamente em alguns segundos." },
           { status: 200 },
         );
       }
 
-      // Se veio HTML, é erro de auth ou bloqueio
       if (preview.startsWith("<!DOCTYPE") || preview.startsWith("<html")) {
         return NextResponse.json(
           {
-            error: `IA retornou HTML (status ${parsed.status}). Verifique o scope do token HF: precisa ser "Make calls to Serverless Inference API".`,
+            error: `IA retornou HTML (status ${hfRes.status}). Verifique o scope do token HF: precisa ser "Make calls to Serverless Inference API".`,
           },
           { status: 502 },
         );
       }
 
       return NextResponse.json(
-        { error: `IA retornou erro (${parsed.status}): ${preview}` },
+        { error: `IA retornou erro (${hfRes.status}): ${preview}` },
         { status: 502 },
       );
     }
@@ -169,10 +119,11 @@ export async function POST(request: NextRequest) {
     /* ---- 6. Parsear JSON ---- */
     let data: unknown;
     try {
-      data = JSON.parse(parsed.body);
+      data = await hfRes.json();
     } catch {
+      const raw = await hfRes.text().catch(() => "");
       return NextResponse.json(
-        { error: `Resposta inválida: ${parsed.body.slice(0, 200)}` },
+        { error: `Resposta inválida: ${raw.slice(0, 200)}` },
         { status: 502 },
       );
     }
