@@ -1,4 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import https from "node:https";
+
+/* ------------------------------------------------------------------ */
+/*  Agente HTTPS com keep-alive para evitar conexões lentas           */
+/* ------------------------------------------------------------------ */
+const httpsAgent = new https.Agent({ keepAlive: true });
 
 /* ------------------------------------------------------------------ */
 /*  Rate-limit simples em memória (por IP)                            */
@@ -20,7 +26,7 @@ function checkRateLimit(ip: string): boolean {
 }
 
 /* ------------------------------------------------------------------ */
-/*  HUGGING FACE INFERENCE API                                        */
+/*  Hugging Face                                                      */
 /* ------------------------------------------------------------------ */
 const HF_API_URL =
   "https://api-inference.huggingface.co/models/gpt2";
@@ -41,6 +47,45 @@ function buildPrompt(userMessage: string): string {
   return `Usuário: ${userMessage}\nOráculo:`;
 }
 
+/* ------------------------------------------------------------------ */
+/*  Fetch com retry e timeout                                         */
+/* ------------------------------------------------------------------ */
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit & { agent?: https.Agent },
+  maxRetries = 2,
+): Promise<Response> {
+  let lastError: Error | null = null;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000); // max 8s
+
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal,
+      } as RequestInit);
+
+      clearTimeout(timeout);
+      return response;
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+      console.error(`[Oráculo] Tentativa ${attempt}/${maxRetries} falhou:`, lastError.message);
+
+      if (attempt < maxRetries) {
+        // Espera 1s antes de retentar
+        await new Promise((r) => setTimeout(r, 1000));
+      }
+    }
+  }
+
+  throw lastError ?? new Error("Fetch failed after retries");
+}
+
+/* ------------------------------------------------------------------ */
+/*  POST handler                                                      */
+/* ------------------------------------------------------------------ */
 export async function POST(request: NextRequest) {
   try {
     /* ---- 1. Validar body ---- */
@@ -80,7 +125,7 @@ export async function POST(request: NextRequest) {
     /* ---- 3. Chamar Hugging Face ---- */
     const hfToken = process.env.HF_TOKEN;
     if (!hfToken) {
-      console.error("[Oráculo] HF_TOKEN não configurado no ambiente");
+      console.error("[Oráculo] HF_TOKEN não configurado");
       return NextResponse.json(
         { error: "Serviço de IA indisponível no momento." },
         { status: 500 },
@@ -89,12 +134,9 @@ export async function POST(request: NextRequest) {
 
     const prompt = buildPrompt(rawMessage);
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 30000);
-
     console.log("[Oráculo] Enviando requisição para HF...");
 
-    const hfResponse = await fetch(HF_API_URL, {
+    const hfResponse = await fetchWithRetry(HF_API_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${hfToken}`,
@@ -103,40 +145,36 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         inputs: prompt,
         parameters: {
-          max_new_tokens: 512,
+          max_new_tokens: 256,
           temperature: 0.4,
           top_p: 0.9,
-          repetition_penalty: 1.05,
         },
       }),
-      signal: controller.signal,
     });
-
-    clearTimeout(timeout);
 
     console.log("[Oráculo] Resposta HF status:", hfResponse.status);
 
-    /* ---- 4. Tratar resposta da HF ---- */
+    /* ---- 4. Tratar resposta ---- */
     if (!hfResponse.ok) {
       const errorText = await hfResponse.text().catch(() => "Erro desconhecido");
       console.error(`[Oráculo] HF erro ${hfResponse.status}:`, errorText?.slice(0, 1000));
 
       if (hfResponse.status === 503) {
         return NextResponse.json(
-          { reply: "O modelo de IA está carregando. Aguarde 10s e tente novamente." },
+          { reply: "O modelo de IA está carregando. Aguarde alguns segundos e tente novamente." },
           { status: 200 },
         );
       }
 
       return NextResponse.json(
-        { error: `Erro do serviço de IA (${hfResponse.status}).` },
+        { error: `Serviço de IA retornou erro (${hfResponse.status}).` },
         { status: 502 },
       );
     }
 
     /* ---- 5. Parsear resposta ---- */
     const raw = await hfResponse.text();
-    console.log("[Oráculo] Resposta bruta (início):", raw?.slice(0, 300));
+    console.log("[Oráculo] Resposta (início):", raw?.slice(0, 300));
 
     let data: unknown;
     try {
@@ -152,14 +190,13 @@ export async function POST(request: NextRequest) {
     let reply = "";
 
     if (Array.isArray(data) && data.length > 0) {
-      const first = data[0] as Record<string, unknown>;
-      reply = (first?.generated_text as string) ?? "";
+      reply = (data[0] as Record<string, unknown>)?.generated_text as string ?? "";
     } else if (data && typeof data === "object") {
       const obj = data as Record<string, unknown>;
       if (obj.generated_text) {
         reply = obj.generated_text as string;
       } else if (obj.error) {
-        console.error("[Oráculo] HF retornou erro:", obj.error);
+        console.error("[Oráculo] HF erro:", obj.error);
         return NextResponse.json(
           { error: "O serviço de IA retornou um erro." },
           { status: 502 },
@@ -168,7 +205,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!reply) {
-      console.error("[Oráculo] Resposta vazia ou formato inesperado:", JSON.stringify(data).slice(0, 500));
+      console.error("[Oráculo] Resposta vazia:", JSON.stringify(data).slice(0, 500));
       return NextResponse.json(
         { error: "Resposta vazia do serviço de IA." },
         { status: 502 },
@@ -177,26 +214,22 @@ export async function POST(request: NextRequest) {
 
     /* ---- 6. Limpar ---- */
     reply = reply.trim();
-    // Remove tokens de template e prefixos residuais
     reply = reply
-      .replace(/<start_of_turn>|<end_of_turn>|<\|system\|>|<\|user\|>|<\|assistant\|>|<\/?s>|\[INST\]|\[\/INST\]/gi, "")
       .replace(/^Oráculo:\s*/i, "")
       .trim();
 
     return NextResponse.json({ reply }, { status: 200 });
   } catch (err: unknown) {
-    if (err instanceof DOMException && err.name === "AbortError") {
-      console.error("[Oráculo] Timeout da requisição");
-      return NextResponse.json(
-        { error: "Requisição excedeu o tempo limite. Tente novamente." },
-        { status: 504 },
-      );
+    if (err instanceof Error) {
+      console.error("[Oráculo] Erro:", err.message);
+      if (err.cause) console.error("[Oráculo] Causa:", err.cause);
+      if ("code" in err) console.error("[Oráculo] Código:", (err as NodeJS.ErrnoException).code);
     }
-    const errMsg = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
-    console.error("[Oráculo] Exceção não capturada:", errMsg);
-    if (err instanceof Error && err.stack) {
-      console.error("[Oráculo] Stack:", err.stack);
-    }
+
+    const errMsg = err instanceof Error
+      ? `${err.name}: ${err.message}${err.cause ? ` (cause: ${err.cause})` : ""}`
+      : String(err);
+
     return NextResponse.json(
       { error: `Erro interno: ${errMsg}` },
       { status: 500 },
