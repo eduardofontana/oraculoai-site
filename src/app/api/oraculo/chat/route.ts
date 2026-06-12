@@ -24,7 +24,7 @@ function checkLimit(ip: string): boolean {
 /*  Documentação: https://huggingface.co/docs/api-inference           */
 /* ------------------------------------------------------------------ */
 const HF_API_BASE = "https://router.huggingface.co/v1";
-const HF_MODEL = "mistralai/Mistral-7B-Instruct-v0.2";
+const HF_MODEL = "Qwen/Qwen2.5-7B-Instruct";
 
 const SYSTEM_PROMPT = `Você é o Oráculo, um assistente técnico amigável e inteligente. Você domina segurança cibernética, IA, arquitetura, Linux, cloud, DevOps, automação. Seja natural, didático e direto. Responda em português claro. Se não souber algo, seja honesto.`;
 
