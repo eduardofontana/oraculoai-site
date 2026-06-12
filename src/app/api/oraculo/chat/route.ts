@@ -2,11 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 /* ------------------------------------------------------------------ */
 /*  Rate-limit simples em memória (por IP)                            */
-/*  Reseta quando a Vercel faz cold-start (não há persistência)       */
 /* ------------------------------------------------------------------ */
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const MAX_MESSAGES = 20;
-const RATE_WINDOW_MS = 60 * 60 * 1000; // 1 hora
+const RATE_WINDOW_MS = 60 * 60 * 1000;
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
@@ -24,23 +23,22 @@ function checkRateLimit(ip: string): boolean {
 /*  HUGGING FACE INFERENCE API                                        */
 /* ------------------------------------------------------------------ */
 const HF_API_URL =
-  "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta";
+  "https://api-inference.huggingface.co/models/google/gemma-2-2b-it";
 
 const SYSTEM_PROMPT = `Você é o Oráculo, um assistente técnico amigável e inteligente.
 
-Você domina segurança cibernética, inteligência artificial, arquitetura de sistemas, desenvolvimento web, Linux, cloud, DevOps, automação e ferramentas open source — esse é seu ponto forte. Mas você também sabe conversar sobre outros assuntos de forma natural, sem ser robótico.
+Você domina segurança cibernética, inteligência artificial, arquitetura de sistemas, desenvolvimento web, Linux, cloud, DevOps, automação e ferramentas open source. Mas também sabe conversar sobre outros assuntos de forma natural.
 
 REGRAS:
-- Seja natural e converse de forma solta, não pare um manual
-- Em tecnologia: seja técnico, didático e direto, com exemplos quando útil
+- Seja natural, não pare um manual de instruções
+- Em tecnologia: seja técnico e didático com exemplos quando útil
 - Em segurança: mantenha sempre foco DEFENSIVO e educativo
 - Se o usuário pedir algo perigoso/ilegal, redirecione para alternativa segura
-- Se perguntar algo que você não sabe (ex: clima agora, cotação), seja honesto: "não tenho acesso a dados em tempo real"
-- Evite: espiritualidade, misticismo, adivinhação, instruções ofensivas, exploração não autorizada, malware
+- Se não souber algo (ex: clima agora, cotação), seja honesto
 - Responda em português claro`;
 
 function buildPrompt(userMessage: string): string {
-  return `<|system|>\n${SYSTEM_PROMPT}\n<|user|>\n${userMessage}\n<|assistant|>\n`;
+  return `<start_of_turn>user\n${SYSTEM_PROMPT}\n\nPergunta do usuário: ${userMessage}<end_of_turn>\n<start_of_turn>model\n`;
 }
 
 export async function POST(request: NextRequest) {
@@ -74,9 +72,7 @@ export async function POST(request: NextRequest) {
       "anonymous";
     if (!checkRateLimit(ip)) {
       return NextResponse.json(
-        {
-          error: `Limite de ${MAX_MESSAGES} mensagens por sessão excedido. Recarregue a página para continuar.`,
-        },
+        { error: `Limite de ${MAX_MESSAGES} mensagens excedido. Recarregue a página.` },
         { status: 429 },
       );
     }
@@ -84,7 +80,7 @@ export async function POST(request: NextRequest) {
     /* ---- 3. Chamar Hugging Face ---- */
     const hfToken = process.env.HF_TOKEN;
     if (!hfToken) {
-      console.error("[Oráculo] HF_TOKEN não configurado");
+      console.error("[Oráculo] HF_TOKEN não configurado no ambiente");
       return NextResponse.json(
         { error: "Serviço de IA indisponível no momento." },
         { status: 500 },
@@ -94,7 +90,9 @@ export async function POST(request: NextRequest) {
     const prompt = buildPrompt(rawMessage);
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000);
+    const timeout = setTimeout(() => controller.abort(), 30000);
+
+    console.log("[Oráculo] Enviando requisição para HF...");
 
     const hfResponse = await fetch(HF_API_URL, {
       method: "POST",
@@ -109,7 +107,6 @@ export async function POST(request: NextRequest) {
           temperature: 0.4,
           top_p: 0.9,
           repetition_penalty: 1.05,
-          return_full_text: false,
         },
       }),
       signal: controller.signal,
@@ -117,37 +114,35 @@ export async function POST(request: NextRequest) {
 
     clearTimeout(timeout);
 
+    console.log("[Oráculo] Resposta HF status:", hfResponse.status);
+
     /* ---- 4. Tratar resposta da HF ---- */
     if (!hfResponse.ok) {
       const errorText = await hfResponse.text().catch(() => "Erro desconhecido");
-      console.error(
-        `[Oráculo] HF API error ${hfResponse.status}: ${errorText}`,
-      );
+      console.error(`[Oráculo] HF erro ${hfResponse.status}:`, errorText?.slice(0, 1000));
 
-      // 503 = model loading (comum no plano gratuito)
       if (hfResponse.status === 503) {
         return NextResponse.json(
-          {
-            reply:
-              "O modelo de IA está sendo carregado. Aguarde alguns segundos e tente novamente.",
-          },
+          { reply: "O modelo de IA está carregando. Aguarde 10s e tente novamente." },
           { status: 200 },
         );
       }
 
       return NextResponse.json(
-        { error: `Falha na comunicação com o serviço de IA (${hfResponse.status}).` },
+        { error: `Erro do serviço de IA (${hfResponse.status}).` },
         { status: 502 },
       );
     }
 
     /* ---- 5. Parsear resposta ---- */
     const raw = await hfResponse.text();
+    console.log("[Oráculo] Resposta bruta (início):", raw?.slice(0, 300));
+
     let data: unknown;
     try {
       data = JSON.parse(raw);
     } catch {
-      console.error("[Oráculo] Resposta inválida da HF (não é JSON):", raw.slice(0, 500));
+      console.error("[Oráculo] Resposta não é JSON:", raw?.slice(0, 500));
       return NextResponse.json(
         { error: "Resposta inválida do serviço de IA." },
         { status: 502 },
@@ -156,48 +151,51 @@ export async function POST(request: NextRequest) {
 
     let reply = "";
 
-    if (Array.isArray(data)) {
-      reply = (data[0] as Record<string, unknown>)?.generated_text as string ?? "";
-    } else if (data && typeof data === "object" && "generated_text" in (data as Record<string, unknown>)) {
-      reply = (data as Record<string, unknown>).generated_text as string;
-    } else if (data && typeof data === "object" && "error" in (data as Record<string, unknown>)) {
-      console.error("[Oráculo] Erro retornado pela HF:", (data as Record<string, unknown>).error);
-      return NextResponse.json(
-        { error: "O serviço de IA retornou um erro." },
-        { status: 502 },
-      );
+    if (Array.isArray(data) && data.length > 0) {
+      const first = data[0] as Record<string, unknown>;
+      reply = (first?.generated_text as string) ?? "";
+    } else if (data && typeof data === "object") {
+      const obj = data as Record<string, unknown>;
+      if (obj.generated_text) {
+        reply = obj.generated_text as string;
+      } else if (obj.error) {
+        console.error("[Oráculo] HF retornou erro:", obj.error);
+        return NextResponse.json(
+          { error: "O serviço de IA retornou um erro." },
+          { status: 502 },
+        );
+      }
     }
 
     if (!reply) {
+      console.error("[Oráculo] Resposta vazia ou formato inesperado:", JSON.stringify(data).slice(0, 500));
       return NextResponse.json(
-        { error: "O serviço de IA retornou uma resposta vazia." },
+        { error: "Resposta vazia do serviço de IA." },
         { status: 502 },
       );
     }
 
-    /* ---- 6. Limpar resposta ---- */
+    /* ---- 6. Limpar ---- */
     reply = reply.trim();
-    // Remove tags residuais do prompt
+    // Remove tokens de template do modelo
     reply = reply
-      .replace(/<\|system\|>|<\|user\|>|<\|assistant\|>|<\/?s>|<\/?INST>|\[INST\]|\[\/INST\]/gi, "")
+      .replace(/<start_of_turn>|<end_of_turn>|<\|system\|>|<\|user\|>|<\|assistant\|>|<\/?s>|\[INST\]|\[\/INST\]/gi, "")
       .trim();
-
-    // Se a resposta começar com o prompt do usuário, remove
-    const userPrefix = rawMessage.slice(0, 60);
-    if (reply.startsWith(userPrefix)) {
-      reply = reply.slice(userPrefix.length).trim();
-    }
 
     return NextResponse.json({ reply }, { status: 200 });
   } catch (err: unknown) {
     if (err instanceof DOMException && err.name === "AbortError") {
+      console.error("[Oráculo] Timeout da requisição");
       return NextResponse.json(
-        { error: "A requisição excedeu o tempo limite. Tente novamente." },
+        { error: "Requisição excedeu o tempo limite. Tente novamente." },
         { status: 504 },
       );
     }
-    const errMsg = err instanceof Error ? err.message : "Erro desconhecido";
-    console.error("[Oráculo] Erro interno:", errMsg);
+    const errMsg = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+    console.error("[Oráculo] Exceção não capturada:", errMsg);
+    if (err instanceof Error && err.stack) {
+      console.error("[Oráculo] Stack:", err.stack);
+    }
     return NextResponse.json(
       { error: "Erro interno do servidor." },
       { status: 500 },
