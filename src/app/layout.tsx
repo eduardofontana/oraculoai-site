@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { NeuralNetwork } from "@/components/NeuralNetwork";
+import { OraculoTrigger } from "@/components/OraculoChat";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { ToolSearch } from "@/components/ToolSearch";
@@ -50,6 +51,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Header />
           <WhatsAppButton />
+          <OraculoTrigger />
           <Analytics />
           <ToolSearch />
           <div className="flex-1 pt-16">{children}</div>
