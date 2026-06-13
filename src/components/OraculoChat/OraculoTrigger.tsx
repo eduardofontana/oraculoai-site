@@ -14,7 +14,7 @@ export function OraculoTrigger() {
       {/* ── Botão flutuante ── */}
       <button
         onClick={() => setIsOpen(true)}
-        className="group fixed right-20 bottom-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-lg shadow-[0_0_24px_var(--glow)] transition-all hover:shadow-[0_0_40px_var(--glow-strong)] hover:scale-105"
+        className="group fixed right-5 bottom-20 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-lg shadow-[0_0_24px_var(--glow)] transition-all hover:shadow-[0_0_40px_var(--glow-strong)] hover:scale-105"
         aria-label="Conversar com o Oráculo"
       >
         {/* Ícone de chip/neural */}
@@ -41,7 +41,7 @@ export function OraculoTrigger() {
       </button>
 
       {/* ── Tooltip (só visible em desktop, no hover) ── */}
-      <div className="fixed right-20 bottom-20 z-50 hidden md:block pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div className="fixed right-5 bottom-36 z-50 hidden md:block pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <div className="rounded-xl border border-border bg-elevated px-4 py-2.5 text-sm font-medium text-primary shadow-lg backdrop-blur-xl">
           <div className="flex items-center gap-2">
             <svg
