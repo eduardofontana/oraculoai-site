@@ -1,21 +1,31 @@
 "use client";
 
+import { useCallback } from "react";
 import { trackWhatsAppClick } from "@/lib/analytics";
 
+/** Monta o link do WhatsApp em runtime, sem expor o número no HTML */
+function buildWaLost(phone: string, msg: string): string {
+  const clean = phone.replace(/[^\d]/g, "");
+  return `https://wa.me/${clean}?text=${encodeURIComponent(msg)}`;
+}
+
 export function WhatsAppButton() {
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
-  const message = encodeURIComponent(
-    "Olá, vim pelo site OraculoAI e gostaria de conversar sobre soluções de IA para minha empresa.",
-  );
-  const href = `https://wa.me/${number}?text=${message}`;
+  /* Parte do número obfusCADA no bundle, nunca no HTML */
+  const digits = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
+
+  const handleClick = useCallback(() => {
+    trackWhatsAppClick("floating_button");
+    const msg =
+      "Olá, vim pelo site OraculoAI e gostaria de conversar sobre soluções de IA para minha empresa.";
+    const url = buildWaLost(digits, msg);
+    window.open(url, "_blank", "noopener,noreferrer");
+  }, [digits]);
 
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      onClick={() => trackWhatsAppClick("floating_button")}
-      className="group fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all hover:scale-110 hover:shadow-[0_0_32px_rgba(37,211,102,0.4)]"
+    <button
+      type="button"
+      onClick={handleClick}
+      className="group fixed bottom-5 right-5 z-50 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all hover:scale-110 hover:shadow-[0_0_32px_rgba(37,211,102,0.4)]"
       aria-label="Falar no WhatsApp"
     >
       <svg
@@ -32,6 +42,6 @@ export function WhatsAppButton() {
           <polyline points="20 6 9 17 4 12" />
         </svg>
       </span>
-    </a>
+    </button>
   );
 }
