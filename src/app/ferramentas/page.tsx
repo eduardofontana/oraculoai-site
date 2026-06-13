@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next"
 import { ToolCard } from "@/components/tools/ToolCard"
+import { PwnedPasswordBanner } from "@/components/tools/PwnedPasswordBanner"
 import { tools, categories } from "@/data/tools"
 
 export const metadata: Metadata = {
@@ -21,8 +22,13 @@ export default function FerramentasPage() {
         </p>
       </div>
 
+      {/* Banner em destaque — Verificador de Senha Vazada */}
+      <div className="mt-14">
+        <PwnedPasswordBanner />
+      </div>
+
       <div className="mt-14 space-y-10">
-        {categories.map((category, i) => (
+        {categories.map((category) => (
           <section key={category}>
             <h2 className="mb-4 font-display text-xl font-bold text-primary">
               {category}

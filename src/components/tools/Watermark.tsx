@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useState, useRef } from "react"
 
 export function Watermark() {
@@ -135,11 +136,15 @@ export function Watermark() {
         <>
           {/* Preview original */}
           <div className="rounded-lg border border-border bg-bg p-2">
-            <img
-              src={imagem}
-              alt="Preview"
-              className="max-h-48 w-full rounded object-contain"
-            />
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded bg-bg">
+              <Image
+                src={imagem}
+                alt="Preview"
+                fill
+                unoptimized
+                className="object-contain"
+              />
+            </div>
           </div>
 
           {/* Configurações */}
@@ -211,11 +216,15 @@ export function Watermark() {
           {resultadoUrl && (
             <div className="space-y-3">
               <div className="rounded-lg border border-border bg-bg p-2">
-                <img
-                  src={resultadoUrl}
-                  alt="Resultado"
-                  className="max-h-64 w-full rounded object-contain"
-                />
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded bg-bg">
+                  <Image
+                    src={resultadoUrl}
+                    alt="Resultado"
+                    fill
+                    unoptimized
+                    className="object-contain"
+                  />
+                </div>
               </div>
               <button
                 onClick={handleDownload}

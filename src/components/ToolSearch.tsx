@@ -15,7 +15,14 @@ export function ToolSearch() {
     function onKeyDown(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault()
-        setOpen((prev) => !prev)
+        setOpen((prev) => {
+          const nextOpen = !prev
+          if (nextOpen) {
+            setQuery("")
+            setSelectedIndex(0)
+          }
+          return nextOpen
+        })
       }
       if (e.key === "Escape") {
         setOpen(false)
@@ -28,8 +35,6 @@ export function ToolSearch() {
   useEffect(() => {
     if (open) {
       requestAnimationFrame(() => inputRef.current?.focus())
-      setQuery("")
-      setSelectedIndex(0)
     }
   }, [open])
 
@@ -42,10 +47,6 @@ export function ToolSearch() {
         t.description.toLowerCase().includes(q) ||
         t.keywords?.some((kw) => kw.toLowerCase().includes(q))
     )
-  }, [query])
-
-  useEffect(() => {
-    setSelectedIndex(0)
   }, [query])
 
   const handleKeyDown = useCallback(
@@ -100,7 +101,10 @@ export function ToolSearch() {
             type="text"
             placeholder="Buscar ferramentas…"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value)
+              setSelectedIndex(0)
+            }}
             onKeyDown={handleKeyDown}
             className="flex-1 bg-transparent text-base text-primary outline-none placeholder:text-muted"
             aria-activedescendant={

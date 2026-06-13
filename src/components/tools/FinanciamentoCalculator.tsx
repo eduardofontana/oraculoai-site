@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { CopyButton } from "./CopyButton"
 
 interface Mes {
   mes: number
@@ -15,13 +14,6 @@ function format(valor: number): string {
   return valor.toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })
-}
-
-function formatNumber(valor: number): string {
-  return valor.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })

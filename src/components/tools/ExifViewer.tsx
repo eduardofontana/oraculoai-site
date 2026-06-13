@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useState } from "react"
 import { extrairExif, formatExifValue, type ExifResult } from "@/lib/exif"
 
@@ -62,11 +63,15 @@ export function ExifViewer() {
       <div className="rounded-lg border border-border bg-bg p-6 text-center">
         {preview ? (
           <div className="space-y-4">
-            <img
-              src={preview}
-              alt="Preview"
-              className="mx-auto max-h-48 rounded-lg object-contain"
-            />
+            <div className="relative mx-auto aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-lg bg-bg">
+              <Image
+                src={preview}
+                alt="Preview"
+                fill
+                unoptimized
+                className="object-contain"
+              />
+            </div>
             <p className="text-sm text-secondary">{file?.name}</p>
           </div>
         ) : (

@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { calcularJurosCompostos } from "@/lib/juros"
-import { CopyButton } from "./CopyButton"
 
 export function JurosCompostos() {
   const [capital, setCapital] = useState("1000")

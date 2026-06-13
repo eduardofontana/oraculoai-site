@@ -18,10 +18,14 @@ export function PopularTools() {
   const [topSlugs, setTopSlugs] = useState<string[]>(FALLBACK_SLUGS)
 
   useEffect(() => {
-    const slugs = getTopTools(6)
-    if (slugs.length >= 3) {
-      setTopSlugs(slugs)
-    }
+    const frame = requestAnimationFrame(() => {
+      const slugs = getTopTools(6)
+      if (slugs.length >= 3) {
+        setTopSlugs(slugs)
+      }
+    })
+
+    return () => cancelAnimationFrame(frame)
   }, [])
 
   const topTools = tools.filter((t) => topSlugs.includes(t.slug))

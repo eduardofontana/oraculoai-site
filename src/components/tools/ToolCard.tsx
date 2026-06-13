@@ -10,9 +10,13 @@ export function ToolCard({ tool }: { tool: Tool }) {
   const [usage, setUsage] = useState(0)
 
   useEffect(() => {
-    const u = getToolUsage(tool.slug)
-    setUsage(u)
-    setPopular(u >= 3)
+    const frame = requestAnimationFrame(() => {
+      const u = getToolUsage(tool.slug)
+      setUsage(u)
+      setPopular(u >= 3)
+    })
+
+    return () => cancelAnimationFrame(frame)
   }, [tool.slug])
 
   return (

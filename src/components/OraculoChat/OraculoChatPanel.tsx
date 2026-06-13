@@ -36,7 +36,6 @@ export function OraculoChatPanel({ onClose }: Props) {
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -80,14 +79,9 @@ export function OraculoChatPanel({ onClose }: Props) {
     const text = input.trim();
     if (!text || isLoading) return;
 
-    setError(null);
-
     // Limite por sessão
     const userMsgCount = messages.filter((m) => m.role === "user").length;
     if (userMsgCount >= MAX_MESSAGES) {
-      setError(
-        `Limite de ${MAX_MESSAGES} mensagens por sessão atingido. Recarregue a página para continuar.`,
-      );
       return;
     }
 
@@ -150,7 +144,7 @@ export function OraculoChatPanel({ onClose }: Props) {
 
   /* ── Retry para mensagens de erro ── */
   const handleRetry = useCallback(
-    (errorContent: string) => {
+    () => {
       // Encontra a última mensagem do usuário anterior ao erro
       const lastUserMsg = [...messages]
         .reverse()
@@ -296,7 +290,7 @@ export function OraculoChatPanel({ onClose }: Props) {
                 {/* Botão retry para erros */}
                 {msg.role === "error" && (
                   <button
-                    onClick={() => handleRetry(msg.content)}
+                    onClick={() => handleRetry()}
                     className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-semibold text-accent transition-all hover:bg-accent/20"
                   >
                     <svg

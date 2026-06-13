@@ -473,6 +473,14 @@ export const tools: Tool[] = [
     description: "Adicione marcas d'água personalizadas em imagens: texto, posição e opacidade configuráveis.",
     keywords: ["marca d'água", "watermark", "imagem", "proteção", "direitos autorais", "sobreposição"],
   },
+  // ─── Segurança ───
+  {
+    title: "Verificador de Senha Vazada",
+    slug: "verificador-senha-vazada",
+    category: "Segurança",
+    description: "Descubra se sua senha já foi exposta em vazamentos de dados. Consulta anônima via k-anonymity.",
+    keywords: ["senha", "vazamento", "segurança", "hibp", "pwned", "password", "breach"],
+  },
 ]
 
 export const categories = Array.from(new Set(tools.map((t) => t.category)))

@@ -45,30 +45,6 @@ function converterCentenas(n: number): string {
   return result
 }
 
-function converterMilhar(n: number): string {
-  if (n === 0) return "zero"
-
-  const milhares = Math.floor(n / 1000)
-  const resto = n % 1000
-
-  let result = ""
-
-  if (milhares > 0) {
-    if (milhares === 1) {
-      result = "mil"
-    } else {
-      result = converterCentenas(milhares) + " mil"
-    }
-  }
-
-  if (resto > 0) {
-    if (result) result += " e "
-    result += converterCentenas(resto)
-  }
-
-  return result
-}
-
 /**
  * Converte um número (0 a 999.999.999) para sua forma por extenso em português.
  * Ex: 123 → "cento e vinte e três"

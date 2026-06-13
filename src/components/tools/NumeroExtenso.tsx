@@ -55,7 +55,7 @@ export function NumeroExtenso() {
           onChange={(e) => setModoMonetario(e.target.checked)}
           className="h-4 w-4 rounded border-border bg-card text-accent"
         />
-        Modo monetário (ex: R$ 1.234,56 → "um mil duzentos e trinta e quatro reais e cinquenta e seis centavos")
+        Modo monetário (ex: R$ 1.234,56 → &quot;um mil duzentos e trinta e quatro reais e cinquenta e seis centavos&quot;)
       </label>
 
       <button

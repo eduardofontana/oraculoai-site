@@ -30,8 +30,6 @@ export const MOEDAS: Record<string, string> = {
   BTC: "Bitcoin",
 }
 
-const MOEDAS_SLUG = Object.keys(MOEDAS).join(",")
-
 export interface ResultadoConversao {
   valorOriginal: number
   moedaOrigem: string

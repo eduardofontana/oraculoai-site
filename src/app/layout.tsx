@@ -36,6 +36,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${nunito.variable} antialiased dark`}
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
     >
       <body className="min-h-screen flex flex-col">
         <Script

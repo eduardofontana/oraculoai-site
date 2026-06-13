@@ -131,7 +131,6 @@ export function formatSQL(sql: string): string {
   const indentUnit = "  "
   let indent = 0
   let result = ""
-  let lastToken = ""
 
   const isMajorKeyword = (token: string) =>
     ["SELECT", "FROM", "WHERE", "INSERT", "UPDATE", "DELETE",
@@ -152,7 +151,6 @@ export function formatSQL(sql: string): string {
       result += "(\n"
       indent++
       result += indentUnit.repeat(indent)
-      lastToken = token
       continue
     }
 
@@ -160,21 +158,18 @@ export function formatSQL(sql: string): string {
     if (token === ")") {
       indent = Math.max(0, indent - 1)
       result += "\n" + indentUnit.repeat(indent) + ")"
-      lastToken = token
       continue
     }
 
     // Vírgula: nova linha
     if (token === ",") {
       result += ",\n" + indentUnit.repeat(indent)
-      lastToken = token
       continue
     }
 
     // Ponto e vírgula: nova linha
     if (token === ";") {
       result += ";\n"
-      lastToken = token
       continue
     }
 
@@ -184,12 +179,10 @@ export function formatSQL(sql: string): string {
       if (token === "AND" || token === "OR") {
         result += "\n" + indentUnit.repeat(Math.max(1, indent))
         result += token + " "
-        lastToken = token
         continue
       }
       result += "\n" + indentUnit.repeat(indent)
       result += token + " "
-      lastToken = token
       continue
     }
 
@@ -198,12 +191,10 @@ export function formatSQL(sql: string): string {
       if (result && !result.endsWith(" ") && !result.endsWith("\n")) {
         result += " "
       }
-      lastToken = token
       continue
     }
 
     result += token + " "
-    lastToken = token
   }
 
   // Limpa espaços extras no final das linhas

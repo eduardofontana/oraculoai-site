@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
   gerarBarcode,
   validarFormato,
@@ -8,7 +8,6 @@ import {
   DEFAULT_OPTIONS,
   type BarcodeOptions,
 } from "@/lib/barcode"
-import { CopyButton } from "./CopyButton"
 
 export function BarcodeGenerator() {
   const [value, setValue] = useState("1234567890")
@@ -16,9 +15,8 @@ export function BarcodeGenerator() {
   const [svg, setSvg] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const svgRef = useRef<HTMLDivElement>(null)
 
-  const generate = async () => {
+  const generate = useCallback(async () => {
     const err = validarFormato(value, options.format)
     if (err) {
       setError(err)
@@ -35,11 +33,15 @@ export function BarcodeGenerator() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [options, value])
 
   useEffect(() => {
-    if (value) generate()
-  }, [])
+    const frame = requestAnimationFrame(() => {
+      if (value) void generate()
+    })
+
+    return () => cancelAnimationFrame(frame)
+  }, [generate, value])
 
   const downloadSvg = () => {
     if (!svg) return
@@ -188,7 +190,6 @@ export function BarcodeGenerator() {
       {svg && !error && (
         <div className="space-y-4">
           <div
-            ref={svgRef}
             className="flex justify-center rounded-lg border border-border bg-white p-6"
             dangerouslySetInnerHTML={{ __html: svg }}
           />
