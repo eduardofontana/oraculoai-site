@@ -23,13 +23,14 @@ CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads (created_at DESC);
 -- Row-Level Security: permitir INSERT anônimo, negar SELECT/UPDATE/DELETE
 ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "leads_insert_anon" ON leads
+DROP POLICY IF EXISTS leads_insert_anon ON leads;
+CREATE POLICY leads_insert_anon ON leads
   FOR INSERT
   TO anon
   WITH CHECK (true);
 
--- Bloquear SELECT/UPDATE/DELETE para anon
-CREATE POLICY "leads_no_select" ON leads
+DROP POLICY IF EXISTS leads_no_select ON leads;
+CREATE POLICY leads_no_select ON leads
   FOR SELECT
   TO anon
   USING (false);
@@ -46,8 +47,8 @@ CREATE TABLE IF NOT EXISTS rate_limits (
 -- RLS: ninguém acessa a tabela diretamente — tudo via RPC SECURITY DEFINER
 ALTER TABLE rate_limits ENABLE ROW LEVEL SECURITY;
 
--- Bloquear todo acesso direto pela API (só a função RPC consegue ler/escrever)
-CREATE POLICY "rate_limits_no_access" ON rate_limits
+DROP POLICY IF EXISTS rate_limits_no_access ON rate_limits;
+CREATE POLICY rate_limits_no_access ON rate_limits
   FOR ALL
   TO anon
   USING (false);

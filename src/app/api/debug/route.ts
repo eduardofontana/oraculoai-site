@@ -2,7 +2,6 @@
 import { getSupabase } from "@/lib/supabase";
 
 export async function POST(request: NextRequest) {
-  // Gather diagnostic info BEFORE any risky operation
   const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const info: Record<string, unknown> = {
@@ -10,12 +9,11 @@ export async function POST(request: NextRequest) {
     hasUrl: !!rawUrl,
     hasKey: !!rawKey,
     urlLength: (rawUrl ?? "").length,
-    urlStart: (rawUrl ?? "").slice(0, 35),
+    urlFull: rawUrl ?? "(undefined)",
     urlIsHttp:
       (rawUrl ?? "").startsWith("http://") ||
       (rawUrl ?? "").startsWith("https://"),
-    keyLength: (rawKey ?? "").length,
-    keyStart: (rawKey ?? "").slice(0, 12),
+    keyPrefix: (rawKey ?? "").slice(0, 15),
   };
 
   try {
@@ -25,19 +23,32 @@ export async function POST(request: NextRequest) {
     info.supabaseType = typeof supabase;
 
     if (supabase) {
-      info.step = "insert-test";
+      // Test 1: simple count query (should work even with RLS if table exists)
+      info.step = "test-count";
       try {
-        const { data, error } = await (
-          supabase.from("leads") as any
-        ).insert({
-          nome: "TESTE DIAG",
-          email: "diag@debug.com",
+        const { count, error: countError } = await supabase
+          .from("leads")
+          .select("*", { count: "exact", head: true });
+        info.countResult = count ?? null;
+        info.countError = countError?.message ?? null;
+        info.countCode = countError?.code ?? null;
+      } catch (e: unknown) {
+        info.countThrow = e instanceof Error ? e.message : String(e);
+      }
+
+      // Test 2: insert WITHOUT select
+      info.step = "test-insert";
+      try {
+        const { data, error } = await (supabase.from("leads") as any).insert({
+          nome: "TESTE DEBUG",
+          email: "debug@test.com",
           whatsapp: "5511999999999",
-          mensagem: "Diagnostico automatico",
+          mensagem: "Teste de insercao",
           origem: "debug",
-        }).select();
+        });
         info.insertError = error?.message ?? null;
-        info.insertData = data ? "ok" : "no data";
+        info.insertCode = error?.code ?? null;
+        info.insertData = JSON.stringify(data);
       } catch (e: unknown) {
         info.insertThrow = e instanceof Error ? e.message : String(e);
       }
@@ -51,10 +62,6 @@ export async function POST(request: NextRequest) {
         ...info,
         step: "catch",
         fatal: err instanceof Error ? err.message : String(err),
-        stack:
-          err instanceof Error
-            ? (err.stack ?? "").split("\n").slice(0, 6)
-            : [],
       },
       { status: 500 },
     );
