@@ -1,25 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { env } from "@/lib/env";
 import { validateOrigin } from "@/lib/csrf";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 /* ------------------------------------------------------------------ */
-/*  Rate-limit                                                        */
+/*  Rate-limit (distribuído via Upstash ou in-memory fallback)        */
 /* ------------------------------------------------------------------ */
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const MAX_MSGS = 20;
-const WINDOW_MS = 60 * 60 * 1000;
-
-function checkLimit(ip: string): boolean {
-  const now = Date.now();
-  const e = rateLimitMap.get(ip);
-  if (!e || now > e.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + WINDOW_MS });
-    return true;
-  }
-  if (e.count >= MAX_MSGS) return false;
-  e.count++;
-  return true;
-}
 
 /* ------------------------------------------------------------------ */
 /*  Hugging Face Inference Providers (OpenAI-compatible)              */
@@ -61,7 +48,11 @@ export async function POST(request: NextRequest) {
       request.headers.get("x-real-ip") ??
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
       "anonymous";
-    if (!checkLimit(ip)) {
+    const rl = await checkRateLimit(`chat:${ip}`, {
+      limit: MAX_MSGS,
+      windowMs: 60 * 60 * 1000,
+    });
+    if (!rl.success) {
       return NextResponse.json(
         { error: `Limite de ${MAX_MSGS} mensagens excedido.` },
         { status: 429 },
