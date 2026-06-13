@@ -76,7 +76,6 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2572298012241654"
           crossOrigin="anonymous"
           strategy="afterInteractive"
-          integrity="sha384-mlCgFDvtPKcWmC+YNwxGzLRhfBmPEYIN2s5r8frZcDCh5E1e6h3INuLUtRFe2Nx"
         />
 
         {/* ── Google Analytics 4 ── */}
