@@ -43,6 +43,15 @@ CREATE TABLE IF NOT EXISTS rate_limits (
   reset_at BIGINT NOT NULL
 );
 
+-- RLS: ninguém acessa a tabela diretamente — tudo via RPC SECURITY DEFINER
+ALTER TABLE rate_limits ENABLE ROW LEVEL SECURITY;
+
+-- Bloquear todo acesso direto pela API (só a função RPC consegue ler/escrever)
+CREATE POLICY "rate_limits_no_access" ON rate_limits
+  FOR ALL
+  TO anon
+  USING (false);
+
 -- -----------------------------------------------------------
 -- 3. Função atômica de Rate Limit (executada via RPC)
 -- -----------------------------------------------------------
