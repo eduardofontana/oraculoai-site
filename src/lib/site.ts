@@ -1,25 +1,25 @@
 export const site = {
   name: "OráculoAI",
   shortName: "Oráculo AI",
-  slogan: "IA aplicada para gerar resultados reais no seu negócio",
+  slogan: "IA que o seu negócio merece — com resultados que você sente na prática",
   heroSubtitle:
-    "Implementamos agentes de IA, automações inteligentes e soluções corporativas para aumentar produtividade, reduzir custos e acelerar crescimento.",
+    "A gente cria agentes inteligentes, automatiza processos e constrói soluções que realmente se encaixam no que sua empresa precisa. Tudo sem complicação, feito com cuidado e pensando no que importa pra você.",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
   location: "Atendimento remoto para Brasil e exterior",
   services: [
     {
       title: "Criação de Sites",
       description:
-        "Sites institucionais e landing pages com foco em performance e conversão.",
-      bullets: ["Landing pages de alta conversão", "Sites institucionais", "Manutenção e otimização contínua"],
+        "Sites institucionais e landing pages que transmitem profissionalismo — e convertem visitantes em clientes.",
+      bullets: ["Landing pages feitas pra converter", "Sites institucionais com a cara do seu negócio", "Manutenção e otimização contínua"],
       href: "/servicos/desenvolvimento-web",
       icon: "globe",
-      highlight: "Sob medida para o seu negócio",
+      highlight: "Feito sob medida pra você",
     },
     {
       title: "Hospedagem Gerenciada",
       description:
-        "Infraestrutura em nuvem com suporte técnico, migração assistida e monitoramento ativo.",
+        "Infraestrutura em nuvem com acompanhamento de perto, migração sem dor de cabeça e monitoramento ativo.",
       bullets: ["Hospedagem cloud gerenciada", "Revenda de VPS e cloud", "Configuração de domínios e DNS"],
       href: "/servicos/dominios-hospedagem",
       icon: "server",
@@ -28,7 +28,7 @@ export const site = {
     {
       title: "Consultoria em IA e Cibersegurança",
       description:
-        "Inteligência artificial aplicada ao negócio e cibersegurança prática para proteger sua operação digital.",
+        "Inteligência artificial aplicada de verdade ao seu negócio, com segurança prática pra proteger sua operação.",
       bullets: ["Consultoria em Inteligência Artificial", "Consultoria em Cibersegurança", "Monitoramento e manutenção de ambientes web"],
       href: "/servicos/consultoria",
       icon: "shield",
@@ -38,77 +38,77 @@ export const site = {
   iaServices: [
     {
       title: "Consultoria em IA",
-      description: "Diagnóstico e planejamento estratégico para aplicar inteligência artificial no seu negócio.",
-      bullets: ["Mapeamento de processos automatizáveis", "Definição de estratégia IA", "ROI e viabilidade técnica"],
+      description: "A gente senta com você, entende seu negócio e descobre onde a inteligência artificial pode fazer a diferença de verdade.",
+      bullets: ["Mapeamento de processos que podem ser automatizados", "Estratégia de IA que cabe no seu bolso", "ROI e viabilidade técnica sem enrolação"],
       href: "/consultoria-ia",
       icon: "brain",
-      highlight: "Estratégia IA",
+      highlight: "Estratégia que funciona",
     },
     {
       title: "Agentes de IA",
-      description: "Agentes inteligentes personalizados para automatizar tarefas e processos empresariais.",
-      bullets: ["Assistentes virtuais inteligentes", "Automação de tarefas repetitivas", "Integração com sistemas"],
+      description: "Assistentes inteligentes feitos sob medida pra automatizar tarefas, atender clientes e dar aquela força no dia a dia.",
+      bullets: ["Assistentes virtuais que entendem do seu negócio", "Automação de tarefas repetitivas", "Integração com os sistemas que você já usa"],
       href: "/agentes-ia",
       icon: "bot",
-      highlight: "Automação inteligente",
+      highlight: "Seu novo assistente",
     },
     {
       title: "Automação com IA",
-      description: "Automatize fluxos de trabalho, reduzindo custos operacionais e erros manuais.",
-      bullets: ["Workflows automatizados", "Processamento de documentos", "Integração entre sistemas"],
+      description: "Chega de tarefa manual repetitiva. A gente automatiza fluxos inteiros e você ganha tempo pro que realmente importa.",
+      bullets: ["Fluxos de trabalho automatizados", "Processamento inteligente de documentos", "Integração entre sistemas sem estresse"],
       href: "/consultoria-ia",
       icon: "zap",
-      highlight: "Eficiência operacional",
+      highlight: "Menos trabalho manual",
     },
     {
       title: "Chatbots Inteligentes",
-      description: "Chatbots com IA generativa para atendimento humanizado e disponível 24/7.",
-      bullets: ["Atendimento automatizado", "FAQ inteligente", "Captura de leads qualificados"],
+      description: "Chatbots com IA que atendem seus clientes com um toque humano — 24 horas por dia, 7 dias por semana.",
+      bullets: ["Atendimento automático que parece gente de verdade", "FAQ inteligente que resolve antes de perguntar", "Captura de leads qualificados"],
       href: "/agentes-ia",
       icon: "message-circle",
       highlight: "Atendimento 24/7",
     },
     {
       title: "RAG com OpenAI",
-      description: "Sistemas de busca e resposta contextual usando seus próprios documentos e bases de conhecimento.",
-      bullets: ["Base de conhecimento corporativa", "Busca semântica inteligente", "Respostas com fontes"],
+      description: "Seus documentos, manuais e bases de conhecimento transformados em respostas rápidas e precisas — como ter um especialista disponível o tempo todo.",
+      bullets: ["Base de conhecimento corporativa sempre acessível", "Busca inteligente nos seus documentos", "Respostas com fonte — você sabe de onde veio"],
       href: "/consultoria-ia",
       icon: "search",
-      highlight: "Conhecimento corporativo",
+      highlight: "Conhecimento na ponta dos dedos",
     },
     {
       title: "Cloud Security",
-      description: "Proteção de ambientes cloud, identidade e acesso com práticas de segurança avançadas.",
-      bullets: ["Segurança em nuvem", "Gestão de identidade", "Proteção de dados"],
+      description: "Proteção de verdade pro seu ambiente digital. A gente cuida da segurança pra você dormir tranquilo.",
+      bullets: ["Segurança em nuvem sem complicação", "Gestão de identidade e acesso", "Proteção de dados que inspira confiança"],
       href: "/servicos/consultoria",
       icon: "shield",
-      highlight: "Proteção total",
+      highlight: "Dormir tranquilo",
     },
   ],
   iaBenefits: [
     {
-      title: "Redução de custos operacionais",
-      description: "Automatize processos repetitivos e reduza gastos com operações manuais.",
+      title: "Menos gasto, mais resultado",
+      description: "Automatizamos processos repetitivos e você reduz custos sem perder qualidade.",
       icon: "trending-down",
     },
     {
-      title: "Automação de processos",
-      description: "Fluxos de trabalho inteligentes que funcionam 24/7 sem supervisão constante.",
+      title: "Trabalho que não para",
+      description: "Fluxos inteligentes que funcionam 24/7 — enquanto você dorme, seu negócio continua produzindo.",
       icon: "zap",
     },
     {
-      title: "Atendimento inteligente",
-      description: "Chatbots e assistentes que resolvem demandas com qualidade humana e escala digital.",
+      title: "Atendimento que encanta",
+      description: "Chatbots e assistentes que resolvem problemas com um toque humano e agilidade digital.",
       icon: "message-circle",
     },
     {
-      title: "Decisões baseadas em dados",
-      description: "Insights acionáveis gerados por análise inteligente dos seus dados corporativos.",
+      title: "Decisões mais seguras",
+      description: "Insights extraídos dos seus dados pra você tomar decisões com mais confiança.",
       icon: "bar-chart",
     },
     {
-      title: "Segurança e escalabilidade",
-      description: "Infraestrutura segura que cresce com seu negócio sem comprometer performance.",
+      title: "Segurança que acompanha o crescimento",
+      description: "Infraestrutura protegida que se adapta ao tamanho do seu negócio — sem sustos.",
       icon: "shield",
     },
   ],
@@ -120,7 +120,7 @@ export const site = {
       annualPrice: "R$ 1.499",
       annualPeriod: "/ano",
       annualSavings: "Ganhe 2 meses grátis",
-      description: "Ideal para profissionais liberais, pequenos negócios e sites institucionais que precisam de estabilidade, suporte humano e gerenciamento simplificado.",
+      description: "Perfeito pra profissionais liberais, pequenos negócios e sites institucionais que precisam de estabilidade sem complicação.",
       popular: false,
       features: [
         "1 site",
@@ -130,7 +130,7 @@ export const site = {
         "10 contas de e-mail",
         "Backup semanal",
         "Migração gratuita",
-        "Suporte via WhatsApp",
+        "Suporte humanizado por e-mail",
         "Hospedagem gerenciada",
         "Monitoramento básico",
       ],
@@ -143,7 +143,7 @@ export const site = {
       annualPrice: "R$ 2.999",
       annualPeriod: "/ano",
       annualSavings: "Ganhe 2 meses grátis",
-      description: "Para empresas que dependem do ambiente online e precisam de performance, suporte prioritário e acompanhamento técnico.",
+      description: "Pra empresas que vivem online e precisam de performance de verdade, com suporte próximo e acompanhamento técnico.",
       popular: true,
       features: [
         "Até 5 sites",
@@ -152,7 +152,7 @@ export const site = {
         "Backup diário",
         "Monitoramento contínuo",
         "Migração assistida",
-        "Suporte prioritário via WhatsApp",
+        "Suporte prioritário por e-mail",
         "Hospedagem gerenciada",
         "1h de suporte técnico/mês",
         "Orientação básica de segurança digital",
@@ -166,7 +166,7 @@ export const site = {
       annualPrice: "R$ 5.999",
       annualPeriod: "/ano",
       annualSavings: "Ganhe 2 meses grátis",
-      description: "Solução completa para empresas que exigem alta disponibilidade, suporte avançado e acompanhamento estratégico.",
+      description: "Solução completa pra empresas que exigem alta disponibilidade, suporte de verdade e acompanhamento estratégico.",
       popular: false,
       features: [
         "Até 10 sites",
@@ -182,50 +182,50 @@ export const site = {
         "Orientação em cibersegurança",
         "Atendimento estratégico",
       ],
-      cta: "Falar com Especialista",
+      cta: "Solicitar Proposta",
     },
   ],
   differentials: [
     {
-      title: "Atendimento Humano",
-      description: "Fale diretamente com especialistas via WhatsApp. Sem filas e sem roteiros prontos.",
+      title: "Atendimento Humano de Verdade",
+      description: "Você fala direto com quem faz. Sem robô, sem menu de opções, sem ficar esperando.",
       icon: "headset",
     },
     {
       title: "Hospedagem Gerenciada",
-      description: "Nós cuidamos da infraestrutura para você focar no seu negócio. Atualizações, segurança e performance sob nossa responsabilidade.",
+      description: "A gente cuida de tudo: atualizações, segurança e performance. Você só precisa se preocupar com o seu negócio.",
       icon: "settings",
     },
     {
       title: "Segurança em Primeiro Lugar",
-      description: "Boas práticas de proteção, monitoramento ativo e orientação especializada para manter seu ambiente digital seguro.",
+      description: "Monitoramento ativo, boas práticas de proteção e orientação especializada pro seu ambiente digital ficar seguro de verdade.",
       icon: "shield",
     },
     {
-      title: "Suporte Técnico Especializado",
-      description: "Auxílio real para DNS, e-mails, sites, WordPress, VPS e toda a infraestrutura. Resposta ágil e técnica de verdade.",
+      title: "Suporte Técnico de Verdade",
+      description: "Ajuda real com DNS, e-mails, sites, WordPress, VPS — resposta rápida de quem entende do assunto.",
       icon: "headset",
     },
     {
-      title: "Migração Sem Complicações",
-      description: "Transferimos seu projeto sem dor de cabeça. Planejamento, execução e validação — tudo feito por nós.",
+      title: "Migração Sem Complicação",
+      description: "Passamos seu projeto de lugar sem dor de cabeça. Planejamos, executamos e validamos — você só acompanha.",
       icon: "zap",
     },
     {
       title: "Parceiro Tecnológico",
-      description: "Muito além da hospedagem: desenvolvimento, automação, inteligência artificial e cibersegurança em um único lugar.",
+      description: "Muito mais que hospedagem: desenvolvimento, automação, inteligência artificial e segurança — tudo num lugar só.",
       icon: "star",
     },
   ],
   portfolio: [
     {
       title: "Mendez Tech",
-      desc: "Site institucional com blog e integração com WhatsApp",
+      desc: "Site institucional com blog e presença digital profissional",
       tags: ["Next.js", "Tailwind", "Vercel"],
     },
     {
       title: "Barcelos Studio",
-      desc: "Landing page para estúdio de design",
+      desc: "Landing page que transmitiu a personalidade do estúdio",
       tags: ["Next.js", "Framer Motion", "Hostinger"],
     },
     {
@@ -242,13 +242,13 @@ export const site = {
   testimonials: [
     {
       quote:
-        "A Oráculo AI transformou nossa presença digital. O site ficou muito mais profissional e as conversas pelo WhatsApp aumentaram significativamente.",
+        "A Oráculo AI transformou nossa presença digital. O site ficou muito mais profissional e as conversas com clientes aumentaram de verdade.",
       author: "Carlos Mendes",
       role: "CEO, Mendez Tech",
     },
     {
       quote:
-        "Atendimento direto, sem burocracia. Em uma semana meu site estava no ar com uma aparência que parece de agência grande.",
+        "Atendimento direto, sem burocracia. Em uma semana meu site estava no ar com uma cara que parece de agência grande.",
       author: "Ana Barcelos",
       role: "Fundadora, Barcelos Studio",
     },
@@ -262,23 +262,23 @@ export const site = {
   consultoriaIAFaq: [
     {
       question: "O que é consultoria em IA?",
-      answer: "É um serviço de diagnóstico e planejamento para identificar oportunidades de aplicar inteligência artificial no seu negócio, desde automação de processos até implementação de agentes inteligentes.",
+      answer: "É um serviço de diagnóstico e planejamento pra descobrir onde a inteligência artificial pode ajudar de verdade no seu negócio — desde automatizar tarefas até criar agentes inteligentes.",
     },
     {
-      question: "Preciso ter time de tecnologia para contratar?",
-      answer: "Não. Nossa consultoria é hands-on: fazemos o diagnóstico, planejamento e implementação. Você só precisa nos contar seus desafios.",
+      question: "Preciso ter time de tecnologia pra contratar?",
+      answer: "De jeito nenhum. A gente faz o diagnóstico, o planejamento e a implementação. Você só precisa contar seus desafios.",
     },
     {
       question: "Quanto tempo leva uma implementação de IA?",
-      answer: "Depende da complexidade. Projetos simples podem levar dias; implementações mais complexas, algumas semanas. Tudo é definido no diagnóstico inicial.",
+      answer: "Varia bastante. Projetos mais simples saem em dias; os mais complexos podem levar algumas semanas. Tudo fica claro no diagnóstico inicial.",
     },
     {
       question: "Quais tipos de IA vocês implementam?",
-      answer: "Implementamos agentes de IA, chatbots com IA generativa, sistemas RAG (busca em documentos), automação de processos e integrações com OpenAI e outras plataformas.",
+      answer: "Agentes de IA, chatbots inteligentes, sistemas de busca em documentos (RAG), automação de processos e integrações com OpenAI e outras plataformas.",
     },
     {
-      question: "Como é feito o diagnóstico gratuito?",
-      answer: "Agendamos uma conversa rápida para entender seu negócio, mapear dores e oportunidades. Devolvemos um plano com as melhores soluções de IA para o seu caso.",
+      question: "Como funciona o diagnóstico gratuito?",
+      answer: "A gente marca uma conversa rápida pra entender seu negócio, mapear desafios e oportunidades. Depois devolvemos um plano com as melhores soluções pro seu caso.",
     },
   ],
   agentesIAFaq: [
@@ -288,54 +288,46 @@ export const site = {
     },
     {
       question: "Qual a diferença entre chatbot e agente de IA?",
-      answer: "Chatbots focam em conversas. Agentes de IA vão além: executam ações, tomam decisões baseadas em regras, acessam sistemas e orquestram processos completos.",
+      answer: "Chatbots focam em conversas. Agentes de IA vão além: executam ações, tomam decisões, acessam sistemas e orquestram processos completos.",
     },
     {
       question: "Meus dados ficam seguros?",
-      answer: "Sim. Trabalhamos com criptografia, controle de acesso e boas práticas de segurança. Os dados podem ficar em infraestrutura própria ou cloud, conforme sua preferência.",
+      answer: "Sim. Trabalhamos com criptografia, controle de acesso e boas práticas de segurança. Os dados podem ficar em estrutura própria ou nuvem, como preferir.",
     },
     {
       question: "Os agentes integram com meus sistemas atuais?",
-      answer: "Sim. Integramos com APIs, CRMs, ERPs, bancos de dados, WhatsApp, e-mail e praticamente qualquer sistema com interface aberta.",
+      answer: "Sim. Integramos com APIs, CRMs, ERPs, bancos de dados, e-mail e praticamente qualquer sistema com interface aberta.",
     },
     {
       question: "Preciso treinar o agente?",
-      answer: "Nós treinamos com seus dados e processos. Você só precisa validar os resultados. Oferecemos suporte contínuo para ajustes e evoluções.",
+      answer: "A gente treina com seus dados e processos. Você só valida os resultados. E oferecemos suporte contínuo pra ajustes e melhorias.",
     },
   ],
   faq: [
     {
-      question: "Quanto tempo leva para migrar ou criar um site?",
+      question: "Quanto tempo leva pra criar ou migrar um site?",
       answer:
-        "Landing pages simples ficam prontas em 3 a 7 dias úteis. Projetos mais complexos, como sites institucionais ou integrações, podem levar de 2 a 4 semanas. Migrações de hospedagem são feitas em até 48h sem downtime.",
+        "Landing pages simples ficam prontas entre 3 a 7 dias úteis. Projetos mais completos, como sites institucionais ou com integrações, podem levar de 2 a 4 semanas. Migrações de hospedagem são feitas em até 48h sem parar o site.",
     },
     {
-      question: "Preciso ter conhecimentos técnicos para contratar?",
+      question: "Preciso ter conhecimento técnico pra contratar?",
       answer:
-        "Não. Nossa hospedagem é gerenciada — nós cuidamos da infraestrutura, segurança, atualizações e backups. Você só precisa se preocupar com o seu negócio.",
+        "Não. Nossa hospedagem é gerenciada — a gente cuida da infraestrutura, segurança, atualizações e backups. Você foca no seu negócio.",
     },
     {
-      question: "O que diferencia a Oráculo AI de uma hospedagem comum?",
+      question: "O que torna a Oráculo AI diferente de uma hospedagem comum?",
       answer:
-        "Não somos apenas hospedagem. Somos um parceiro tecnológico: criamos sites, gerenciamos infraestrutura em nuvem, oferecemos consultoria em IA e cibersegurança, com suporte humano direto via WhatsApp. Tudo em um só lugar com o mesmo responsável técnico.",
+        "Não somos só hospedagem. Somos parceiros: criamos sites, gerenciamos infraestrutura em nuvem, oferecemos consultoria em IA e cibersegurança — tudo com atendimento direto de quem entende do assunto.",
     },
     {
       question: "Como funciona o suporte técnico?",
       answer:
-        "Suporte via WhatsApp com resposta ágil. Planos Business e Enterprise incluem horas de suporte técnico dedicadas por mês para resolver problemas, realizar ajustes e otimizar seu ambiente.",
+        "Suporte por e-mail com resposta rápida. Planos Business e Enterprise incluem horas de suporte técnico dedicadas por mês pra resolver problemas, fazer ajustes e otimizar seu ambiente.",
     },
     {
-      question: "Fazem apenas sites ou também segurança e IA?",
+      question: "Fazem só sites ou também segurança e IA?",
       answer:
-        "Fazemos tudo: criação de sites, hospedagem gerenciada, revenda de VPS, consultoria em inteligência artificial e cibersegurança. É tudo no mesmo lugar com o mesmo responsável técnico.",
+        "Fazemos tudo: criação de sites, hospedagem gerenciada, revenda de VPS, consultoria em inteligência artificial e cibersegurança. Tudo no mesmo lugar com o mesmo responsável técnico.",
     },
   ],
 } as const;
-
-export function buildWhatsAppUrl(message?: string) {
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
-  const text = encodeURIComponent(
-    message ?? "Olá, vim pelo site OraculoAI e gostaria de conversar sobre soluções de IA para minha empresa.",
-  );
-  return `https://wa.me/${number}?text=${text}`;
-}

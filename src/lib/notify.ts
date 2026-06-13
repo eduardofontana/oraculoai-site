@@ -8,7 +8,6 @@ import nodemailer from "nodemailer";
 type LeadData = {
   nome: string;
   email: string;
-  whatsapp: string;
   empresa?: string | null;
   mensagem: string;
 };
@@ -71,8 +70,6 @@ export async function notifyNewLead(lead: LeadData): Promise<void> {
                 <td style="padding:8px 0"><strong>${lead.nome}</strong></td></tr>
             <tr><td style="padding:8px 0;color:#666">E-mail</td>
                 <td style="padding:8px 0"><a href="mailto:${lead.email}">${lead.email}</a></td></tr>
-            <tr><td style="padding:8px 0;color:#666">WhatsApp</td>
-                <td style="padding:8px 0">${lead.whatsapp}</td></tr>
             <tr><td style="padding:8px 0;color:#666">Empresa</td>
                 <td style="padding:8px 0">${lead.empresa || "—"}</td></tr>
             <tr><td style="padding:8px 0;color:#666;vertical-align:top">Mensagem</td>

@@ -103,15 +103,6 @@ export function trackEvent({ action, category, label, value }: GtagEvent) {
   });
 }
 
-/** Rastreia clique no WhatsApp */
-export function trackWhatsAppClick(location: string) {
-  trackEvent({
-    action: "click_whatsapp",
-    category: "engagement",
-    label: location,
-  });
-}
-
 /** Rastreia clique em "Solicitar Diagnóstico" */
 export function trackDiagnosticoClick(location: string) {
   trackEvent({

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { WhatsAppLink } from "@/components/WhatsAppLink";
 
 export function Header() {
   return (
@@ -50,20 +49,20 @@ export function Header() {
               </svg>
               Ferramentas
             </Link>
-            <WhatsAppLink
-              trackLabel="header_desktop"
+            <a
+              href={`mailto:${site.email}`}
               className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full bg-accent px-5 py-2 text-sm font-bold text-white transition-all hover:shadow-[0_0_24px_var(--glow-strong)]"
             >
-              WhatsApp
-            </WhatsAppLink>
+              Contato
+            </a>
           </nav>
           <ThemeToggle />
-          <WhatsAppLink
-            trackLabel="header_mobile"
+          <a
+            href={`mailto:${site.email}`}
             className="inline-flex cursor-pointer items-center justify-center rounded-full bg-accent px-4 py-2 text-sm font-bold text-white md:hidden"
           >
-            WhatsApp
-          </WhatsAppLink>
+            Contato
+          </a>
         </div>
       </div>
 

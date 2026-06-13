@@ -12,7 +12,7 @@ export function Footer() {
               {site.name.slice(1)}
             </p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-secondary">
-              IA aplicada para gerar resultados reais no seu negócio. Agentes de IA, automações inteligentes e soluções corporativas.
+              Agentes de IA, automação de processos e soluções digitais que realmente funcionam pro seu negócio.
             </p>
           </div>
           <div>

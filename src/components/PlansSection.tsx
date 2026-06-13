@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { buildWhatsAppUrl, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 
 export function PlansSection() {
-  const primaryCta = buildWhatsAppUrl();
-
   return (
     <section id="planos" className="mx-auto w-full max-w-7xl scroll-mt-20 px-6 py-20 md:px-8 md:py-28">
       <Reveal>
@@ -21,7 +19,7 @@ export function PlansSection() {
 
       <Reveal delay={80}>
         <div className="mb-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 rounded-xl border border-border bg-card px-6 py-3.5 text-center text-sm">
-          {["Sem fidelidade", "Cancelamento simples", "Suporte humano via WhatsApp", "Ganhe 2 meses grátis no plano anual"].map((item) => (
+          {["Sem fidelidade", "Cancelamento simples", "Suporte humanizado por e-mail", "Ganhe 2 meses grátis no plano anual"].map((item) => (
             <span key={item} className="inline-flex items-center gap-1.5 text-secondary">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
                 <polyline points="20 6 9 17 4 12" />
@@ -89,10 +87,8 @@ export function PlansSection() {
                 </ul>
               </div>
 
-              <Link
-                href={primaryCta}
-                target="_blank"
-                rel="noreferrer"
+              <a
+                href={`mailto:${site.email}?subject=Quero o plano ${plan.name}`}
                 className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition-all ${
                   plan.popular
                     ? "bg-accent text-white shadow-lg shadow-[0_0_20px_var(--glow)] hover:shadow-[0_0_36px_var(--glow-strong)] hover:-translate-y-0.5"
@@ -105,7 +101,7 @@ export function PlansSection() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                 </svg>
-              </Link>
+              </a>
             </div>
           </Reveal>
         ))}

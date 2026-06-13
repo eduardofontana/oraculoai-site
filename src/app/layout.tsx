@@ -7,7 +7,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { NeuralNetwork } from "@/components/NeuralNetwork";
 import { OraculoTrigger } from "@/components/OraculoChat";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { JsonLd, organizationSchema, websiteSchema } from "@/components/JsonLd";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
@@ -24,16 +23,16 @@ const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
 export const metadata: Metadata = {
   title: {
-    default: "OráculoAI | IA aplicada para gerar resultados reais no seu negócio",
+    default: "OráculoAI | Soluções inteligentes que transformam o seu negócio",
     template: "%s | OraculoAI",
   },
   description:
-    "Implementamos agentes de IA, automações inteligentes e soluções corporativas para aumentar produtividade, reduzir custos e acelerar crescimento.",
+    "Criamos agentes de IA, automatizamos processos e desenvolvemos soluções digitais que realmente funcionam pra sua empresa. Simples, direto e com resultado de verdade.",
   metadataBase: new URL("https://oraculoai.cloud"),
   openGraph: {
-    title: "OráculoAI | IA aplicada para gerar resultados reais",
+    title: "OráculoAI | Soluções inteligentes que transformam o seu negócio",
     description:
-      "Implementamos agentes de IA, automações inteligentes e soluções corporativas para aumentar produtividade, reduzir custos e acelerar crescimento.",
+      "Criamos agentes de IA, automatizamos processos e desenvolvemos soluções digitais que realmente funcionam pra sua empresa.",
     url: "https://oraculoai.cloud",
     siteName: "OráculoAI",
     locale: "pt_BR",
@@ -41,9 +40,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OráculoAI | IA aplicada para gerar resultados reais",
+    title: "OráculoAI | Soluções inteligentes que transformam o seu negócio",
     description:
-      "Implementamos agentes de IA, automações inteligentes e soluções corporativas.",
+      "Criamos agentes de IA, automatizamos processos e desenvolvemos soluções digitais que realmente funcionam.",
   },
   robots: {
     index: true,
@@ -131,7 +130,6 @@ export default function RootLayout({
         <ThemeProvider>
           <Header />
           <OraculoTrigger />
-          <WhatsAppButton />
           <Analytics />
           <ToolSearch />
           <div className="flex-1 pt-16">{children}</div>

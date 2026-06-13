@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { trackWhatsAppClick, trackDiagnosticoClick } from "@/lib/analytics";
+import { trackDiagnosticoClick } from "@/lib/analytics";
 
-type TrackEvent = "whatsapp" | "diagnostico";
+type TrackEvent = "diagnostico";
 
 type Props = {
   href: string;
@@ -19,7 +19,6 @@ type Props = {
 };
 
 const trackMap: Record<TrackEvent, (label: string) => void> = {
-  whatsapp: trackWhatsAppClick,
   diagnostico: trackDiagnosticoClick,
 };
 

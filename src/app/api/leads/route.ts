@@ -11,11 +11,6 @@ import { notifyNewLead } from "@/lib/notify";
 const leadSchema = z.object({
   nome: z.string().min(2, "Mínimo 2 caracteres.").max(120, "Máximo 120 caracteres."),
   email: z.string().email("E-mail inválido.").max(254, "Máximo 254 caracteres."),
-  whatsapp: z
-    .string()
-    .min(8, "Mínimo 8 caracteres.")
-    .max(20, "Máximo 20 caracteres.")
-    .transform((v) => v.replace(/[^\d+]/g, "")),
   empresa: z.string().max(200, "Máximo 200 caracteres.").optional().or(z.literal("")),
   mensagem: z.string().min(10, "Mínimo 10 caracteres.").max(1000, "Máximo 1000 caracteres."),
 });
@@ -58,7 +53,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: firstError }, { status: 400 });
     }
 
-    const { nome, email, whatsapp, empresa, mensagem } = parsed.data;
+    const { nome, email, empresa, mensagem } = parsed.data;
 
     /* ---- Persistir no Supabase ---- */
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -75,7 +70,6 @@ export async function POST(request: NextRequest) {
       const { error } = await (supabase.from("leads") as any).insert({
         nome,
         email,
-        whatsapp,
         empresa: empresa || null,
         mensagem,
       });
@@ -89,11 +83,11 @@ export async function POST(request: NextRequest) {
       }
     } else {
       // Sem Supabase configurado: apenas log
-      console.info("[Leads] Lead recebido (sem Supabase):", { nome, email, whatsapp, empresa, mensagem });
+      console.info("[Leads] Lead recebido (sem Supabase):", { nome, email, empresa, mensagem });
     }
 
     /* ---- Notificar (assíncrono, não bloqueia resposta) ---- */
-    notifyNewLead({ nome, email, whatsapp, empresa, mensagem }).catch((err) =>
+    notifyNewLead({ nome, email, empresa, mensagem }).catch((err) =>
       console.error("[Leads] Erro na notificação:", err),
     );
 

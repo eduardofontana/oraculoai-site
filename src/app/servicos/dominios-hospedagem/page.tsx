@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { buildWhatsAppUrl } from "@/lib/site";
+import { site } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 
 export default function DominiosHospedagemPage() {
-  const message = buildWhatsAppUrl();
-
   return (
     <main className="min-h-[80vh] text-primary">
       <div className="relative mx-auto w-full max-w-7xl px-6 py-20 md:px-8">
@@ -26,15 +24,13 @@ export default function DominiosHospedagemPage() {
                 Infraestrutura cloud, VPS, domínio e e-mail profissional com suporte técnico especializado e gerenciamento completo.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  href={message}
-                  target="_blank"
-                  rel="noreferrer"
+                <a
+                  href={`mailto:${site.email}?subject=Hospedagem Gerenciada`}
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 font-bold text-white shadow-lg shadow-[0_0_16px_var(--glow)] transition hover:shadow-[0_0_32px_var(--glow-strong)] hover:-translate-y-0.5"
                 >
-                  Pedir atendimento no WhatsApp
+                  Solicitar atendimento
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                </Link>
+                </a>
                 <Link
                   href="/servicos/consultoria"
                   className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3 font-semibold text-secondary backdrop-blur-xl transition hover:border-border-hover hover:text-primary"

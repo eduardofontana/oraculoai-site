@@ -17,11 +17,6 @@ const leadSchema = z.object({
     .string()
     .email("E-mail inválido.")
     .max(254, "E-mail muito longo."),
-  whatsapp: z
-    .string()
-    .min(8, "WhatsApp inválido.")
-    .max(20, "Número muito longo.")
-    .transform((v) => v.replace(/[^\d+]/g, "")),
   empresa: z
     .string()
     .max(200, "Nome da empresa muito longo.")
@@ -40,7 +35,6 @@ type FieldErrors = Partial<Record<keyof FormData, string>>;
 const initialForm: FormData = {
   nome: "",
   email: "",
-  whatsapp: "",
   empresa: "",
   mensagem: "",
 };
@@ -140,35 +134,18 @@ export function LeadForm() {
         </div>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="whatsapp" className="block text-sm font-semibold text-primary">
-            WhatsApp <span className="text-accent">*</span>
-          </label>
-          <input
-            id="whatsapp"
-            type="tel"
-            required
-            value={data.whatsapp}
-            onChange={(e) => handleChange("whatsapp", e.target.value)}
-            className={`mt-1.5 w-full rounded-xl border bg-surface-overlay px-4 py-3 text-sm text-primary placeholder-muted outline-none transition focus:ring-1 focus:ring-accent/30 ${errors.whatsapp ? "border-red-500 focus:border-red-500" : "border-border focus:border-accent-border"}`}
-            placeholder="(11) 99999-9999"
-          />
-          {errors.whatsapp && <p className="mt-1 text-xs text-red-500">{errors.whatsapp}</p>}
-        </div>
-        <div>
-          <label htmlFor="empresa" className="block text-sm font-semibold text-primary">
-            Empresa
-          </label>
-          <input
-            id="empresa"
-            type="text"
-            value={data.empresa}
-            onChange={(e) => handleChange("empresa", e.target.value)}
-            className="mt-1.5 w-full rounded-xl border border-border bg-surface-overlay px-4 py-3 text-sm text-primary placeholder-muted outline-none transition focus:border-accent-border focus:ring-1 focus:ring-accent/30"
-            placeholder="Nome da sua empresa"
-          />
-        </div>
+      <div>
+        <label htmlFor="empresa" className="block text-sm font-semibold text-primary">
+          Empresa
+        </label>
+        <input
+          id="empresa"
+          type="text"
+          value={data.empresa}
+          onChange={(e) => handleChange("empresa", e.target.value)}
+          className="mt-1.5 w-full rounded-xl border border-border bg-surface-overlay px-4 py-3 text-sm text-primary placeholder-muted outline-none transition focus:border-accent-border focus:ring-1 focus:ring-accent/30"
+          placeholder="Nome da sua empresa"
+        />
       </div>
 
       <div>
