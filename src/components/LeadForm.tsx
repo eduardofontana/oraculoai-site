@@ -80,19 +80,28 @@ export function LeadForm() {
     // Track event
     trackFormSubmit("lead_form");
 
-    // Simulate submission (ready for webhook/API integration)
-    await new Promise((r) => setTimeout(r, 800));
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(result.data),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: "Erro ao enviar." }));
+        setErrors({ mensagem: err.error ?? "Erro ao enviar. Tente novamente." });
+        setLoading(false);
+        return;
+      }
+    } catch {
+      setErrors({ mensagem: "Erro de conexão. Verifique sua internet." });
+      setLoading(false);
+      return;
+    }
 
     setLoading(false);
     setSubmitted(true);
     setData(initialForm);
-
-    // Optional: prepare for API call
-    // const res = await fetch("/api/leads", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(result.data),
-    // });
   };
 
   if (submitted) {
