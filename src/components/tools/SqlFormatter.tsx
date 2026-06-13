@@ -12,7 +12,7 @@ export function SqlFormatter() {
 
   const handleProcess = () => {
     if (!input.trim()) {
-      setError("Digite uma consulta SQL.")
+      setError("Nada para formatar. Cole o SQL primeiro.")
       setOutput("")
       return
     }

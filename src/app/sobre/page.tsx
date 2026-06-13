@@ -18,11 +18,11 @@ export default function SobrePage() {
                 Sobre
               </p>
               <h1 className="mt-5 max-w-3xl font-display text-5xl font-extrabold tracking-tight text-primary md:text-7xl">
-                Uma presença digital com mais intenção.
+                Presença digital com mais propósito.
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-secondary md:text-lg">
-                A OraculoAI existe para criar, proteger e operar presença digital com clareza
-                técnica, comunicação objetiva e conversa direta.
+                A OráculoAI existe pra criar, proteger e operar presença digital com clareza
+                técnica, comunicação objetiva e conversa direta. Sem rodeio.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <a
@@ -52,19 +52,19 @@ export default function SobrePage() {
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20V10" /><path d="M18 20V4" /><path d="M6 20v-4" /></svg>
                     </span>
-                    <div>
-                      <p className="font-bold text-primary">Consultoria direta</p>
-                      <p className="mt-1 text-sm leading-6 text-secondary">Fala técnica, sem rodeio e com foco no que fecha negócio.</p>
-                    </div>
+                      <div>
+                        <p className="font-bold text-primary">Consultoria direta</p>
+                        <p className="mt-1 text-sm leading-6 text-secondary">Fala técnica, objetiva e com foco no que resolve.</p>
+                      </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent-blue-soft text-accent-blue">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>
                     </span>
-                    <div>
-                      <p className="font-bold text-primary">Entrega objetiva</p>
-                      <p className="mt-1 text-sm leading-6 text-secondary">Menos ruído, mais clareza e uma experiência que passa valor.</p>
-                    </div>
+                      <div>
+                        <p className="font-bold text-primary">Entrega objetiva</p>
+                        <p className="mt-1 text-sm leading-6 text-secondary">Menos ruído, mais clareza. Experiência que passa confiança.</p>
+                      </div>
                   </div>
                 </div>
               </div>

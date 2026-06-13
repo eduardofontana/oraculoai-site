@@ -30,7 +30,7 @@ export function ImageCompressor() {
     const f = e.target.files?.[0]
     if (!f) return
     if (!f.type.startsWith("image/")) {
-      setError("Selecione uma imagem válida.")
+      setError("Arquivo inválido. Selecione uma imagem (JPG, PNG ou WebP).")
       return
     }
     setFile(f)

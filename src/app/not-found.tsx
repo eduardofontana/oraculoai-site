@@ -15,7 +15,7 @@ export default function NotFound() {
             Página não encontrada
           </h1>
           <p className="mt-4 text-secondary">
-            Volte para a home ou use o contato para seguir pelo canal certo.
+            Volta pra home ou usa o contato pra seguir pelo caminho certo.
           </p>
           <Link
             href="/"

@@ -17,11 +17,11 @@ export default function ContatoPage() {
                 Contato
               </p>
               <h1 className="mt-5 max-w-3xl font-display text-5xl font-extrabold tracking-tight text-primary md:text-7xl">
-                Vamos conversar sobre o seu projeto?
+                Vamos conversar sobre seu projeto?
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-secondary md:text-lg">
                 Manda um e-mail que a gente responde rápido. Sem roteiro pronto, sem conversa
-                genérica — é da pessoa que cuida do seu projeto direto com você.
+                genérica — é você falando direto com quem faz.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <a

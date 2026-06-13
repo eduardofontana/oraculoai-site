@@ -10,11 +10,11 @@ import { JsonLd, organizationSchema } from "@/components/JsonLd";
 export const metadata: Metadata = {
   title: "Consultoria em IA para Empresas | OraculoAI",
   description:
-    "Aplicamos inteligência artificial do jeito certo no seu negócio: sem promessa vazia, com planejamento e resultado de verdade.",
+    "Aplicamos inteligência artificial do jeito certo no seu negócio. Sem promessa vazia — planejamento e resultado de verdade.",
   openGraph: {
     title: "Consultoria em IA para Empresas | OraculoAI",
     description:
-      "Aplicamos inteligência artificial do jeito certo no seu negócio: sem promessa vazia, com planejamento e resultado de verdade.",
+      "Aplicamos inteligência artificial do jeito certo no seu negócio. Sem promessa vazia, com planejamento e resultado de verdade.",
     url: "https://oraculoai.cloud/consultoria-ia",
     siteName: "OráculoAI",
     type: "website",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Consultoria em IA para Empresas | OraculoAI",
     description:
-      "Implementamos inteligência artificial de forma prática para empresas que desejam automatizar processos e ganhar eficiência.",
+      "Implementamos inteligência artificial de forma prática pra empresas que querem automatizar processos e ganhar eficiência.",
   },
   alternates: {
     canonical: "https://oraculoai.cloud/consultoria-ia",
@@ -57,11 +57,11 @@ const steps = [
 const useCases = [
   {
     title: "Automação de Atendimento",
-    desc: "Chatbots e assistentes que resolvem 70%+ das demandas sem intervenção humana.",
+    desc: "Chatbots e assistentes que resolvem mais de 70% das demandas sem intervenção humana.",
   },
   {
     title: "Análise de Dados",
-    desc: "Relatórios inteligentes e dashboards com insights extraídos automaticamente dos seus dados.",
+    desc: "Relatórios inteligentes com insights extraídos automaticamente dos seus dados.",
   },
   {
     title: "Processamento de Documentos",
@@ -69,7 +69,7 @@ const useCases = [
   },
   {
     title: "Integração de Sistemas",
-    desc: "Conectamos sistemas legados com IA moderna sem precisar substituir sua infraestrutura atual.",
+    desc: "Conectamos sistemas legados com IA moderna sem substituir sua infraestrutura atual.",
   },
 ];
 
@@ -102,7 +102,7 @@ export default function ConsultoriaIAPage() {
             <Reveal delay={200}>
               <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-secondary md:text-lg">
                 A gente tira a IA do papel e aplica de verdade no seu negócio. Com planejamento,
-                transparência e foco no que realmente gera resultado. No seu ritmo.
+                transparência e foco no que gera resultado. No seu ritmo.
               </p>
             </Reveal>
 
@@ -133,7 +133,7 @@ export default function ConsultoriaIAPage() {
         <Section
           eyebrow="Benefícios"
           title="Por que investir em IA agora?"
-          description="Empresas que usam IA ganham produtividade, reduzem custos e tomam decisões com mais confiança."
+          description="Empresas que usam IA ganham produtividade, reduzem custos e decidem com mais confiança."
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {site.iaBenefits.map((benefit, i) => (
@@ -180,7 +180,7 @@ export default function ConsultoriaIAPage() {
         <Section
           eyebrow="Casos de Uso"
           title="Onde a IA pode transformar seu negócio"
-          description="Soluções práticas para desafios reais de empresas como a sua."
+          description="Soluções práticas pra desafios reais de empresas como a sua."
         >
           <div className="grid gap-4 md:grid-cols-2">
             {useCases.map((item, i) => (
@@ -198,7 +198,7 @@ export default function ConsultoriaIAPage() {
         <Section
           eyebrow="Processo"
           title="Como implementamos IA na sua empresa"
-          description="Metodologia estruturada em 4 etapas para entregar resultados reais."
+          description="4 etapas pra entregar resultado de verdade."
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {steps.map((item) => (
@@ -217,7 +217,7 @@ export default function ConsultoriaIAPage() {
         <Section
           eyebrow="FAQ"
           title="Dúvidas frequentes sobre Consultoria em IA"
-          description="Tire suas principais dúvidas sobre como aplicar IA na sua empresa."
+          description="O que mais perguntam sobre aplicar IA na empresa."
         >
           <FAQ items={site.consultoriaIAFaq} />
         </Section>
@@ -234,8 +234,8 @@ export default function ConsultoriaIAPage() {
                     Pronto para implementar IA na sua empresa?
                   </h2>
                   <p className="mt-4 text-base leading-7 text-secondary">
-                    Preencha o formulário e nossa equipe entrará em contato para um diagnóstico
-                    gratuito e sem compromisso. Descubra onde a IA pode gerar mais valor para você.
+                    Preenche o formulário que a gente entra em contato pra um diagnóstico
+                    gratuito e sem compromisso. Vamos descobrir juntos onde a IA pode gerar mais valor pra você.
                   </p>
                   <div className="mt-6 space-y-3">
                     {[

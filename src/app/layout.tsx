@@ -27,12 +27,12 @@ export const metadata: Metadata = {
     template: "%s | OraculoAI",
   },
   description:
-    "Criamos agentes de IA, automatizamos processos e desenvolvemos soluções digitais que realmente funcionam pra sua empresa. Simples, direto e com resultado de verdade.",
+    "Criamos agentes de IA, automatizamos processos e construímos soluções digitais que funcionam de verdade pra sua empresa. Simples, direto e sem enrolação.",
   metadataBase: new URL("https://oraculoai.cloud"),
   openGraph: {
     title: "OráculoAI | IA que transforma seu negócio",
     description:
-      "Criamos agentes de IA, automatizamos processos e desenvolvemos soluções digitais que realmente funcionam pra sua empresa.",
+      "Criamos agentes de IA, automatizamos processos e construímos soluções digitais que funcionam pra sua empresa.",
     url: "https://oraculoai.cloud",
     siteName: "OráculoAI",
     locale: "pt_BR",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "OráculoAI | IA que transforma seu negócio",
     description:
-      "Criamos agentes de IA, automatizamos processos e desenvolvemos soluções digitais que realmente funcionam.",
+      "Criamos agentes de IA, automatizamos processos e construímos soluções digitais que funcionam.",
   },
   robots: {
     index: true,

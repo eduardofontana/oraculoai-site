@@ -43,9 +43,9 @@ export default function ObrigadoPage() {
           </h1>
 
           <p className="mt-4 text-lg leading-relaxed text-secondary">
-            Recebemos sua mensagem e nossa equipe retornará em até{" "}
+            Recebemos sua mensagem. A gente retorna em até{" "}
             <strong className="text-primary">24 horas</strong> pelo e-mail
-            informado.
+            que você informou.
           </p>
 
           <div className="mt-10 flex items-center justify-center gap-6 text-sm text-tertiary">

@@ -21,7 +21,7 @@ export function ExifViewer() {
     const f = e.target.files?.[0]
     if (!f) return
     if (!f.type.startsWith("image/")) {
-      setError("Selecione uma imagem válida.")
+      setError("Formato não suportado. Envie uma foto JPEG, PNG, WebP ou GIF.")
       return
     }
 

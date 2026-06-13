@@ -50,7 +50,7 @@ export default function Home() {
             <Reveal>
               <div className="inline-flex items-center gap-2 rounded-full border border-accent-border bg-accent-soft px-4 py-1.5 text-xs font-semibold text-accent-text">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent animate-glow-pulse" />
-                Especialistas em IA para empresas
+                IA pra empresas, do jeito certo
               </div>
             </Reveal>
 
@@ -130,8 +130,8 @@ export default function Home() {
         <Section
           id="servicos"
           eyebrow="Serviços de IA"
-          title="Soluções de IA para o seu negócio"
-          description="De consultoria estratégica a agentes inteligentes e automação — tudo que você precisa para transformar sua empresa com IA."
+          title="Soluções de IA pro seu negócio"
+          description="Da consultoria estratégica aos agentes inteligentes e automação — tudo que você precisa pra transformar sua empresa com IA."
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {site.iaServices.map((service, i) => (
@@ -146,7 +146,7 @@ export default function Home() {
         <Section
           eyebrow="Benefícios"
           title="O que sua empresa ganha com IA"
-          description="Resultados mensuráveis que impactam diretamente seus resultados."
+          description="Resultados que aparecem no dia a dia — não só no papel."
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {site.iaBenefits.map((benefit, i) => (
@@ -189,7 +189,7 @@ export default function Home() {
         <Section
           eyebrow="Ferramentas"
           title="Ferramentas populares"
-          description="As ferramentas gratuitas mais acessadas pelos nossos visitantes — tudo direto no navegador, sem envio de dados."
+          description="Utilitários gratuitos que rodam direto no navegador. Nada é enviado pra servidor."
         >
           <PopularTools />
           <div className="mt-8 text-center">
@@ -212,26 +212,26 @@ export default function Home() {
         <Section
           eyebrow="Processo"
           title="Como funciona"
-          description="Simples, direto e sem burocracia. Do diagnóstico à implementação."
+          description="Simples, direto e sem burocracia. Do diagnóstico à entrega."
         >
           <div className="grid gap-3 md:grid-cols-3">
             {[
               {
                 step: "01",
                 title: "Você entra em contato",
-                desc: "Nos envie uma mensagem pelo formulário ou e-mail. A gente entende seu cenário e objetivos numa conversa simples.",
+                desc: "Manda uma mensagem pelo formulário ou e-mail. A gente entende seu cenário e seus objetivos.",
                 icon: "message",
               },
               {
                 step: "02",
                 title: "Alinhamos a solução",
-                desc: "Definimos o plano, escopo e prazos. Você recebe tudo claro e sem surpresas.",
+                desc: "Definimos o plano, escopo e prazos. Você recebe tudo claro, sem surpresas.",
                 icon: "target",
               },
               {
                 step: "03",
                 title: "Cuidamos de tudo",
-                desc: "Execução, migração, configuração e suporte contínuo — você foca no seu negócio.",
+                desc: "Execução, configuração e suporte contínuo — você foca no seu negócio.",
                 icon: "rocket",
               },
             ].map((item) => (
@@ -265,7 +265,7 @@ export default function Home() {
         <Section
           eyebrow="Depoimentos"
           title="O que nossos clientes dizem"
-          description="Quem já experimenta o atendimento direto e a entrega consistente entende o valor."
+          description="Quem já experimentou o atendimento direto sabe a diferença."
         >
           <div className="grid gap-4 md:grid-cols-3">
             {site.testimonials.map((t, i) => (
@@ -280,7 +280,7 @@ export default function Home() {
         <Section
           eyebrow="FAQ"
           title="Dúvidas frequentes"
-          description="Respostas rápidas para as perguntas mais comuns."
+          description="O que mais perguntam por aqui."
         >
           <FAQ items={site.faq} />
         </Section>
@@ -295,11 +295,11 @@ export default function Home() {
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.32em] text-accent">Diagnóstico Gratuito</p>
                   <h2 className="mt-5 font-display text-3xl font-extrabold tracking-tight text-primary md:text-4xl">
-                    Pronto para implementar IA na sua empresa?
+                    Pronto pra colocar IA na sua empresa?
                   </h2>
                   <p className="mt-4 text-base leading-7 text-secondary">
-                    Preencha o formulário e nossa equipe entrará em contato para um diagnóstico
-                    gratuito e sem compromisso. Descubra onde a IA pode gerar mais valor para você.
+                    Preenche o formulário que a gente entra em contato pra um diagnóstico
+                    gratuito, sem compromisso. Vamos descobrir juntos onde a IA pode gerar mais valor pra você.
                   </p>
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                     <a

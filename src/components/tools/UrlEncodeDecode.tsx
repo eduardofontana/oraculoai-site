@@ -48,7 +48,7 @@ export function UrlEncodeDecode() {
 
       <div>
         <label className="mb-2 block text-sm font-medium text-secondary">
-          {mode === "encode" ? "URL para codificar" : "URL para decodificar"}
+          {mode === "encode" ? "URL com acentos ou espaços" : "URL já codificada (%XX)"}
         </label>
         <textarea
           value={input}

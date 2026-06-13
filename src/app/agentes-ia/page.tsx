@@ -10,11 +10,11 @@ import { JsonLd, organizationSchema } from "@/components/JsonLd";
 export const metadata: Metadata = {
   title: "Agentes de IA Personalizados | OraculoAI",
   description:
-    "Criamos agentes de IA que automatizam tarefas, atendem clientes e integram sistemas — feitos sob medida pro seu negócio.",
+    "Criamos agentes de IA que automatizam tarefas, atendem clientes e integram sistemas — tudo sob medida pro seu negócio.",
   openGraph: {
     title: "Agentes de IA Personalizados | OraculoAI",
     description:
-      "Criamos agentes de IA que automatizam tarefas, atendem clientes e integram sistemas — feitos sob medida pro seu negócio.",
+      "Criamos agentes de IA que automatizam tarefas, atendem clientes e integram sistemas — tudo sob medida pro seu negócio.",
     url: "https://oraculoai.cloud/agentes-ia",
     siteName: "OráculoAI",
     type: "website",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Agentes de IA Personalizados | OraculoAI",
     description:
-      "Desenvolvemos agentes de IA capazes de automatizar tarefas, responder clientes e integrar processos empresariais.",
+      "Desenvolvemos agentes de IA que automatizam tarefas, atendem clientes e integram processos empresariais.",
   },
   alternates: {
     canonical: "https://oraculoai.cloud/agentes-ia",
@@ -35,17 +35,17 @@ const useCases = [
   {
     title: "Atendimento ao Cliente",
     icon: "message-circle",
-    desc: "Agentes que atendem clientes 24/7, resolvem dúvidas, abrem chamados e qualificam leads automaticamente.",
+    desc: "Agentes que atendem 24/7, tiram dúvidas, abrem chamados e qualificam leads automaticamente.",
   },
   {
     title: "Operações Internas",
     icon: "settings",
-    desc: "Automatização de tarefas administrativas, aprovações, relatórios e fluxos de trabalho repetitivos.",
+    desc: "Automatização de tarefas administrativas, aprovações, relatórios e fluxos repetitivos.",
   },
   {
     title: "Integrações",
     icon: "globe",
-    desc: "Agentes que conectam CRM, ERP, e-mail, WhatsApp e APIs para orquestrar processos completos.",
+    desc: "Agentes que conectam CRM, ERP, e-mail, WhatsApp e APIs pra orquestrar processos completos.",
   },
   {
     title: "Análise de Dados",
@@ -55,7 +55,7 @@ const useCases = [
   {
     title: "Suporte Técnico",
     icon: "headset",
-    desc: "Triagem inteligente de chamados, diagnóstico automatizado e encaminhamento para equipe certa.",
+    desc: "Triagem inteligente de chamados, diagnóstico automático e encaminhamento pra equipe certa.",
   },
   {
     title: "Vendas e Marketing",
@@ -123,8 +123,8 @@ export default function AgentesIAPage() {
 
             <Reveal delay={200}>
               <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-secondary md:text-lg">
-                A gente cria assistentes inteligentes que trabalham por você: atendem clientes,
-                automatizam tarefas e integram sistemas. Tudo feito sob medida pro seu negócio.
+                Criamos assistentes inteligentes que trabalham por você: atendem clientes,
+                automatizam tarefas e integram sistemas. Tudo sob medida pro seu negócio.
               </p>
             </Reveal>
 
@@ -155,11 +155,11 @@ export default function AgentesIAPage() {
         <Section
           eyebrow="O que são"
           title="Agentes de IA"
-          description="Sistemas inteligentes que executam tarefas de forma autônoma: atendem, analisam, decidem e agem."
+          description="Sistemas que vão além do chatbot: eles raciocinam, executam ações e integram sistemas."
         >
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-base leading-8 text-secondary">
-              Diferente de chatbots simples, nossos agentes de IA são capazes de <strong className="text-primary">raciocinar, executar ações e integrar sistemas</strong> para automatizar processos completos. Eles aprendem com seus dados, respeitam regras de negócio e evoluem continuamente.
+              Diferente de chatbots comuns, nossos agentes <strong className="text-primary">raciocinam, executam ações e conversam com seus sistemas</strong> pra automatizar processos de verdade. Eles aprendem com seus dados, respeitam regras de negócio e evoluem com o tempo.
             </p>
           </div>
         </Section>
@@ -167,8 +167,8 @@ export default function AgentesIAPage() {
         {/* Casos de Uso */}
         <Section
           eyebrow="Casos de Uso"
-          title="O que um Agente de IA pode fazer por você"
-          description="Soluções práticas para áreas críticas do seu negócio."
+          title="O que um agente de IA pode fazer por você"
+          description="Soluções práticas pra áreas que mais pesam no dia a dia."
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {useCases.map((item, i) => (
@@ -190,12 +190,12 @@ export default function AgentesIAPage() {
         {/* Processo */}
         <Section
           eyebrow="Processo"
-          title="Como desenvolvemos seu Agente de IA"
-          description="Metodologia ágil para entregar valor rápido."
+          title="Como desenvolvemos seu agente de IA"
+          description="Metodologia ágil pra entregar valor rápido."
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {[
-              { step: "01", title: "Mapeamento", desc: "Entendemos seus processos, dados e objetivos para definir o escopo do agente." },
+              { step: "01", title: "Mapeamento", desc: "Entendemos seus processos, dados e objetivos pra definir o escopo do agente." },
               { step: "02", title: "Treinamento", desc: "Alimentamos o agente com seus dados, documentos e regras de negócio." },
               { step: "03", title: "Integração", desc: "Conectamos com seus sistemas: CRM, ERP, WhatsApp, e-mail, APIs." },
               { step: "04", title: "Produção", desc: "Agente em operação com monitoramento contínuo e evolução gradual." },
@@ -215,7 +215,7 @@ export default function AgentesIAPage() {
         <Section
           eyebrow="FAQ"
           title="Dúvidas frequentes sobre Agentes de IA"
-          description="Tire suas principais dúvidas."
+          description="O que mais perguntam sobre agentes de IA."
         >
           <FAQ items={site.agentesIAFaq} />
         </Section>
@@ -229,10 +229,10 @@ export default function AgentesIAPage() {
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.32em] text-accent">Diagnóstico Gratuito</p>
                   <h2 className="mt-5 font-display text-3xl font-extrabold tracking-tight text-primary md:text-4xl">
-                    Pronto para ter seu Agente de IA?
+                    Pronto pra ter seu agente de IA?
                   </h2>
                   <p className="mt-4 text-base leading-7 text-secondary">
-                    Preencha o formulário e descubra como um agente de IA pode automatizar processos, reduzir custos e transformar sua operação.
+                    Preenche o formulário e descobre como um agente de IA pode automatizar processos, reduzir custos e transformar sua operação.
                   </p>
                   <div className="mt-6 space-y-3">
                     {[

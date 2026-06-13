@@ -12,14 +12,14 @@ export function PlansSection() {
             Escolha o plano ideal para o seu negócio
           </h2>
           <p className="mt-4 text-base leading-8 text-secondary">
-            Hospedagem gerenciada, suporte humano e infraestrutura técnica. Cancele quando quiser.
+            Hospedagem gerenciada, suporte humano e infraestrutura que funciona. Cancele quando quiser.
           </p>
         </div>
       </Reveal>
 
       <Reveal delay={80}>
         <div className="mb-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 rounded-xl border border-border bg-card px-6 py-3.5 text-center text-sm">
-          {["Sem fidelidade", "Cancelamento simples", "Suporte humanizado por e-mail", "Ganhe 2 meses grátis no plano anual"].map((item) => (
+          {["Sem fidelidade", "Cancelamento simples", "Suporte humanizado", "Ganhe 2 meses grátis no plano anual"].map((item) => (
             <span key={item} className="inline-flex items-center gap-1.5 text-secondary">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
                 <polyline points="20 6 9 17 4 12" />

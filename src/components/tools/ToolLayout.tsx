@@ -14,9 +14,11 @@ interface ToolLayoutProps {
 export function buildMetadata(slug: string): Metadata {
   const tool = tools.find((t) => t.slug === slug)
   if (!tool) return {}
+  const suffix =
+    " Rápida, gratuita e com processamento local no navegador sempre que possível."
   return {
     title: `${tool.title} | Oráculo AI`,
-    description: `${tool.description} Ferramenta gratuita, rápida e segura, com processamento local no navegador sempre que possível.`,
+    description: `${tool.description}${suffix}`,
   }
 }
 

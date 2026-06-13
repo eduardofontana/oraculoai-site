@@ -21,7 +21,7 @@ export default function DominiosHospedagemPage() {
                 Hospedagem Gerenciada
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-secondary md:text-lg">
-                Infraestrutura cloud, VPS, domínio e e-mail profissional com suporte técnico especializado e gerenciamento completo.
+                Infraestrutura cloud, VPS, domínio e e-mail profissional com suporte técnico de verdade e gerenciamento completo.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <a
@@ -70,7 +70,7 @@ export default function DominiosHospedagemPage() {
                     </span>
                     <div>
                       <p className="font-bold text-primary">Migração assistida</p>
-                      <p className="mt-1 text-sm leading-6 text-secondary">Troca de hospedagem ou estrutura com acompanhamento direto.</p>
+                      <p className="mt-1 text-sm leading-6 text-secondary">Troca de hospedagem ou estrutura com acompanhamento direto, sem susto.</p>
                     </div>
                   </div>
                 </div>

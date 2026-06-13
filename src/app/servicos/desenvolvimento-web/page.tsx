@@ -22,7 +22,7 @@ export default function DesenvolvimentoWebPage() {
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-secondary md:text-lg">
                 Landing pages e sites institucionais com foco em clareza, desempenho e caminho
-                curto até a conversa.
+                curto até a conversão.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <a
@@ -71,7 +71,7 @@ export default function DesenvolvimentoWebPage() {
                     </span>
                     <div>
                       <p className="font-bold text-primary">Manutenção estratégica</p>
-                      <p className="mt-1 text-sm leading-6 text-secondary">Ajustes contínuos para manter performance, clareza e conversão.</p>
+                      <p className="mt-1 text-sm leading-6 text-secondary">Ajustes contínuos pra manter performance, clareza e conversão.</p>
                     </div>
                   </div>
                 </div>
@@ -91,7 +91,7 @@ export default function DesenvolvimentoWebPage() {
             <div className="rounded-xl border border-border bg-card p-6">
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Ideal para</p>
               <p className="mt-4 text-base leading-7 text-secondary">
-                Negócios que querem uma landing ou site com aparência profissional e foco em conversão.
+                Negócios que querem um site com aparência profissional e foco em conversão.
               </p>
             </div>
           </section>

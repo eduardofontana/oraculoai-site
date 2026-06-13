@@ -48,7 +48,7 @@ export function Base64Tool() {
 
       <div>
         <label className="mb-2 block text-sm font-medium text-secondary">
-          {mode === "encode" ? "Texto para codificar" : "Base64 para decodificar"}
+          {mode === "encode" ? "Texto puro para converter" : "String Base64 para decodificar"}
         </label>
         <textarea
           value={input}

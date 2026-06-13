@@ -15,7 +15,7 @@ export function BaseConverter() {
 
   const handleConvert = () => {
     if (!input.trim()) {
-      setError("Digite um número.")
+      setError("Informe um número para converter.")
       setResults([])
       return
     }

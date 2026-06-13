@@ -21,7 +21,7 @@ export default function ConsultoriaPage() {
                 Consultoria em IA e Segurança
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-secondary md:text-lg">
-                Inteligência artificial aplicada ao seu negócio e cibersegurança prática para proteger sua operação digital.
+                Inteligência artificial aplicada ao seu negócio e cibersegurança prática pra proteger sua operação digital.
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                 <a
@@ -84,13 +84,13 @@ export default function ConsultoriaPage() {
             <div className="rounded-xl border border-border bg-card p-6">
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Resultado esperado</p>
               <p className="mt-4 text-base leading-7 text-secondary">
-                Mais inovação, menos risco e uma operação digital preparada para o futuro.
+                Mais inovação, menos risco e uma operação digital preparada pro futuro.
               </p>
             </div>
             <div className="rounded-xl border border-border bg-card p-6">
               <p className="text-xs font-bold uppercase tracking-[0.24em] text-muted">Ideal para</p>
               <p className="mt-4 text-base leading-7 text-secondary">
-                Empresas que querem aplicar IA no negócio ou precisam de segurança digital sem complexidade.
+                Empresas que querem aplicar IA no negócio ou precisam de segurança digital sem complicação.
               </p>
             </div>
           </section>

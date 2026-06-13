@@ -40,7 +40,7 @@ export function DifferentialsSection() {
             Por que escolher a Oráculo AI?
           </h2>
           <p className="mt-4 text-base leading-8 text-secondary">
-            Não somos apenas hospedagem. Somos seu parceiro tecnológico.
+            Não somos só hospedagem. Somos seu parceiro tecnológico.
           </p>
         </div>
       </Reveal>

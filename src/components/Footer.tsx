@@ -12,7 +12,7 @@ export function Footer() {
               {site.name.slice(1)}
             </p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-secondary">
-              Agentes de IA, automação de processos e soluções digitais que realmente funcionam pro seu negócio.
+              Agentes de IA, automação de processos e soluções digitais que funcionam pro seu negócio.
             </p>
           </div>
           <div>
@@ -66,7 +66,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {site.name}.
           </p>
           <p className="text-xs text-muted">
-            Infraestrutura baseada em parceiros de hospedagem
+            Infraestrutura com parceiros de hospedagem
           </p>
         </div>
       </div>

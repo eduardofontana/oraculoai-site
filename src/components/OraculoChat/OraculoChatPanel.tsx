@@ -119,7 +119,7 @@ export function OraculoChatPanel({ onClose }: Props) {
       setMessages((prev) => [...prev, reply]);
     } catch (err) {
       const errMsg =
-        err instanceof Error ? err.message : "Falha ao comunicar com o serviço.";
+        err instanceof Error ? err.message : "Não foi possível falar com o Oráculo agora.";
       const errorMessage: Message = {
         id: uuid(),
         role: "error",
@@ -333,8 +333,8 @@ export function OraculoChatPanel({ onClose }: Props) {
           {/* ── Aviso de limite ── */}
           {isAtLimit && (
             <div className="rounded-xl border border-accent-border bg-accent-soft px-4 py-3 text-center text-sm text-accent-text">
-              Limite de {MAX_MESSAGES} mensagens por sessão atingido.
-              Recarregue a página para continuar.
+              Você atingiu o limite de {MAX_MESSAGES} mensagens por conversa.
+              Atualize a página para começar de novo.
             </div>
           )}
 

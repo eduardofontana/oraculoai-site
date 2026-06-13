@@ -49,13 +49,13 @@ export function HtmlEntities() {
 
       <div>
         <label className="mb-2 block text-sm font-medium text-secondary">
-          {mode === "encode" ? "Texto para codificar" : "HTML Entities para decodificar"}
+          {mode === "encode" ? "Caracteres especiais (&, <, > etc.)" : "Entidades HTML (&amp;, &lt;, &gt; etc.)"}
         </label>
         <textarea
           value={input}
           onChange={(e) => { setInput(e.target.value); setOutput("") }}
           rows={4}
-          placeholder={mode === "encode" ? '<div class="exemplo">' : "&lt;div&gt;"}
+          placeholder={mode === "encode" ? 'Cole seu HTML com &, <, > aqui' : '&lt;div class=&quot;exemplo&quot;&gt;'}
           className="w-full rounded-lg border border-border bg-bg px-4 py-2.5 font-mono text-sm text-primary placeholder-muted focus:border-accent-border focus:outline-none"
         />
       </div>

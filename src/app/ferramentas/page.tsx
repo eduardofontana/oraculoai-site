@@ -6,7 +6,7 @@ import { tools, categories } from "@/data/tools"
 export const metadata: Metadata = {
   title: "Ferramentas Online | Oráculo AI",
   description:
-    "Use ferramentas rápidas para documentos, Pix, QR Code, texto, desenvolvimento, imagem e PDF. Quase tudo roda localmente no navegador.",
+    "Use ferramentas gratuitas pra documentos, Pix, QR Code, texto, desenvolvimento, imagem e PDF. Quase tudo roda no navegador, sem enviar dados.",
 }
 
 export default function FerramentasPage() {
@@ -17,8 +17,8 @@ export default function FerramentasPage() {
           Ferramentas online
         </h1>
         <p className="mt-4 text-base leading-relaxed text-secondary">
-          Use ferramentas rápidas para documentos, Pix, QR Code, texto,
-          desenvolvimento, imagem e PDF. Quase tudo roda localmente no navegador.
+          Utilitários gratuitos pra documentos, Pix, QR Code, texto,
+          desenvolvimento, imagem e PDF. Quase tudo roda no navegador, nada é enviado pra servidor.
         </p>
       </div>
 
