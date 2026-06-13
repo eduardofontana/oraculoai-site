@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { validateOrigin } from "@/lib/csrf"
 
 const HIBP_RANGE_URL = "https://api.pwnedpasswords.com/range/"
 const HASH_PREFIX_PATTERN = /^[0-9A-F]{5}$/
@@ -20,6 +21,11 @@ function checkRateLimit(ip: string): boolean {
 }
 
 export async function GET(request: NextRequest) {
+  /* ---- 0. CSRF check ---- */
+  if (!validateOrigin(request)) {
+    return NextResponse.json({ error: "Requisição rejeitada." }, { status: 403 })
+  }
+
   const ip =
     request.headers.get("x-real-ip") ??
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
@@ -54,11 +60,7 @@ export async function GET(request: NextRequest) {
 
     if (!response.ok) {
       return NextResponse.json(
-        {
-          error:
-            body ||
-            `Falha ao consultar o Have I Been Pwned (${response.status}).`,
-        },
+        { error: "Falha ao consultar serviço de senhas vazadas." },
         { status: response.status },
       )
     }
