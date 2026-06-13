@@ -24,77 +24,83 @@ const leadSchema = z.object({
 /*  POST /api/leads                                                    */
 /* ------------------------------------------------------------------ */
 export async function POST(request: NextRequest) {
-  /* ---- CSRF ---- */
-  if (!validateOrigin(request)) {
-    return NextResponse.json({ error: "Requisição rejeitada." }, { status: 403 });
-  }
-
-  /* ---- Rate limit ---- */
-  const ip =
-    request.headers.get("x-real-ip") ??
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    "anonymous";
-
-  const rl = await checkRateLimit(`leads:${ip}`, { limit: 5, windowMs: 60 * 1000 });
-  if (!rl.success) {
-    return NextResponse.json(
-      { error: "Muitas requisições. Aguarde um minuto." },
-      { status: 429 },
-    );
-  }
-
-  /* ---- Validação Zod ---- */
-  let body: unknown;
   try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "JSON inválido." }, { status: 400 });
-  }
-
-  const parsed = leadSchema.safeParse(body);
-  if (!parsed.success) {
-    const firstError = parsed.error.issues[0]?.message ?? "Dados inválidos.";
-    return NextResponse.json({ error: firstError }, { status: 400 });
-  }
-
-  const { nome, email, whatsapp, empresa, mensagem } = parsed.data;
-
-  /* ---- Persistir no Supabase ---- */
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (url && key) {
-    const supabase = getSupabase();
-    if (!supabase) {
-      console.info("[Leads] Supabase não configurado. Lead não persistido.");
-      return NextResponse.json({ success: true }, { status: 201 });
+    /* ---- CSRF ---- */
+    if (!validateOrigin(request)) {
+      return NextResponse.json({ error: "Requisição rejeitada." }, { status: 403 });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase.from("leads") as any).insert({
-      nome,
-      email,
-      whatsapp,
-      empresa: empresa || null,
-      mensagem,
-    });
+    /* ---- Rate limit ---- */
+    const ip =
+      request.headers.get("x-real-ip") ??
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      "anonymous";
 
-    if (error) {
-      console.error("[Leads] Erro ao salvar no Supabase:", error.message);
+    const rl = await checkRateLimit(`leads:${ip}`, { limit: 5, windowMs: 60 * 1000 });
+    if (!rl.success) {
       return NextResponse.json(
-        { error: "Erro ao salvar lead." },
-        { status: 500 },
+        { error: "Muitas requisições. Aguarde um minuto." },
+        { status: 429 },
       );
     }
-  } else {
-    // Sem Supabase configurado: apenas log
-    console.info("[Leads] Lead recebido (sem Supabase):", { nome, email, whatsapp, empresa, mensagem });
+
+    /* ---- Validação Zod ---- */
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: "JSON inválido." }, { status: 400 });
+    }
+
+    const parsed = leadSchema.safeParse(body);
+    if (!parsed.success) {
+      const firstError = parsed.error.issues[0]?.message ?? "Dados inválidos.";
+      return NextResponse.json({ error: firstError }, { status: 400 });
+    }
+
+    const { nome, email, whatsapp, empresa, mensagem } = parsed.data;
+
+    /* ---- Persistir no Supabase ---- */
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (url && key) {
+      const supabase = getSupabase();
+      if (!supabase) {
+        console.info("[Leads] Supabase não configurado. Lead não persistido.");
+        return NextResponse.json({ success: true }, { status: 201 });
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase.from("leads") as any).insert({
+        nome,
+        email,
+        whatsapp,
+        empresa: empresa || null,
+        mensagem,
+      });
+
+      if (error) {
+        console.error("[Leads] Erro ao salvar no Supabase:", error.message);
+        return NextResponse.json(
+          { error: "Erro ao salvar lead." },
+          { status: 500 },
+        );
+      }
+    } else {
+      // Sem Supabase configurado: apenas log
+      console.info("[Leads] Lead recebido (sem Supabase):", { nome, email, whatsapp, empresa, mensagem });
+    }
+
+    /* ---- Notificar (assíncrono, não bloqueia resposta) ---- */
+    notifyNewLead({ nome, email, whatsapp, empresa, mensagem }).catch((err) =>
+      console.error("[Leads] Erro na notificação:", err),
+    );
+
+    return NextResponse.json({ success: true }, { status: 201 });
+  } catch (err) {
+    console.error("[Leads] Erro inesperado:", err instanceof Error ? err.message : err);
+    console.error("[Leads] Stack:", err instanceof Error ? err.stack : "no stack");
+    return NextResponse.json({ error: "Erro interno do servidor." }, { status: 500 });
   }
-
-  /* ---- Notificar (assíncrono, não bloqueia resposta) ---- */
-  notifyNewLead({ nome, email, whatsapp, empresa, mensagem }).catch((err) =>
-    console.error("[Leads] Erro na notificação:", err),
-  );
-
-  return NextResponse.json({ success: true }, { status: 201 });
 }
