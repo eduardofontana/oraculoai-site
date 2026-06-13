@@ -3,6 +3,8 @@
 /*  Opcional — se SMTP não configurado, apenas log                    */
 /* ------------------------------------------------------------------ */
 
+import nodemailer from "nodemailer";
+
 type LeadData = {
   nome: string;
   email: string;
@@ -11,33 +13,48 @@ type LeadData = {
   mensagem: string;
 };
 
+let _transporter: nodemailer.Transporter | null = null;
+
+function getTransporter() {
+  if (_transporter) return _transporter;
+
+  const host = process.env.SMTP_HOST;
+  const port = process.env.SMTP_PORT;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+
+  if (!host || !port || !user || !pass) return null;
+
+  _transporter = nodemailer.createTransport({
+    host,
+    port: Number(port),
+    secure: Number(port) === 465,
+    auth: { user, pass },
+  });
+
+  return _transporter;
+}
+
 /**
  * Envia e-mail de notificação quando um novo lead chega.
  * Silenciosamente ignora se SMTP não estiver configurado.
  */
 export async function notifyNewLead(lead: LeadData): Promise<void> {
-  const host = process.env.SMTP_HOST;
-  const port = process.env.SMTP_PORT;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-  const from = process.env.SMTP_FROM || user;
+  const from = process.env.SMTP_FROM || process.env.SMTP_USER;
   const to = process.env.NOTIFY_EMAIL;
 
-  if (!host || !port || !user || !pass || !to) {
+  if (!from || !to) {
     console.info("[Notify] SMTP não configurado. Notificação ignorada.");
     return;
   }
 
+  const transporter = getTransporter();
+  if (!transporter) {
+    console.info("[Notify] Transporter não disponível. Notificação ignorada.");
+    return;
+  }
+
   try {
-    const nodemailer = await import("nodemailer");
-
-    const transporter = nodemailer.createTransport({
-      host,
-      port: Number(port),
-      secure: Number(port) === 465,
-      auth: { user, pass },
-    });
-
     await transporter.sendMail({
       from: `"OráculoAI" <${from}>`,
       to,

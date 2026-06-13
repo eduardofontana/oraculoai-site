@@ -92,7 +92,9 @@ export async function POST(request: NextRequest) {
   }
 
   /* ---- Notificar (assíncrono, não bloqueia resposta) ---- */
-  notifyNewLead({ nome, email, whatsapp, empresa, mensagem });
+  notifyNewLead({ nome, email, whatsapp, empresa, mensagem }).catch((err) =>
+    console.error("[Leads] Erro na notificação:", err),
+  );
 
   return NextResponse.json({ success: true }, { status: 201 });
 }
