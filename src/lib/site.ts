@@ -1,7 +1,7 @@
 export const site = {
   name: "OráculoAI",
   shortName: "Oráculo AI",
-  slogan: "IA que o seu negócio merece — com resultados que você sente na prática",
+  slogan: "IA que transforma seu negócio",
   heroSubtitle:
     "A gente cria agentes inteligentes, automatiza processos e constrói soluções que realmente se encaixam no que sua empresa precisa. Tudo sem complicação, feito com cuidado e pensando no que importa pra você.",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",

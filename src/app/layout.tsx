@@ -23,14 +23,14 @@ const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
 export const metadata: Metadata = {
   title: {
-    default: "OráculoAI | Soluções inteligentes que transformam o seu negócio",
+    default: "OráculoAI | IA que transforma seu negócio",
     template: "%s | OraculoAI",
   },
   description:
     "Criamos agentes de IA, automatizamos processos e desenvolvemos soluções digitais que realmente funcionam pra sua empresa. Simples, direto e com resultado de verdade.",
   metadataBase: new URL("https://oraculoai.cloud"),
   openGraph: {
-    title: "OráculoAI | Soluções inteligentes que transformam o seu negócio",
+    title: "OráculoAI | IA que transforma seu negócio",
     description:
       "Criamos agentes de IA, automatizamos processos e desenvolvemos soluções digitais que realmente funcionam pra sua empresa.",
     url: "https://oraculoai.cloud",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OráculoAI | Soluções inteligentes que transformam o seu negócio",
+    title: "OráculoAI | IA que transforma seu negócio",
     description:
       "Criamos agentes de IA, automatizamos processos e desenvolvemos soluções digitais que realmente funcionam.",
   },
