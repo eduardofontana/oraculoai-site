@@ -1,3 +1,5 @@
+// ─── Tool Usage Tracking (localStorage) ───
+
 const STORAGE_KEY = "oraculo-tool-usage"
 const MAX_ENTRIES = 100
 const EXPIRY_MS = 30 * 24 * 60 * 60 * 1000
@@ -66,6 +68,75 @@ export function getTopTools(limit = 6): string[] {
     .sort(([, a], [, b]) => b - a)
     .slice(0, limit)
     .map(([slug]) => slug)
+}
+
+// ─── Google Analytics / GTM Event Tracking ───
+
+type GtagEvent = {
+  action: string;
+  category?: string;
+  label?: string;
+  value?: number;
+};
+
+/**
+ * Dispara um evento para o GA4 via gtag (se carregado).
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const gtagFn = (...args: any[]) => {
+  if (typeof window === "undefined") return;
+  try {
+    const gtag = (window as unknown as Record<string, unknown>).gtag;
+    if (typeof gtag === "function") {
+      gtag(...args);
+    }
+  } catch {
+    // GA não carregado — ignora
+  }
+};
+
+export function trackEvent({ action, category, label, value }: GtagEvent) {
+  gtagFn("event", action, {
+    event_category: category,
+    event_label: label,
+    value,
+  });
+}
+
+/** Rastreia clique no WhatsApp */
+export function trackWhatsAppClick(location: string) {
+  trackEvent({
+    action: "click_whatsapp",
+    category: "engagement",
+    label: location,
+  });
+}
+
+/** Rastreia clique em CTA principal */
+export function trackCtaClick(ctaName: string) {
+  trackEvent({
+    action: "click_cta",
+    category: "conversion",
+    label: ctaName,
+  });
+}
+
+/** Rastreia clique em "Solicitar Diagnóstico" */
+export function trackDiagnosticoClick(location: string) {
+  trackEvent({
+    action: "click_diagnostico",
+    category: "lead",
+    label: location,
+  });
+}
+
+/** Rastreia envio de formulário */
+export function trackFormSubmit(formName: string) {
+  trackEvent({
+    action: "form_submit",
+    category: "lead",
+    label: formName,
+  });
 }
 
 

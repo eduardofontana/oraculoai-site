@@ -17,18 +17,24 @@ export function Header() {
         </Link>
 
         <div className="flex items-center gap-3">
-          <nav className="hidden items-center gap-6 md:flex">
+          <nav className="hidden items-center gap-5 md:flex">
             <Link
-              href="/#services"
+              href="/consultoria-ia"
+              className="text-sm font-semibold text-secondary transition hover:text-primary"
+            >
+              Consultoria IA
+            </Link>
+            <Link
+              href="/agentes-ia"
+              className="text-sm font-semibold text-secondary transition hover:text-primary"
+            >
+              Agentes IA
+            </Link>
+            <Link
+              href="/#servicos"
               className="text-sm font-semibold text-secondary transition hover:text-primary"
             >
               Serviços
-            </Link>
-            <Link
-              href="/#planos"
-              className="text-sm font-semibold text-secondary transition hover:text-primary"
-            >
-              Planos
             </Link>
             <Link
               href="/sobre"

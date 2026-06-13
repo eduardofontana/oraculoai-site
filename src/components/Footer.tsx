@@ -5,16 +5,34 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-bg">
       <div className="mx-auto w-full max-w-7xl px-6 py-16 md:px-8">
-        <div className="grid gap-10 md:grid-cols-4">
-          <div className="md:col-span-2">
+        <div className="grid gap-10 md:grid-cols-5">
+          <div className="md:col-span-1">
             <p className="text-lg font-extrabold text-primary">
               <span className="text-accent">{site.name.slice(0, 1)}</span>
               {site.name.slice(1)}
             </p>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-secondary">
-              Criação de sites, hospedagem gerenciada e consultoria em cibersegurança.
-              Atendimento direto, sem burocracia.
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-secondary">
+              IA aplicada para gerar resultados reais no seu negócio. Agentes de IA, automações inteligentes e soluções corporativas.
             </p>
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-muted">
+              IA e Automação
+            </p>
+            <nav className="mt-5 flex flex-col gap-3">
+              <Link href="/consultoria-ia" className="text-sm text-secondary transition hover:text-primary">
+                Consultoria em IA
+              </Link>
+              <Link href="/agentes-ia" className="text-sm text-secondary transition hover:text-primary">
+                Agentes de IA
+              </Link>
+              <Link href="/consultoria-ia" className="text-sm text-secondary transition hover:text-primary">
+                Automação com IA
+              </Link>
+              <Link href="/agentes-ia" className="text-sm text-secondary transition hover:text-primary">
+                Chatbots Inteligentes
+              </Link>
+            </nav>
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-muted">

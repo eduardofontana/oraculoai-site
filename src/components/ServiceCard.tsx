@@ -38,6 +38,54 @@ const iconMap: Record<string, { node: React.ReactNode; color: string }> = {
       </svg>
     ),
   },
+  brain: {
+    color: "text-accent",
+    node: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2a4 4 0 0 1 4 4v1h2a3 3 0 0 1 3 3v1h-2v-1a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v1H3v-1a3 3 0 0 1 3-3h2V6a4 4 0 0 1 4-4z" />
+        <path d="M12 6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2 2 2 0 0 0 2-2V8a2 2 0 0 0-2-2z" />
+        <path d="M6 12h12" />
+        <path d="M6 16h12" />
+      </svg>
+    ),
+  },
+  bot: {
+    color: "text-accent-text",
+    node: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="11" width="18" height="10" rx="2" />
+        <circle cx="12" cy="16" r="1" />
+        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+        <line x1="2" y1="16" x2="3" y2="16" />
+        <line x1="21" y1="16" x2="22" y2="16" />
+      </svg>
+    ),
+  },
+  "message-circle": {
+    color: "text-accent-blue",
+    node: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      </svg>
+    ),
+  },
+  zap: {
+    color: "text-accent",
+    node: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+      </svg>
+    ),
+  },
+  search: {
+    color: "text-accent-blue",
+    node: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+    ),
+  },
 };
 
 export function ServiceCard({ title, description, bullets, href, icon, highlight }: ServiceCardProps) {
