@@ -95,9 +95,6 @@ export async function POST(request: NextRequest) {
 
     /* ---- 5. Tratar HTTP errors ---- */
     if (!hfRes.ok) {
-      const text = await hfRes.text().catch(() => "");
-      const preview = text.slice(0, 300);
-
       if (hfRes.status === 503) {
         return NextResponse.json(
           { reply: "Modelo carregando. Tente novamente em alguns segundos." },

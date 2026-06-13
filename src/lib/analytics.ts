@@ -112,15 +112,6 @@ export function trackWhatsAppClick(location: string) {
   });
 }
 
-/** Rastreia clique em CTA principal */
-export function trackCtaClick(ctaName: string) {
-  trackEvent({
-    action: "click_cta",
-    category: "conversion",
-    label: ctaName,
-  });
-}
-
 /** Rastreia clique em "Solicitar Diagnóstico" */
 export function trackDiagnosticoClick(location: string) {
   trackEvent({
