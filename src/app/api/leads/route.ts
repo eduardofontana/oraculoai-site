@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getSupabase } from "@/lib/supabase";
 import { validateOrigin } from "@/lib/csrf";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { notifyNewLead } from "@/lib/notify";
 
 /* ------------------------------------------------------------------ */
 /*  Schema de validação                                                */
@@ -89,6 +90,9 @@ export async function POST(request: NextRequest) {
     // Sem Supabase configurado: apenas log
     console.info("[Leads] Lead recebido (sem Supabase):", { nome, email, whatsapp, empresa, mensagem });
   }
+
+  /* ---- Notificar (assíncrono, não bloqueia resposta) ---- */
+  notifyNewLead({ nome, email, whatsapp, empresa, mensagem });
 
   return NextResponse.json({ success: true }, { status: 201 });
 }

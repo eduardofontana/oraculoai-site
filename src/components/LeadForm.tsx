@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { trackFormSubmit } from "@/lib/analytics";
 
@@ -45,9 +46,9 @@ const initialForm: FormData = {
 };
 
 export function LeadForm() {
+  const router = useRouter();
   const [data, setData] = useState<FormData>(initialForm);
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (field: keyof FormData, value: string) => {
@@ -100,25 +101,9 @@ export function LeadForm() {
     }
 
     setLoading(false);
-    setSubmitted(true);
     setData(initialForm);
+    router.push("/obrigado");
   };
-
-  if (submitted) {
-    return (
-      <div className="rounded-2xl border border-accent-border bg-accent-soft p-10 text-center">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent/20">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-        </div>
-        <h3 className="mt-5 text-2xl font-bold text-primary">Recebemos seu contato!</h3>
-        <p className="mt-3 text-secondary">
-          Nossa equipe retornará em até 24 horas pelo WhatsApp ou e-mail.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
