@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import NextImage from "next/image"
 import { useState, useRef } from "react"
 
 export function Watermark() {
@@ -29,7 +29,7 @@ export function Watermark() {
     if (!imagem) return
     setProcessando(true)
 
-    const img = new Image()
+    const img = new window.Image()
     img.onload = () => {
       const canvas = canvasRef.current!
       const ctx = canvas.getContext("2d")!
@@ -137,7 +137,7 @@ export function Watermark() {
           {/* Preview original */}
           <div className="rounded-lg border border-border bg-bg p-2">
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded bg-bg">
-              <Image
+              <NextImage
                 src={imagem}
                 alt="Preview"
                 fill
@@ -217,7 +217,7 @@ export function Watermark() {
             <div className="space-y-3">
               <div className="rounded-lg border border-border bg-bg p-2">
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded bg-bg">
-                  <Image
+                  <NextImage
                     src={resultadoUrl}
                     alt="Resultado"
                     fill
