@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { buildWhatsAppUrl, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 
 export function Header() {
-  const whatsappUrl = buildWhatsAppUrl();
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/90 backdrop-blur-2xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
@@ -51,24 +50,20 @@ export function Header() {
               </svg>
               Ferramentas
             </Link>
-            <Link
-              href={whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-accent px-5 py-2 text-sm font-bold text-white transition-all hover:shadow-[0_0_24px_var(--glow-strong)]"
+            <WhatsAppLink
+              trackLabel="header_desktop"
+              className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full bg-accent px-5 py-2 text-sm font-bold text-white transition-all hover:shadow-[0_0_24px_var(--glow-strong)]"
             >
               WhatsApp
-            </Link>
+            </WhatsAppLink>
           </nav>
           <ThemeToggle />
-          <Link
-            href={whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-sm font-bold text-white md:hidden"
+          <WhatsAppLink
+            trackLabel="header_mobile"
+            className="inline-flex cursor-pointer items-center justify-center rounded-full bg-accent px-4 py-2 text-sm font-bold text-white md:hidden"
           >
             WhatsApp
-          </Link>
+          </WhatsAppLink>
         </div>
       </div>
 
