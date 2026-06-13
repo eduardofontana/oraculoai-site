@@ -99,8 +99,12 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (err) {
-    console.error("[Leads] Erro inesperado:", err instanceof Error ? err.message : err);
-    console.error("[Leads] Stack:", err instanceof Error ? err.stack : "no stack");
+    const errInfo = {
+      name: err instanceof Error ? err.name : typeof err,
+      message: err instanceof Error ? err.message : String(err),
+      stack: err instanceof Error ? (err.stack ?? "no stack").split("\n").slice(0, 6).join("\n") : "no stack",
+    };
+    console.error("[Leads] UNCAUGHT ERROR:", JSON.stringify(errInfo, null, 2));
     return NextResponse.json({ error: "Erro interno do servidor." }, { status: 500 });
   }
 }
