@@ -189,10 +189,13 @@ export function BarcodeGenerator() {
 
       {svg && !error && (
         <div className="space-y-4">
-          <div
-            className="flex justify-center rounded-lg border border-border bg-white p-6"
-            dangerouslySetInnerHTML={{ __html: svg }}
-          />
+          <div className="flex justify-center rounded-lg border border-border bg-white p-6">
+            <img
+              src={`data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`}
+              alt="Código de barras"
+              className="max-w-full"
+            />
+          </div>
 
           <div className="flex gap-3">
             <button

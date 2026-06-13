@@ -49,13 +49,20 @@ function jsonToYaml(obj: unknown, indent = 0): string {
   return String(obj)
 }
 
+const FORBIDDEN_KEYS = new Set(["__proto__", "constructor", "prototype"])
+
+function isSafeKey(key: string): boolean {
+  return !FORBIDDEN_KEYS.has(key)
+}
+
 function yamlToJson(text: string): string {
   const lines = text.split("\n").filter((l) => l.trim() && !l.trim().startsWith("#"))
-  const result: Record<string, unknown> = {}
+  const result: Record<string, unknown> = Object.create(null)
   for (const line of lines) {
     const match = line.match(/^(\s*)([\w-]+):\s*(.*)$/)
     if (match) {
       const key = match[2]
+      if (!isSafeKey(key)) continue
       let value: unknown = match[3].trim()
       if (value === "null") value = null
       else if (value === "true") value = true
@@ -112,17 +119,17 @@ function convert(input: string, from: Format, to: Format): string {
 }
 
 function parseToml(text: string): Record<string, unknown> {
-  const result: Record<string, unknown> = {}
+  const result: Record<string, unknown> = Object.create(null)
   let currentSection = result
   for (const line of text.split("\n")) {
     const trimmed = line.trim()
     if (!trimmed || trimmed.startsWith("#")) continue
     const sectionMatch = trimmed.match(/^\[([^\]]+)\]$/)
     if (sectionMatch) {
-      const keys = sectionMatch[1].split(".")
+      const keys = sectionMatch[1].split(".").filter(isSafeKey)
       let obj = result
       for (const key of keys) {
-        if (!(key in obj)) obj[key] = {}
+        if (!(key in obj)) obj[key] = Object.create(null)
         obj = obj[key] as Record<string, unknown>
       }
       currentSection = obj
@@ -130,6 +137,8 @@ function parseToml(text: string): Record<string, unknown> {
     }
     const kvMatch = trimmed.match(/^([\w-]+)\s*=\s*(.+)$/)
     if (kvMatch) {
+      const kvKey = kvMatch[1]
+      if (!isSafeKey(kvKey)) continue
       let value: unknown = kvMatch[2].trim()
       if (value === "true") value = true
       else if (value === "false") value = false

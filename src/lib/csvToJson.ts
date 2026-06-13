@@ -1,3 +1,5 @@
+const FORBIDDEN_KEYS = new Set(["__proto__", "constructor", "prototype"])
+
 export interface CsvToJsonOptions {
   delimiter?: string
   hasHeader?: boolean
@@ -70,18 +72,19 @@ export function csvToJson(
     startIndex = 0
   }
 
-  const result: Record<string, string>[] = []
+  const result: Array<Record<string, string>> = []
 
   for (let i = startIndex; i < lines.length; i++) {
     const line = lines[i].trim()
     if (!line) continue
 
     const values = parseLine(line)
-    const obj: Record<string, string> = {}
+    const obj: Record<string, string> = Object.create(null)
 
     if (hasHeader) {
       headers.forEach((h, idx) => {
-        obj[h] = values[idx] ?? ""
+        const safeKey = FORBIDDEN_KEYS.has(h) ? `_${h}` : h
+        obj[safeKey] = values[idx] ?? ""
       })
     } else {
       values.forEach((v, idx) => {

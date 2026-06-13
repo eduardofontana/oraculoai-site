@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { extrairExif, formatExifValue, type ExifResult } from "@/lib/exif"
 
 export function ExifViewer() {
@@ -10,6 +10,12 @@ export function ExifViewer() {
   const [data, setData] = useState<ExifResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview)
+    }
+  }, [preview])
 
   const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
@@ -20,6 +26,7 @@ export function ExifViewer() {
     }
 
     setFile(f)
+    if (preview) URL.revokeObjectURL(preview)
     setPreview(URL.createObjectURL(f))
     setData(null)
     setError("")

@@ -11,9 +11,17 @@ export interface GradientConfig {
   radialPosition: string // ex: "center", "top left"
 }
 
+const COLOR_REGEX = /^#[0-9a-fA-F]{3,8}$|^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(?:,\s*[\d.]+\s*)?\)$|^hsla?\(\s*\d+\s*,\s*[\d.]+%\s*,\s*[\d.]+%\s*(?:,\s*[\d.]+\s*)?\)$|^[a-zA-Z]+$/
+
+function isValidColor(color: string): boolean {
+  return COLOR_REGEX.test(color.trim())
+}
+
 export function gerarCssGradient(config: GradientConfig): string {
-  const stopsStr = config.stops
-    .filter((s) => s.color)
+  const validStops = config.stops.filter((s) => s.color && isValidColor(s.color))
+  if (validStops.length === 0) return "background: transparent;"
+
+  const stopsStr = validStops
     .sort((a, b) => a.position - b.position)
     .map((s) => `${s.color} ${s.position}%`)
     .join(", ")

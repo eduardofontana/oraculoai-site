@@ -1,11 +1,31 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useCallback } from "react"
+
+const MAX_PATTERN_LENGTH = 200
+const MAX_TEXT_LENGTH = 50000
+const MAX_MATCH_RESULTS = 5000
+
+const REDOS_PATTERN = /\([^)]*[+*][^)]*\)[+*]/
+
+function hasRedosRisk(pattern: string): boolean {
+  return REDOS_PATTERN.test(pattern)
+}
 
 export function RegexTester() {
   const [pattern, setPattern] = useState("")
   const [flags, setFlags] = useState("gi")
   const [testText, setTestText] = useState("")
+
+  const redosRisk = hasRedosRisk(pattern)
+
+  const handlePatternChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setPattern(e.target.value.slice(0, MAX_PATTERN_LENGTH))
+  }, [])
+
+  const handleTextChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTestText(e.target.value.slice(0, MAX_TEXT_LENGTH))
+  }, [])
 
   const regex = useMemo(() => {
     try {
@@ -20,9 +40,11 @@ export function RegexTester() {
     const results: { value: string; index: number }[] = []
     let match: RegExpExecArray | null
     const r = new RegExp(regex.regex.source, regex.regex.flags.includes("g") ? regex.regex.flags : regex.regex.flags + "g")
-    while ((match = r.exec(testText)) !== null) {
+    let iterations = 0
+    while ((match = r.exec(testText)) !== null && iterations < MAX_MATCH_RESULTS) {
       results.push({ value: match[0], index: match.index })
       if (match.index === r.lastIndex) r.lastIndex++
+      iterations++
     }
     return results
   }, [regex.regex, testText])
@@ -35,13 +57,15 @@ export function RegexTester() {
     let lastIndex = 0
     const r = new RegExp(regex.regex.source, regex.regex.flags.includes("g") ? regex.regex.flags : regex.regex.flags + "g")
     let match: RegExpExecArray | null
-    while ((match = r.exec(testText)) !== null) {
+    let iterations = 0
+    while ((match = r.exec(testText)) !== null && iterations < MAX_MATCH_RESULTS) {
       if (match.index > lastIndex) {
         parts.push({ text: testText.slice(lastIndex, match.index), highlight: false })
       }
       parts.push({ text: match[0], highlight: true })
       lastIndex = match.index + match[0].length
       if (match.index === r.lastIndex) r.lastIndex++
+      iterations++
     }
     if (lastIndex < testText.length) {
       parts.push({ text: testText.slice(lastIndex), highlight: false })
@@ -58,7 +82,8 @@ export function RegexTester() {
             <span className="flex items-center pl-3 text-sm text-muted">/</span>
             <input
               value={pattern}
-              onChange={(e) => setPattern(e.target.value)}
+              onChange={handlePatternChange}
+              maxLength={MAX_PATTERN_LENGTH}
               placeholder="ex: [a-z]+"
               className="flex-1 bg-transparent px-1 py-2.5 font-mono text-sm text-primary placeholder-muted focus:outline-none"
             />
@@ -79,13 +104,19 @@ export function RegexTester() {
         </div>
       )}
 
+      {redosRisk && (
+        <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-sm text-amber-600">
+          Esta expressão pode causar lentidão com backtracking catastrófico. Considere simplificá-la.
+        </div>
+      )}
+
       <div>
         <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-muted">
           Texto de teste
         </label>
         <textarea
           value={testText}
-          onChange={(e) => setTestText(e.target.value)}
+          onChange={handleTextChange}
           rows={8}
           placeholder="Cole o texto para testar a expressão regular..."
           className="w-full rounded-lg border border-border bg-bg px-4 py-2.5 font-mono text-sm text-primary placeholder-muted focus:border-accent-border focus:outline-none"

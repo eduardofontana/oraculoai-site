@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { comprimirImagem, formatSize } from "@/lib/imageCompressor"
 
 export function ImageCompressor() {
@@ -19,6 +19,13 @@ export function ImageCompressor() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview)
+      if (result?.url) URL.revokeObjectURL(result.url)
+    }
+  }, [preview, result])
+
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
     if (!f) return
@@ -27,6 +34,7 @@ export function ImageCompressor() {
       return
     }
     setFile(f)
+    if (preview) URL.revokeObjectURL(preview)
     setPreview(URL.createObjectURL(f))
     setResult(null)
     setError("")

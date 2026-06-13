@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { checkPwnedPassword } from "@/lib/hibp"
 
@@ -41,6 +41,13 @@ export function PwnedPasswordChecker() {
   const [searched, setSearched] = useState(false)
 
   const strength = password ? getPasswordStrength(password) : null
+
+  useEffect(() => {
+    return () => {
+      setPassword("")
+      setResult(null)
+    }
+  }, [])
 
   const handleCheck = async () => {
     if (!password) return

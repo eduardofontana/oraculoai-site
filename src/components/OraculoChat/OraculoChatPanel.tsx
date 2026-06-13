@@ -8,6 +8,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { v4 as uuid } from "uuid";
+import DOMPurify from "dompurify";
 import type { Message } from "./types";
 
 /* ──────────────────────────────────────────────────────────────── */
@@ -280,7 +281,7 @@ export function OraculoChatPanel({ onClose }: Props) {
                 {msg.role === "assistant" ? (
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: renderContent(msg.content),
+                      __html: DOMPurify.sanitize(renderContent(msg.content)),
                     }}
                   />
                 ) : (

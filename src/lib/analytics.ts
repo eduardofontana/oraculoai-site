@@ -1,4 +1,6 @@
 const STORAGE_KEY = "oraculo-tool-usage"
+const MAX_ENTRIES = 100
+const EXPIRY_MS = 30 * 24 * 60 * 60 * 1000
 
 interface UsageData {
   counts: Record<string, number>
@@ -10,7 +12,15 @@ function loadUsage(): UsageData {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return { counts: {}, lastUsed: {} }
-    return JSON.parse(raw) as UsageData
+    const data = JSON.parse(raw) as UsageData
+    const now = Date.now()
+    for (const slug of Object.keys(data.lastUsed)) {
+      if (now - data.lastUsed[slug] > EXPIRY_MS) {
+        delete data.counts[slug]
+        delete data.lastUsed[slug]
+      }
+    }
+    return data
   } catch {
     return { counts: {}, lastUsed: {} }
   }
@@ -18,16 +28,20 @@ function loadUsage(): UsageData {
 
 function saveUsage(data: UsageData): void {
   try {
+    const entries = Object.keys(data.counts)
+    if (entries.length > MAX_ENTRIES) {
+      const sorted = entries.sort((a, b) => (data.lastUsed[b] ?? 0) - (data.lastUsed[a] ?? 0))
+      for (const slug of sorted.slice(MAX_ENTRIES)) {
+        delete data.counts[slug]
+        delete data.lastUsed[slug]
+      }
+    }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
   } catch {
     // localStorage cheio ou desabilitado — ignora
   }
 }
 
-/**
- * Incrementa o contador de uso de uma ferramenta.
- * Chamado diretamente (não é hook React).
- */
 export function trackToolUsage(slug: string): void {
   const data = loadUsage()
   data.counts[slug] = (data.counts[slug] ?? 0) + 1
