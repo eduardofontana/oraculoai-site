@@ -111,15 +111,13 @@ export async function POST(request: NextRequest) {
       // Erro de auth (token inválido / scope errado)
       if (hfRes.status === 401 || hfRes.status === 403) {
         return NextResponse.json(
-          {
-            error: `Token HF inválido ou sem permissão (status ${hfRes.status}). Vá em hf.co/settings/tokens, gere um token com "Make calls to Inference Providers".`,
-          },
+          { error: "Serviço de IA temporariamente indisponível." },
           { status: 502 },
         );
       }
 
       return NextResponse.json(
-        { error: `IA retornou erro (${hfRes.status}): ${preview}` },
+        { error: "Serviço de IA temporariamente indisponível." },
         { status: 502 },
       );
     }
@@ -129,9 +127,8 @@ export async function POST(request: NextRequest) {
     try {
       data = await hfRes.json();
     } catch {
-      const raw = await hfRes.text().catch(() => "");
       return NextResponse.json(
-        { error: `Resposta inválida: ${raw.slice(0, 200)}` },
+        { error: "Resposta inválida do serviço de IA." },
         { status: 502 },
       );
     }
@@ -148,7 +145,7 @@ export async function POST(request: NextRequest) {
     console.error("[Oráculo]", errObj.message, code);
 
     return NextResponse.json(
-      { error: `${errObj.message}${code ? ` [${code}]` : ""}` },
+      { error: "Erro interno do servidor." },
       { status: 500 },
     );
   }

@@ -2,11 +2,18 @@ type JsonLdProps = {
   schema: Record<string, unknown>;
 };
 
+/**
+ * Renderiza JSON-LD com proteção contra XSS via injection de </script>.
+ * JSON.stringify não escapa `<` ou `>`, então uma env var maliciosa
+ * como `</script><script>alert(1)</script>` quebraria o script tag.
+ * A substituição de `<` por `\\u003c` elimina esse risco.
+ */
 export function JsonLd({ schema }: JsonLdProps) {
+  const json = JSON.stringify(schema).replace(/</g, "\\u003c");
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      dangerouslySetInnerHTML={{ __html: json }}
     />
   );
 }
