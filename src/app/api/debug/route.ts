@@ -2,23 +2,34 @@
 import { getSupabase } from "@/lib/supabase";
 
 export async function POST(request: NextRequest) {
+  // Gather diagnostic info BEFORE any risky operation
+  const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const info: Record<string, unknown> = {
+    step: "start",
+    hasUrl: !!rawUrl,
+    hasKey: !!rawKey,
+    urlLength: (rawUrl ?? "").length,
+    urlStart: (rawUrl ?? "").slice(0, 35),
+    urlIsHttp:
+      (rawUrl ?? "").startsWith("http://") ||
+      (rawUrl ?? "").startsWith("https://"),
+    keyLength: (rawKey ?? "").length,
+    keyStart: (rawKey ?? "").slice(0, 12),
+  };
+
   try {
-    const info: Record<string,unknown> = { step: "start" };
-
-    // Step 1: check env
-    info.hasUrl = !!process.env.NEXT_PUBLIC_SUPABASE_URL;
-    info.hasKey = !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    info.urlPrefix = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").slice(0, 20);
-
-    // Step 2: getSupabase
+    info.step = "get-supabase";
     const supabase = getSupabase();
     info.hasSupabase = !!supabase;
-    info.supabaseType = supabase ? typeof supabase : "null";
+    info.supabaseType = typeof supabase;
 
-    // Step 3: try to insert
     if (supabase) {
+      info.step = "insert-test";
       try {
-        const { data, error } = await (supabase.from("leads") as any).insert({
+        const { data, error } = await (
+          supabase.from("leads") as any
+        ).insert({
           nome: "TESTE DIAG",
           email: "diag@debug.com",
           whatsapp: "5511999999999",
@@ -32,11 +43,20 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    info.step = "done";
     return NextResponse.json(info, { status: 200 });
   } catch (err: unknown) {
-    return NextResponse.json({
-      fatal: err instanceof Error ? err.message : String(err),
-      stack: err instanceof Error ? (err.stack ?? "").split("\n").slice(0, 6) : [],
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        ...info,
+        step: "catch",
+        fatal: err instanceof Error ? err.message : String(err),
+        stack:
+          err instanceof Error
+            ? (err.stack ?? "").split("\n").slice(0, 6)
+            : [],
+      },
+      { status: 500 },
+    );
   }
 }
