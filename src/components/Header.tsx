@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { site } from "@/lib/site";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -11,12 +12,15 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/90 backdrop-blur-2xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
-        <Link
-          href="/"
-          className="text-lg font-extrabold tracking-tight text-primary"
-        >
-          <span className="text-accent">{site.shortName.slice(0, 1)}</span>
-          {site.shortName.slice(1)}
+        <Link href="/" className="block shrink-0">
+          <Image
+            src="/logooraculoai_horizontal.png"
+            alt={site.name}
+            width={160}
+            height={36}
+            className="h-8 w-auto"
+            priority
+          />
         </Link>
 
         <div className="flex items-center gap-3">

@@ -31,6 +31,12 @@ export const metadata: Metadata = {
   description:
     "Criamos agentes de IA, automatizamos processos e construímos soluções digitais que funcionam de verdade pra sua empresa. Simples, direto e sem enrolação.",
   metadataBase: new URL("https://oraculoai.cloud"),
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico" },
+    ],
+  },
   openGraph: {
     title: "OráculoAI | Transformação digital impulsionada por Inteligência Artificial",
     description:
