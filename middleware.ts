@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const SOC_API_URL = "https://2.25.175.161/api";
+const SOC_API_URL = "https://oraculo-soc.duckdns.org/api";
 
 const SCANNER_PATTERNS = [
   /(sqlmap|nuclei|nikto|masscan|zgrab|acunetix|nessus|openvas|wpscan|netsparker)/i,
