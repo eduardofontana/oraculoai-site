@@ -33,9 +33,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://oraculoai.cloud"),
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico" },
     ],
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
   openGraph: {
     title: "OráculoAI | Transformação digital impulsionada por Inteligência Artificial",

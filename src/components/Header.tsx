@@ -16,9 +16,9 @@ export function Header() {
           <Image
             src="/logooraculoai_horizontal.png"
             alt={site.name}
-            width={160}
-            height={36}
-            className="h-8 w-auto"
+            width={200}
+            height={44}
+            className="h-10 w-auto"
             priority
           />
         </Link>

@@ -11,9 +11,9 @@ export function Footer() {
             <Image
               src="/logooraculoai_horizontal.png"
               alt={site.name}
-              width={160}
-              height={36}
-              className="h-8 w-auto"
+              width={200}
+              height={44}
+              className="h-10 w-auto"
             />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-secondary">
               Agentes de IA, automação de processos e soluções digitais que funcionam pro seu negócio.
