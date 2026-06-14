@@ -33,10 +33,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://oraculoai.cloud"),
   icons: {
     icon: [
-      { url: "/oraculoailogo.png", type: "image/png" },
-      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/oraculoailogo.png", type: "image/png", sizes: "any" },
     ],
-    shortcut: "/oraculoailogo.png",
+    shortcut: "/favicon.svg",
     apple: "/oraculoailogo.png",
   },
   openGraph: {
