@@ -28,34 +28,54 @@ const XSS_PATTERNS = [
   /<script/i, /javascript:/i, /onerror/i, /onload/i,
 ];
 
-function classifyRequest(request: NextRequest): { threatType: string; score: number } | null {
+const BOT_CRAWLERS = [
+  /googlebot/i, /bingbot/i, /baiduspider/i, /yandexbot/i,
+  /duckduckbot/i, /slurp/i, /facebookexternalhit/i,
+  /twitterbot/i, /linkedinbot/i, /slackbot/i, /discordbot/i,
+];
+
+function classifyRequest(request: NextRequest): {
+  threatType: string; score: number; severity: string; category: string
+} {
   const url = request.nextUrl.pathname + request.nextUrl.search;
   const ua = request.headers.get("user-agent") || "";
   const method = request.method;
 
   if (SCANNER_PATTERNS.some((p) => p.test(ua))) {
-    return { threatType: "scanner_detected", score: 60 };
+    return { threatType: "scanner_detected", score: 60, severity: "medium", category: "scanner" };
   }
 
   if (SUSPICIOUS_PATHS.some((p) => p.test(url))) {
-    const severity = /\.env|\.git\/config|admin/.test(url) ? 80 : 40;
-    return { threatType: severity >= 80 ? "env_scan" : "admin_scan", score: severity };
+    const isHigh = /\.env|\.git\/config|admin/.test(url);
+    return {
+      threatType: isHigh ? "env_scan" : "admin_scan",
+      score: isHigh ? 80 : 40,
+      severity: isHigh ? "high" : "medium",
+      category: "recon",
+    };
   }
 
   if (SQLI_PATTERNS.some((p) => p.test(url))) {
-    return { threatType: "sqli_attempt", score: 90 };
+    return { threatType: "sqli_attempt", score: 90, severity: "critical", category: "exploit" };
   }
 
   if (XSS_PATTERNS.some((p) => p.test(url))) {
-    return { threatType: "xss_attempt", score: 85 };
+    return { threatType: "xss_attempt", score: 85, severity: "critical", category: "exploit" };
   }
 
   if (method !== "GET" && method !== "POST" && method !== "OPTIONS") {
-    return { threatType: "suspicious_request", score: 30 };
+    return { threatType: "suspicious_request", score: 30, severity: "low", category: "anomaly" };
   }
 
-  return null;
+  if (BOT_CRAWLERS.some((p) => p.test(ua))) {
+    return { threatType: "crawler", score: 5, severity: "info", category: "bot" };
+  }
+
+  return { threatType: "access", score: 1, severity: "info", category: "access" };
 }
+
+const sampleRate = parseInt(process.env.SOC_SAMPLE_RATE || "10", 10);
+let counter = 0;
 
 async function sendEventToSOC(event: any) {
   try {
@@ -76,24 +96,32 @@ async function sendEventToSOC(event: any) {
 export function middleware(request: NextRequest) {
   const classification = classifyRequest(request);
 
-  if (classification) {
-    const event = {
-      ip: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-          request.headers.get("x-real-ip") ||
-          "0.0.0.0",
-      path: request.nextUrl.pathname + request.nextUrl.search,
-      method: request.method,
-      userAgent: request.headers.get("user-agent") || "",
-      referer: request.headers.get("referer") || "",
-      threatType: classification.threatType,
-      score: classification.score,
-      rawHeaders: Object.fromEntries(request.headers.entries()),
-      source: "vercel",
-    };
-
-    sendEventToSOC(event);
+  // Always send threats; sample normal traffic (1:N)
+  if (classification.severity !== "info") {
+    counter = 0;
+  } else {
+    counter++;
+    if (counter % sampleRate !== 0) return NextResponse.next();
   }
 
+  const event = {
+    ip: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+        request.headers.get("x-real-ip") ||
+        "0.0.0.0",
+    path: request.nextUrl.pathname + request.nextUrl.search,
+    method: request.method,
+    userAgent: request.headers.get("user-agent") || "",
+    referer: request.headers.get("referer") || "",
+    threatType: classification.threatType,
+    score: classification.score,
+    severity: classification.severity,
+    category: classification.category,
+    rawHeaders: Object.fromEntries(request.headers.entries()),
+    source: "vercel",
+    metadata: { sampled: classification.severity === "info" },
+  };
+
+  sendEventToSOC(event);
   return NextResponse.next();
 }
 
