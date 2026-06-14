@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 import Script from "next/script";
@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { NeuralNetwork } from "@/components/NeuralNetwork";
 import { OraculoTrigger } from "@/components/OraculoChat";
 import { JsonLd, organizationSchema, websiteSchema } from "@/components/JsonLd";
+import { AiBrandsTicker } from "@/components/AiBrandsTicker";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { ToolSearch } from "@/components/ToolSearch";
@@ -20,6 +21,7 @@ const nunito = Nunito_Sans({
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
 const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;
 
 export const metadata: Metadata = {
   title: {
@@ -37,12 +39,21 @@ export const metadata: Metadata = {
     siteName: "OráculoAI",
     locale: "pt_BR",
     type: "website",
+    images: [
+      {
+        url: "https://oraculoai.cloud/og-default.svg",
+        width: 1200,
+        height: 630,
+        alt: "OráculoAI - Transformação digital impulsionada por IA",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "OráculoAI | Transformação digital impulsionada por Inteligência Artificial",
     description:
       "Criamos agentes de IA, automatizamos processos e construímos soluções digitais que funcionam.",
+    images: ["https://oraculoai.cloud/og-default.svg"],
   },
   robots: {
     index: true,
@@ -52,7 +63,7 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ?? "",
   },
   other: {
-    "google-adsense-account": "ca-pub-2572298012241654",
+    ...(adsenseId ? { "google-adsense-account": adsenseId } : {}),
   },
 };
 
@@ -69,13 +80,24 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <body className="min-h-screen flex flex-col">
+        {/* ── Skip to content (accessibility) ── */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white"
+        >
+          Pular para o conteúdo
+        </a>
+
         {/* ── Google AdSense ── */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2572298012241654"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        {adsenseId && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
+            crossOrigin="anonymous"
+            strategy="beforeInteractive"
+            onError={() => console.info("[AdSense] Script bloqueado ou indisponível.")}
+          />
+        )}
 
         {/* ── Google Analytics 4 ── */}
         {gaId && (
@@ -129,10 +151,11 @@ export default function RootLayout({
         <NeuralNetwork />
         <ThemeProvider>
           <Header />
+          <AiBrandsTicker />
           <OraculoTrigger />
           <Analytics />
           <ToolSearch />
-          <div className="flex-1 pt-16">{children}</div>
+          <div className="flex-1 pt-[104px]">{children}</div>
           <Footer />
         </ThemeProvider>
       </body>

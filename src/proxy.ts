@@ -1,24 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-/* ------------------------------------------------------------------ */
-/*  Proxy (anteriormente Middleware): Nonce-based CSP para API routes  */
-/*                                                                     */
-/*  - API routes (/api/*) recebem CSP restrito (default-src 'none')   */
-/*    + nonce, eliminando 'unsafe-inline' nessas rotas                 */
-/*  - Páginas estáticas continuam com o CSP do vercel.json             */
-/*    (com 'unsafe-inline' — necessário pois não há SSR)              */
-/* ------------------------------------------------------------------ */
-
 export function proxy(request: NextRequest) {
   const nonce = crypto.randomUUID();
 
   const response = NextResponse.next();
 
-  // Disponibiliza o nonce para uso futuro em SSR
+  /* ---- CSP nonce-based para API routes ---- */
   response.headers.set("x-nonce", nonce);
-
-  // CSP estrito para API routes (elimina 'unsafe-inline' dessas rotas)
-  // OBS: vercel.json mantém 'unsafe-inline' para páginas estáticas (SSG)
   response.headers.set(
     "Content-Security-Policy",
     [
@@ -30,6 +18,27 @@ export function proxy(request: NextRequest) {
       "form-action 'none'",
     ].join("; "),
   );
+
+  /* ---- CORS (defense-in-depth) ---- */
+  const origin = request.headers.get("origin");
+  if (origin) {
+    const allowed =
+      origin === "https://oraculoai.cloud" ||
+      origin === "https://www.oraculoai.cloud" ||
+      /^https:\/\/[\w-]+\.vercel\.app$/.test(origin);
+    if (allowed) {
+      response.headers.set("Access-Control-Allow-Origin", origin);
+      response.headers.set("Vary", "Origin");
+    }
+  }
+  response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  response.headers.set("Access-Control-Max-Age", "86400");
+
+  /* ---- Preflight ---- */
+  if (request.method === "OPTIONS") {
+    return new NextResponse(null, { status: 204, headers: response.headers });
+  }
 
   return response;
 }

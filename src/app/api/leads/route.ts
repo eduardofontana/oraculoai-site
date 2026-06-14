@@ -82,8 +82,8 @@ export async function POST(request: NextRequest) {
         );
       }
     } else {
-      // Sem Supabase configurado: apenas log
-      console.info("[Leads] Lead recebido (sem Supabase):", { nome, email, empresa, mensagem });
+      // Sem Supabase configurado: apenas log (sem PII)
+      console.info("[Leads] Lead recebido (sem Supabase) — não persistido");
     }
 
     /* ---- Notificar (assíncrono, não bloqueia resposta) ---- */

@@ -51,9 +51,9 @@ export function validateOrigin(request: { headers: Headers }): boolean {
     return isOriginAllowed(origin);
   }
 
-  // Origin ausente → same-origin (seguro) ou fallback para Referer
+  // Origin ausente → fallback para Referer
   if (!referer) {
-    return true; // sem Origin e sem Referer → confiar (ex.: curl, server-side)
+    return false; // sem Origin e sem Referer → rejeitar (defense-in-depth)
   }
 
   const refOrigin = extractOriginFromReferer(referer);

@@ -32,7 +32,7 @@ function inMemoryCheck(key: string, opts: RatelimitOpts): RatelimitResult {
 
 /* ==================== Supabase (distribuído) ==================== */
 
-let supabaseRpc: ((identifier: string) => Promise<RatelimitResult>) | null = null;
+let supabaseRpc: ((identifier: string, opts: RatelimitOpts) => Promise<RatelimitResult>) | null = null;
 
 async function tryInitSupabase(): Promise<typeof supabaseRpc> {
   try {
@@ -40,22 +40,26 @@ async function tryInitSupabase(): Promise<typeof supabaseRpc> {
 
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    if (!url || !key) return null;
+    if (!url || !key) {
+      console.warn("[RateLimit] Supabase not configured, using in-memory fallback");
+      return null;
+    }
 
-    return async (identifier: string): Promise<RatelimitResult> => {
+    return async (identifier: string, opts: RatelimitOpts): Promise<RatelimitResult> => {
       const supabase = getSupabase();
-      if (!supabase) return { success: true, remaining: 999 };
+      if (!supabase) {
+        throw new Error("[RateLimit] Supabase client not available");
+      }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await (supabase.rpc as any)("check_rate_limit", {
         p_identifier: identifier,
-        p_limit: 10,
-        p_window_ms: 10_000,
+        p_limit: opts.limit,
+        p_window_ms: opts.windowMs,
       });
 
-      if (error || !data) {
-        console.warn("[RateLimit] Supabase RPC error:", error?.message);
-        return { success: true, remaining: 999 };
+      if (error) {
+        throw error;
       }
 
       return data as RatelimitResult;
@@ -87,7 +91,7 @@ async function getRatelimiter(): Promise<typeof supabaseRpc> {
  * - Caso contrário → fallback in-memory Map
  *
  * @param identifier - Identificador único (ex.: IP do cliente)
- * @param opts - Configuração (usado apenas no fallback in-memory)
+ * @param opts - Configuração (limit/windowMs)
  */
 export async function checkRateLimit(
   identifier: string,
@@ -96,8 +100,9 @@ export async function checkRateLimit(
   const rl = await getRatelimiter();
 
   if (rl) {
-    return rl(identifier);
+    return rl(identifier, opts);
   }
 
+  // Fallback: Supabase not available or not configured
   return inMemoryCheck(identifier, opts);
 }
