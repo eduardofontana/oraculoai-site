@@ -13,7 +13,7 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-bg/90 backdrop-blur-2xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
         <Link href="/" className="block shrink-0">
-          <Logo className="h-10 w-auto" />
+          <Logo className="h-12 w-auto" />
         </Link>
 
         <div className="flex items-center gap-3">

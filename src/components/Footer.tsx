@@ -8,7 +8,7 @@ export function Footer() {
       <div className="mx-auto w-full max-w-7xl px-6 py-16 md:px-8">
         <div className="grid gap-10 md:grid-cols-5">
           <div className="md:col-span-1">
-            <Logo className="h-10 w-auto" />
+            <Logo className="h-12 w-auto" />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-secondary">
               Agentes de IA, automação de processos e soluções digitais que funcionam pro seu negócio.
             </p>
