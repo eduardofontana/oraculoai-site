@@ -41,6 +41,9 @@ const PARTICLES = 100;
 const CONN_DIST = 130;
 const PART_CONN_DIST = 100;
 
+const DOTS_MOBILE = 30;
+const PARTICLES_MOBILE = 20;
+
 /* ── Helpers ── */
 
 function rand(min: number, max: number) {
@@ -58,6 +61,13 @@ export function NeuralNetwork() {
 
     const ctx = canvas.getContext("2d")!;
 
+    /* ── Check for reduced motion preference ── */
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    /* ── Check for mobile ── */
+    const isMobile = window.innerWidth < 768;
+
     /* ── resize ── */
     let W: number, H: number;
     function resize() {
@@ -72,9 +82,9 @@ export function NeuralNetwork() {
     }
 
     /* ── create dots (pequenos nós azuis/vermelhos) ── */
-    function createDots(): Dot[] {
+    function createDots(count: number): Dot[] {
       const dots: Dot[] = [];
-      for (let i = 0; i < DOTS; i++) {
+      for (let i = 0; i < count; i++) {
         dots.push({
           x: rand(0, W),
           y: rand(0, H),
@@ -89,9 +99,9 @@ export function NeuralNetwork() {
     }
 
     /* ── create microparticles ── */
-    function createParticles(): Dot[] {
+    function createParticles(count: number): Dot[] {
       const p: Dot[] = [];
-      for (let i = 0; i < PARTICLES; i++) {
+      for (let i = 0; i < count; i++) {
         p.push({
           x: rand(0, W),
           y: rand(0, H),
@@ -107,8 +117,8 @@ export function NeuralNetwork() {
 
     /* ── init ── */
     resize();
-    const dots = createDots();
-    const particles = createParticles();
+    const dots = createDots(isMobile ? DOTS_MOBILE : DOTS);
+    const particles = createParticles(isMobile ? PARTICLES_MOBILE : PARTICLES);
 
     /* ── Resize ── */
     function onResize() {

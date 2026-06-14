@@ -17,7 +17,7 @@ export default function Home() {
     <>
       <JsonLd schema={organizationSchema()} />
       <JsonLd schema={websiteSchema()} />
-      <main className="min-h-screen text-primary">
+      <main id="main-content" className="min-h-screen text-primary">
         {/* Hero */}
         <section id="hero" className="relative flex min-h-[88vh] w-full items-center overflow-hidden px-6 pt-24 pb-20 md:px-8">
           {/* ── Floating orbs ── */}

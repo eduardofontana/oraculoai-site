@@ -25,6 +25,7 @@ export function FAQ({ items }: Props) {
             onClick={() => setOpenIndex(openIndex === i ? null : i)}
             className="flex w-full items-center justify-between px-6 py-5 text-left text-sm font-semibold text-primary transition"
             aria-expanded={openIndex === i}
+            aria-controls={`faq-panel-${i}`}
           >
             <span>{item.question}</span>
             <svg
@@ -42,6 +43,9 @@ export function FAQ({ items }: Props) {
             </svg>
           </button>
           <div
+            id={`faq-panel-${i}`}
+            role="region"
+            aria-labelledby={`faq-question-${i}`}
             className={`overflow-hidden transition-all duration-300 ${
               openIndex === i ? "max-h-96" : "max-h-0"
             }`}

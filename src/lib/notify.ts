@@ -12,6 +12,15 @@ type LeadData = {
   mensagem: string;
 };
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 let _transporter: nodemailer.Transporter | null = null;
 
 function getTransporter() {
@@ -67,13 +76,13 @@ export async function notifyNewLead(lead: LeadData): Promise<void> {
           <h2 style="color:#6C63FF">Novo lead — OráculoAI</h2>
           <table style="width:100%;border-collapse:collapse">
             <tr><td style="padding:8px 0;color:#666">Nome</td>
-                <td style="padding:8px 0"><strong>${lead.nome}</strong></td></tr>
+                <td style="padding:8px 0"><strong>${escapeHtml(lead.nome)}</strong></td></tr>
             <tr><td style="padding:8px 0;color:#666">E-mail</td>
-                <td style="padding:8px 0"><a href="mailto:${lead.email}">${lead.email}</a></td></tr>
+                <td style="padding:8px 0"><a href="mailto:${escapeHtml(lead.email)}">${escapeHtml(lead.email)}</a></td></tr>
             <tr><td style="padding:8px 0;color:#666">Empresa</td>
-                <td style="padding:8px 0">${lead.empresa || "—"}</td></tr>
+                <td style="padding:8px 0">${escapeHtml(lead.empresa || "—")}</td></tr>
             <tr><td style="padding:8px 0;color:#666;vertical-align:top">Mensagem</td>
-                <td style="padding:8px 0">${lead.mensagem}</td></tr>
+                <td style="padding:8px 0">${escapeHtml(lead.mensagem)}</td></tr>
           </table>
           <hr style="margin:24px 0;border:none;border-top:1px solid #eee">
           <p style="color:#999;font-size:12px">

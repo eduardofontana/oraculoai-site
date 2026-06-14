@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0b0b12"/>
+      <stop offset="100%" style="stop-color:#141420"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" style="stop-color:#e11937;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#e11937;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <text x="600" y="260" text-anchor="middle" font-family="system-ui, sans-serif" font-size="72" font-weight="800" fill="#f5f5f7">
+    <tspan fill="#e11937">O</tspan>rác<tspan fill="#e11937">u</tspan>loAI
+  </text>
+  <text x="600" y="340" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="500" fill="#9494a8">
+    Transformação digital impulsionada por IA
+  </text>
+  <text x="600" y="400" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" fill="#63637a">
+    Agentes de IA · Automação · Cloud · Segurança
+  </text>
+</svg>
