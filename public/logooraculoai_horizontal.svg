@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100" width="400" height="100">
+  <style>
+    .text-main { fill: #f5f5f7; }
+    .text-accent { fill: #e11937; }
+    @media (prefers-color-scheme: light) {
+      .text-main { fill: #141420; }
+    }
+  </style>
+  <text class="text-accent" x="12" y="72" font-family="Nunito Sans, system-ui, -apple-system, sans-serif" font-weight="800" font-size="60" letter-spacing="-2">O</text>
+  <text class="text-main" x="74" y="72" font-family="Nunito Sans, system-ui, -apple-system, sans-serif" font-weight="800" font-size="60" letter-spacing="-2">ráculo</text>
+  <text class="text-accent" x="256" y="72" font-family="Nunito Sans, system-ui, -apple-system, sans-serif" font-weight="800" font-size="60" letter-spacing="-2">A</text>
+  <text class="text-main" x="310" y="72" font-family="Nunito Sans, system-ui, -apple-system, sans-serif" font-weight="800" font-size="60" letter-spacing="-2">I</text>
+</svg>
