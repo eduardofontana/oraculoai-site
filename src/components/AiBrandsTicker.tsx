@@ -60,7 +60,7 @@ export function AiBrandsTicker() {
     <div
       style={{
         position: "fixed",
-        top: "64px",
+        top: "80px",
         left: 0,
         right: 0,
         zIndex: 40,

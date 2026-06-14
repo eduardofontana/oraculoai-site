@@ -163,7 +163,7 @@ export default function RootLayout({
           <OraculoTrigger />
           <Analytics />
           <ToolSearch />
-          <div className="flex-1 pt-[104px]">{children}</div>
+          <div className="flex-1 pt-[128px]">{children}</div>
           <Footer />
         </ThemeProvider>
       </body>
